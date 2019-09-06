@@ -19,4 +19,4 @@
 
 
 ## Programma di massima per la prossima giornata di lavoro
-Creare una pianificazione delle varie fasi del progetto.
+Creare una pianificazione per le varie fasi del progetto.
