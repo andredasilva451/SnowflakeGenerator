@@ -51,6 +51,14 @@
 
 ### Informazioni sul progetto
 
+Il progetto SnowFlake Generator comprende la partecipazione di: 
+
+- André Da Silva, I3AC, nel ruolo di  progettista e sviluppatore.
+- Luca Muggiasca, docente,consulente e cliente.
+
+Date inizio: 06.09.19
+
+
   In questo capitolo raccogliere le informazioni relative al progetto, ad esempio:
 
   -   Allievo/i e docente/i coinvolti nel progetto e rispettivi ruoli,
