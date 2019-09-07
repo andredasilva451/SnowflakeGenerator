@@ -7,7 +7,7 @@
 
 |Orario        |Lavoro svolto                           |
 |--------------|----------------------------------------|
-|14:10 - 14:15 |Creata repository per il progetto su github      |
+|14:10 - 14:15 |Creata repository per il progetto       |
 |14:15 - 14:30 |Installato Git                          |
 |15:00 - 15:05 |Disinstallato Git                       |
 |15:05 - 15:20 |Installato e configurato github desktop |
