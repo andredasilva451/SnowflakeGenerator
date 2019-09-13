@@ -1,6 +1,6 @@
 # Snowflake Generator | Diario di lavoro
 ##### André Da Silva
-### Centro Professionale Trevano, 06.09.19
+### Centro Professionale Trevano, 13.09.19
 
 ## Lavori svolti
 
