@@ -141,42 +141,6 @@ SAMT, Sezione informatica modulo 306 + progetti.
 
 ### Analisi e specifica dei requisiti
 
-  Il progettista, dopo aver ricevuto il mandato, in collaborazione con il
-  committente redige una lista di requisiti. Durante questi incontri,
-  tramite interviste (da inserire nei diari), il progettista deve cercare
-  di rispondere alle seguenti domande:
-
-  -   Quali sono i bisogni del committente?
-
-  -   Quali funzioni deve svolgere il prodotto?
-
-  -   Come devono essere implementate?
-
-  -   L’utente, come vorrebbe/dovrebbe interagire con il prodotto?
-
-  -   Come verrà utilizzato il prodotto?
-
-  -   Che tipo di interfaccia si immagina?
-
-  -   Che prestazioni minime deve fornire il prodotto?
-
-  -   Che grado di sicurezza deve avere il prodotto?
-
-  -   …
-
-  In base alla lista dei requisiti e all’analisi degli stessi, il
-  progettista redige una *specifica dei requisiti* in cui elenca e
-  descrive in modo dettagliato quali sono le funzionalità che il prodotto
-  fornirà. La specifica dovrebbe essere abbastanza dettagliata da poter
-  essere utilizzata come base per lo sviluppo, ma non troppo; ad esempio
-  non dovrebbe contenere dettagli di implementazione, o definizioni
-  dettagliate dell’interfaccia grafica a meno che questi non siano
-  considerati cruciali. Non si deve scordare che i requisiti non
-  rappresentano delle attività bensì delle caratteristiche che il prodotto
-  dovrà possedere.
-
-
-
 
   |**ID**	|**Nome**			|**Priorità**|**Vers**|**Note**  |
   |----|------------|--------|----|------|
@@ -199,17 +163,6 @@ SAMT, Sezione informatica modulo 306 + progetti.
   |Req-16|Il salvataggio deve avere dimensioni definite dall'utente|1|1.0|-|
   |Req-17|I punti devono essere salvabili|1|1.0|-|
   
-  
-  
-  
-  
-  
-  
-  
-  
-
-
-
 **Spiegazione elementi tabella dei requisiti:**
 
 **ID**: identificativo univoco del requisito
@@ -230,9 +183,6 @@ vecchie dovranno essere inserite nei diari.
 
 **Note**: eventuali osservazioni importanti o riferimenti ad altri
 requisiti.
-
-**Sotto requisiti**: elementi che compongono il requisito.
-
 
 ### Use case
 
