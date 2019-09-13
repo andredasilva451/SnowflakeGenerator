@@ -144,13 +144,12 @@ SAMT, Sezione informatica modulo 306 + progetti.
 
   |**ID**	|**Nome**			|**Priorità**|**Vers**|**Note**  |
   |----|------------|--------|----|------|
-  |Req-0|Il software deve essere scritto in JAVA o JS|1|1.0|-|
-  |Req-1|Deve esiste un sito con la descrizione del software|1|1.0|-|
-  |Req-2|Deve essere possibile scaricare il software dal sito|1|1.0|-|
+  |Req-1|Il software deve essere scritto in JAVA o JS|1|1.0|-|
+  |Req-2|Deve esistere un sito con la descrizione del software|1|1.0|-|
   |Req-3|Deve essere possibile scaricare il software dal sito|1|1.0|-|
   |Req-4|Il software deve avere un'interfaccia grafica (jframe o frame)|1|1.0|-|
   |Req-5|All'avvio deve essere mostrato il triangolo da ritagliare|1|1.0|-|
-  |Req-6|All'avvio deve essere mostrato il triangolo da ritagliare|1|1.0|-|
+  |Req-6|Il triangolo può ridimensionarsi in base alla grandezza del frame|1|1.0|-|
   |Req-7|I tagli (punti) del triangolo devono poter essere fatti con il mouse|1|1.0|-|
   |Req-8|I tagli (punti) del triangolo devono poter essere fatti con il mouse|1|1.0|-|
   |Req-9|Deve essere possibile resettare i punti del ritaglio|1|1.0|-|
@@ -158,10 +157,11 @@ SAMT, Sezione informatica modulo 306 + progetti.
   |Req-11|La generazione del fiocco avvenire in tempo reale (anteprima con i punti attualmente messi)|2|1.0|-|
   |Req-12|I punti devono poter essere spostati o rimossi |2|1.0|-|
   |Req-13|Il lavoro deve poter essere salvato|1|1.0|-|
-  |Req-14|Il salvataggio del fiocco deve essere fatto in formato PNG o SVG|1|1.0|-|
+  |Req-14|Il salvataggio del fiocco deve essere fatto in formato PNG o SVG tramite un bottone 'salva'|1|1.0|-|
   |Req-15|Il salvataggio deve avere dimensioni definite dall'utente|1|1.0|-|
-  |Req-16|Il salvataggio deve avere dimensioni definite dall'utente|1|1.0|-|
-  |Req-17|I punti devono essere salvabili|1|1.0|-|
+  |Req-17|I punti devono essere salvabili in un file|1|1.0|-|
+  |Req-18|I punti potranno essere importati tramite esplora file|1|1.0|-|
+  |Req-19|È possibile switchare tra creazione/eliminazione punto tramite un bottone 'creazione/eliminazione'|2|1.0|-|
   
 **Spiegazione elementi tabella dei requisiti:**
 
