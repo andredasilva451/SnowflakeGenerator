@@ -106,6 +106,12 @@ SAMT, Sezione informatica modulo 306 + progetti.
 
 ### Scopo
 
+  Lo scopo del progetto è quello di sviluppare un software programmato in Java il cui compito è quello di
+  generare un fiocco di neve. Per fare ciò l'utente deve ritagliare, a scelta, le varie parti di un triangolo 
+  rettangolo al fine di generare il fiocco. Infine, per scelta dell'utente, sarà possibile salvare il risultato
+  in formato raster o vettoriale.
+  
+  
   Lo scopo del progetto (scopi didattici/scopi operativi). Dovrebbe
   descrivere il mandato, ma non vanno ricopiate le informazioni del
   quaderno dei compiti (che va invece allegato).
