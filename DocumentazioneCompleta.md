@@ -150,7 +150,7 @@ SAMT, Sezione informatica modulo 306 + progetti.
 
   |**ID**	|**Nome**			|**Priorità**|**Vers**|**Note**  |
   |----|------------|--------|----|------|
-  |Req-1|Il software deve essere scritto in JAVA o JS|1|1.0|-|
+  |Req-1 |Il software deve essere scritto in JAVA o JS|1|1.0|-|
   |Req-2|Occorre l'utilizzo di un'interfaccia grafica|1|1.0|-|
   |Req-3|La finistra dell'interfaccia è ridimensionabile, minimo 1024x768|1|1.0|-|
   |Req-4|Deve esistere un sito con la descrizione del software|1|1.0|-|
