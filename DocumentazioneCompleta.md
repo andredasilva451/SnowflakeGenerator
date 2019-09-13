@@ -178,10 +178,9 @@ SAMT, Sezione informatica modulo 306 + progetti.
 **Nome**: breve descrizione del requisito
 
 **Priorità**: indica l’importanza di un requisito nell’insieme del
-progetto, definita assieme al committente. Ad esempio poter disporre di
-report con colonne di colori diversi ha priorità minore rispetto al
-fatto di avere un database con gli elementi al suo interno. Solitamente
-si definiscono al massimo di 2-3 livelli di priorità.
+progetto, definita assieme al committente:
+1: Priorità alta
+2: Priorità bassa
 
 **Versione**: indica la versione del requisito. Ogni modifica del
 requisito avrà una versione aggiornata.
@@ -213,6 +212,10 @@ Se si usano altri metodi di pianificazione (es scrum), dovranno apparire
 in questo capitolo.
 
 ### Analisi dei mezzi
+
+
+
+
 
 Elencare e *descrivere* i mezzi disponibili per la realizzazione del
 progetto. Ricordarsi di sempre descrivere nel dettaglio le versioni e il
