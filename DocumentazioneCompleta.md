@@ -213,7 +213,14 @@ in questo capitolo.
 
 ### Analisi dei mezzi
 
+#### Hardware
+- ROG GL702VM
+#### Librerie
+- Java Swing
+- Java AWT
 
+#### Piattaforma
+Qualsiasi Sistema operativo (Windows,Mac OS, distribuzioni Linux, etc.)
 
 
 
