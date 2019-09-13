@@ -185,9 +185,13 @@ Data fine: 20.12.19
 
   |**ID**	|**Nome**			|**Priorità**|**Vers**|**Note**  |
   |----|------------|--------|----|------|
-  |Req-12|Dovrà esserci una maschera di login|1|1.0|...|
-  |Req-13|Si dovranno poter immettere nuovi allievi|1|1.0|...|
-  |Req-14|Dovrà essere possibile la ricerca di allievi|1|1.0|...|
+  |Req-0|Il programma genera inizialmente un triangolo|1|1.0|-|
+  |Req-1|Cliccando con il tasto sinistro si dovranno generare dei punti per il ritaglio collegati tramite linea|1|1.0|-|
+  |Req-2|Si potrà eliminare e spostare i vari 'punti ritaglio' creati|2|1.0|-|
+  |Req-3|Il fiocco di neve viene generato tramite un tasto "Genera"|1|1.0|-|
+  |Req-4|La generazione del fiocco avviene in tempo reale dopo aver cliccato il tasto|2|1.0|-|
+  |Req-5|Sarà possibile salvare il fiocco di neve in formato raster o vettoriale (PNG,SVG)|1|1.0|-|
+  |Req-6|Sarà possibile salvere i vari 'punti ritaglio' per poi eseguire future modifiche.|1|1.0|-|
   
   
 
