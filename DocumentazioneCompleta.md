@@ -144,7 +144,7 @@ SAMT, Sezione informatica modulo 306 + progetti.
 
   |**ID**	|**Nome**			|**Priorità**|**Vers**|**Note**  |
   |----|------------|--------|----|------|
-  |Req-0|Il software deve essere scritto in JAVA O JS|1|1.0|-|
+  |Req-0|Il software deve essere scritto in JAVA o JS|1|1.0|-|
   |Req-1|Deve esiste un sito con la descrizione del software|1|1.0|-|
   |Req-2|Deve essere possibile scaricare il software dal sito|1|1.0|-|
   |Req-3|Deve essere possibile scaricare il software dal sito|1|1.0|-|
