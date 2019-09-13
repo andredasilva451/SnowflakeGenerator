@@ -53,7 +53,7 @@
 
 Il progetto SnowFlake Generator comprende la partecipazione di: 
 
-- André Da Silva, nel ruolo di  progettista e sviluppatore.
+- André Da Silva, progettista e sviluppatore.
 - Luca Muggiasca, docente,consulente e cliente.
 - Geo Petrini, docente, consulente e cliente.
 
