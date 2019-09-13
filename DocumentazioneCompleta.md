@@ -53,22 +53,17 @@
 
 Il progetto SnowFlake Generator comprende la partecipazione di: 
 
-- André Da Silva, I3AC, nel ruolo di  progettista e sviluppatore.
+- André Da Silva, nel ruolo di  progettista e sviluppatore.
 - Luca Muggiasca, docente,consulente e cliente.
+- Geo Petrini, docente, consulente e cliente.
 
 Data inizio: 06.09.19
 Data fine: 20.12.19
 
+SAMT, Sezione informatica modulo 306 + progetti.
 
-  In questo capitolo raccogliere le informazioni relative al progetto, ad esempio:
 
-  -   Allievo/i e docente/i coinvolti nel progetto e rispettivi ruoli,
-
-  -   scuola ,sezione, materia/e,
-
-  -   date di inizio e termine di consegna,
-
-  -   …
+  
 
 ### Abstract
 
@@ -185,13 +180,31 @@ Data fine: 20.12.19
 
   |**ID**	|**Nome**			|**Priorità**|**Vers**|**Note**  |
   |----|------------|--------|----|------|
-  |Req-0|Il programma genera inizialmente un triangolo|1|1.0|-|
-  |Req-1|Cliccando con il tasto sinistro si dovranno generare dei punti per il ritaglio collegati tramite linea|1|1.0|-|
-  |Req-2|Si potrà eliminare e spostare i vari 'punti ritaglio' creati|2|1.0|-|
-  |Req-3|Il fiocco di neve viene generato tramite un tasto "Genera"|1|1.0|-|
-  |Req-4|La generazione del fiocco avviene in tempo reale dopo aver cliccato il tasto|2|1.0|-|
-  |Req-5|Sarà possibile salvare il fiocco di neve in formato raster o vettoriale (PNG,SVG)|1|1.0|-|
-  |Req-6|Sarà possibile salvere i vari 'punti ritaglio' per poi eseguire future modifiche.|1|1.0|-|
+  |Req-0|Il software deve essere scritto in JAVA O JS|1|1.0|-|
+  |Req-1|Deve esiste un sito con la descrizione del software|1|1.0|-|
+  |Req-2|Deve essere possibile scaricare il software dal sito|1|1.0|-|
+  |Req-3|Deve essere possibile scaricare il software dal sito|1|1.0|-|
+  |Req-4|Il software deve avere un'interfaccia grafica (jframe o frame)|1|1.0|-|
+  |Req-5|All'avvio deve essere mostrato il triangolo da ritagliare|1|1.0|-|
+  |Req-6|All'avvio deve essere mostrato il triangolo da ritagliare|1|1.0|-|
+  |Req-7|I tagli (punti) del triangolo devono poter essere fatti con il mouse|1|1.0|-|
+  |Req-8|I tagli (punti) del triangolo devono poter essere fatti con il mouse|1|1.0|-|
+  |Req-9|Deve essere possibile resettare i punti del ritaglio|1|1.0|-|
+  |Req-10|Deve esistere un tasto 'genera fiocco'|1|1.0|-|
+  |Req-11|La generazione del fiocco avvenire in tempo reale (anteprima con i punti attualmente messi)|2|1.0|-|
+  |Req-12|I punti devono poter essere spostati o rimossi |2|1.0|-|
+  |Req-13|Il lavoro deve poter essere salvato|1|1.0|-|
+  |Req-14|Il salvataggio del fiocco deve essere fatto in formato PNG o SVG|1|1.0|-|
+  |Req-15|Il salvataggio deve avere dimensioni definite dall'utente|1|1.0|-|
+  |Req-16|Il salvataggio deve avere dimensioni definite dall'utente|1|1.0|-|
+  |Req-17|I punti devono essere salvabili|1|1.0|-|
+  
+  
+  
+  
+  
+  
+  
   
   
 
