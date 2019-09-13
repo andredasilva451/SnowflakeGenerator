@@ -151,11 +151,13 @@ SAMT, Sezione informatica modulo 306 + progetti.
   |**ID**	|**Nome**			|**Priorità**|**Vers**|**Note**  |
   |----|------------|--------|----|------|
   |Req-1|Il software deve essere scritto in JAVA o JS|1|1.0|-|
+  |Req-1|Occorre l'utilizzo di un'interfaccia grafica|1|1.0|-|
+  |Req-1|La finistra dell'interfaccia è ridimensionabile, minimo 1024x768|1|1.0|-|
   |Req-2|Deve esistere un sito con la descrizione del software|1|1.0|-|
   |Req-3|Deve essere possibile scaricare il software dal sito|1|1.0|-|
   |Req-4|Il software deve avere un'interfaccia grafica (jframe o frame)|1|1.0|-|
   |Req-5|All'avvio deve essere mostrato il triangolo da ritagliare|1|1.0|-|
-  |Req-6|Il triangolo può ridimensionarsi in base alla grandezza del frame|1|1.0|-|
+  |Req-6|Il triangolo può ridimensionarsi in base alla grandezza dell'interfaccia (iniziale 50%)|1|1.0|-|
   |Req-7|I tagli (punti) del triangolo devono poter essere fatti con il mouse|1|1.0|-|
   |Req-8|I tagli (punti) del triangolo devono poter essere fatti con il mouse|1|1.0|-|
   |Req-9|Deve essere possibile resettare i punti del ritaglio|1|1.0|-|
