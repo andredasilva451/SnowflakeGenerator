@@ -116,7 +116,7 @@ SAMT, Sezione informatica modulo 306 + progetti.
 ### Analisi del dominio
 
   Essendo al terzo anno della sezione informatica della scuola Arti e Mestieri di Trevano, occorre
-  essere capaci di progettare e sviluppare un progetto in modo autonomo, sia per il prossimo anno che in futuro in azienda. 
+  essere capaci di progettare e sviluppare un progetto in modo autonomo, sia per il prossimo anno che in futuro in un'azienda. 
   Per questo, nel primo semestre, è stato deciso di affidarci a tutti lo stesso progetto, cioè un generatore di fiocchi
   di neve.
   
