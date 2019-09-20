@@ -111,18 +111,13 @@ SAMT, Sezione informatica modulo 306 + progetti.
   in formato raster o vettoriale.
   
   
-  Lo scopo del progetto (scopi didattici/scopi operativi). Dovrebbe
-  descrivere il mandato, ma non vanno ricopiate le informazioni del
-  quaderno dei compiti (che va invece allegato).
-
-
 ## Analisi
 
 ### Analisi del dominio
 
   Essendo al terzo anno della sezione informatica della scuola Arti e Mestieri di Trevano, occorre
-  essere capaci di progettare e sviluppare un progetto, sia per il prossimo anno che in futuro in azienda. 
-  Proprio per questo, il primo semestre occorre progettare e sviluppare in modo autonomo e singolo un progetto.
+  essere capaci di progettare e sviluppare un progetto in modo autonomo, sia per il prossimo anno che in futuro in azienda. 
+  Per questo, nel primo semestre, è stato deciso di affidarci a tutti lo stesso progetto
 
   Questo capitolo dovrebbe descrivere il contesto in cui il prodotto verrà
   utilizzato, da questa analisi dovrebbero scaturire le risposte a quesiti
@@ -164,7 +159,7 @@ SAMT, Sezione informatica modulo 306 + progetti.
   |Req-9|I tagli (punti) del triangolo devono poter essere fatti con il mouse|1|1.0|-|
   |Req-10|Deve essere possibile resettare i punti del ritaglio|1|1.0|-|
   |Req-11|Deve esistere un tasto 'genera fiocco'|1|1.0|-|
-  |Req-12|La generazione del fiocco avvenire in tempo reale (anteprima con i punti attualmente messi)|2|1.0|-|
+  |Req-12|La generazione del fiocco deve avvenire in tempo reale (anteprima con i punti attualmente messi)|2|1.0|-|
   |Req-13|I punti devono poter essere spostati o rimossi |2|1.0|-|
   |Req-14|Il lavoro deve poter essere salvato|1|1.0|-|
   |Req-15|Il salvataggio del fiocco deve essere fatto in formato PNG o SVG tramite un bottone 'salva'|1|1.0|-|
