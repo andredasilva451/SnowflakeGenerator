@@ -119,7 +119,8 @@ SAMT, Sezione informatica modulo 306 + progetti.
   essere capaci di progettare e sviluppare un progetto in modo autonomo, sia per il prossimo anno che in futuro in azienda. 
   Per questo, nel primo semestre, è stato deciso di affidarci a tutti lo stesso progetto, cioè un generatore di fiocchi
   di neve.
-
+  
+  
   Questo capitolo dovrebbe descrivere il contesto in cui il prodotto verrà
   utilizzato, da questa analisi dovrebbero scaturire le risposte a quesiti
   quali ad esempio:
