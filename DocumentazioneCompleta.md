@@ -117,7 +117,8 @@ SAMT, Sezione informatica modulo 306 + progetti.
 
   Essendo al terzo anno della sezione informatica della scuola Arti e Mestieri di Trevano, occorre
   essere capaci di progettare e sviluppare un progetto in modo autonomo, sia per il prossimo anno che in futuro in azienda. 
-  Per questo, nel primo semestre, è stato deciso di affidarci a tutti lo stesso progetto
+  Per questo, nel primo semestre, è stato deciso di affidarci a tutti lo stesso progetto, cioè un generatore di fiocchi
+  di neve.
 
   Questo capitolo dovrebbe descrivere il contesto in cui il prodotto verrà
   utilizzato, da questa analisi dovrebbero scaturire le risposte a quesiti
@@ -170,9 +171,9 @@ SAMT, Sezione informatica modulo 306 + progetti.
   
 **Spiegazione elementi tabella dei requisiti:**
 
-**ID**: identificativo univoco del requisito
+**ID**: ID dell' requisito
 
-**Nome**: breve descrizione del requisito
+**Nome**: Breve descrizione del requisito
 
 **Priorità**: indica l’importanza di un requisito nell’insieme del
 progetto, definita assieme al committente:
@@ -181,9 +182,6 @@ progetto, definita assieme al committente:
 
 **Versione**: indica la versione del requisito. Ogni modifica del
 requisito avrà una versione aggiornata.
-
-Sulla documentazione apparirà solamente l’ultima versione, mentre le
-vecchie dovranno essere inserite nei diari.
 
 **Note**: eventuali osservazioni importanti o riferimenti ad altri
 requisiti.
@@ -218,19 +216,6 @@ in questo capitolo.
 
 #### Piattaforma
 Qualsiasi Sistema operativo (Windows,Mac OS, distribuzioni Linux, etc.)
-
-
-
-Elencare e *descrivere* i mezzi disponibili per la realizzazione del
-progetto. Ricordarsi di sempre descrivere nel dettaglio le versioni e il
-modello di riferimento.
-
-SDK, librerie, tools utilizzati per la realizzazione del progetto e
-eventuali dipendenze.
-
-Su quale piattaforma dovrà essere eseguito il prodotto? Che hardware
-particolare è coinvolto nel progetto? Che particolarità e limitazioni
-presenta? Che hw sarà disponibile durante lo sviluppo?
 
 ## Progettazione
 
