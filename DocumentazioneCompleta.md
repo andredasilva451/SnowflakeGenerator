@@ -120,6 +120,10 @@ SAMT, Sezione informatica modulo 306 + progetti.
 
 ### Analisi del dominio
 
+  Essendo al terzo anno della sezione informatica della scuola Arti e Mestieri di Trevano, occorre
+  essere capaci di progettare e sviluppare un progetto, sia per il prossimo anno che in futuro in azienda. 
+  Proprio per questo, il primo semestre occorre progettare e sviluppare in modo autonomo e singolo un progetto.
+
   Questo capitolo dovrebbe descrivere il contesto in cui il prodotto verrà
   utilizzato, da questa analisi dovrebbero scaturire le risposte a quesiti
   quali ad esempio:
