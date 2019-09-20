@@ -7,10 +7,9 @@
 
 |Orario        |Lavoro svolto                           |
 |--------------|----------------------------------------|
-|14:10 - 14:15 |Creata repository per il progetto       |
-|14:15 - 14:30 |Installato Git                          |
-|15:00 - 15:05 |Disinstallato Git                       |
-|15:05 - 15:20 |Installato e configurato github desktop |
+|14:15 - 16:00 |Documentata Analisi dei requisiti       |
+|16:00 - 16-10 |Documentato scopo progetto              |
+|16:10 - 16:20 |Documentata Analisi dei mezzi           |
 
 ##  Problemi riscontrati e soluzioni adottate
 
@@ -19,4 +18,4 @@
 
 
 ## Programma di massima per la prossima giornata di lavoro
-Creare una pianificazione per le varie fasi del progetto.
+Creare una pianificazione, tramite Gantt, per le varie fasi del progetto.
