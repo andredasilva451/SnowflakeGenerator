@@ -22,11 +22,12 @@ public class SnowFlakeFrame extends JFrame implements MouseListener {
     
     Triangolo a;
     List<CropPoint> cropPoints;
-   
+    boolean lastPoint = false;
     
     public SnowFlakeFrame(){
         super("SnowFlake Generator");
         this.setSize(300,400);
+        this.setBackground(Color.BLUE);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         cropPoints = new ArrayList<CropPoint>();
         this.addMouseListener(this);
@@ -62,7 +63,7 @@ public class SnowFlakeFrame extends JFrame implements MouseListener {
         super.paint(g);
         int coordX = this.getWidth()/4;
         int coordY = this.getHeight()/4;
-        g.setColor(Color.LIGHT_GRAY);
+        g.setColor(Color.gray);
         this.a = new Triangolo(coordX,coordY,this.getWidth()/2,this.getHeight()/2);
         this.a.paint(g);
         int i = 0;
