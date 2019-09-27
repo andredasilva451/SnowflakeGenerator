@@ -10,7 +10,7 @@ import java.awt.Graphics;
  *
  * @author andre
  */
-public class Triangolo {
+public class Triangolo  {
     
     private int posX;
     private int posY;
@@ -25,7 +25,7 @@ public class Triangolo {
         this.height = height;
     }
     
-    public int[] pointsXdefinition(){
+    private int[] pointsXdefinition(){
        
         int[] pointX = new int[3];
         pointX[0] = this.posX;
@@ -35,12 +35,12 @@ public class Triangolo {
     
     }
     
-    public int[] pointsYdefinition(){
+    private int[] pointsYdefinition(){
         
         int[] pointY = new int[3];
         pointY[0] = this.posY;
-        pointY[1] = this.posY+(this.width/5);
-        pointY[2] = this.posY + this.width;  
+        pointY[1] = this.posY+(this.height/5);
+        pointY[2] = this.posY + this.height+30;  
         return pointY;
     }
     
