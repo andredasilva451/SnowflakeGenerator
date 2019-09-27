@@ -1,4 +1,5 @@
 
+import java.awt.Color;
 import java.awt.Graphics;
 import javax.swing.JFrame;
 
@@ -23,14 +24,20 @@ public class SnowFlakeFrame extends JFrame {
     }
     
     public void paint(Graphics g){
-    
+        super.paint(g);
+        int coordX = this.getWidth()/4;
+        int coordY = this.getHeight()/4;
+        g.setColor(Color.blue);
+        this.a = new Triangolo(this.getWidth()/2,this.getHeight()/2,coordX,coordY);
+        this.a.paint(g);
         
-    
-    
     }
     
     public static void main(String[] args){
-    
+        
+        SnowFlakeFrame b = new SnowFlakeFrame();
+        b.setVisible(true);
+        
     
     }
 }

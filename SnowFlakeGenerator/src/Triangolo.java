@@ -30,7 +30,7 @@ public class Triangolo {
         int[] pointX = new int[3];
         pointX[0] = this.posX;
         pointX[1] = this.posX + this.width;
-        pointX[2] = this.posX + (this.posX + height)/2;
+        pointX[2] = this.posX + (this.width/2);
         return pointX;
     
     }
@@ -40,8 +40,7 @@ public class Triangolo {
         int[] pointY = new int[3];
         pointY[0] = this.posY;
         pointY[1] = this.posY+(this.width/5);
-        pointY[2] = this.posY + this.width;
-        
+        pointY[2] = this.posY + this.width;  
         return pointY;
     }
     
