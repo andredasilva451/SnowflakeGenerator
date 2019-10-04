@@ -33,6 +33,7 @@ public class SnowFlakeFrame extends JFrame implements MouseListener,MouseMotionL
         this.setBackground(Color.BLUE);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.cropPoints = new ArrayList<CropPoint>();
+        this.polys = new ArrayList<Polygon>();
         this.addMouseListener(this);
         this.addMouseMotionListener(this);
     }
@@ -120,19 +121,19 @@ public class SnowFlakeFrame extends JFrame implements MouseListener,MouseMotionL
                   pointsX[j] = cropPoints.get(j).getX();
                   pointsY[j] = cropPoints.get(j).getY();
             }
-            this.polys.add(new Polygon(pointsX,pointsY,this.cropPoints.size()));
+            
+            Polygon p = new Polygon(pointsX,pointsY,this.cropPoints.size());
+            this.polys.add(p);
             this.definePoly = true;
             this.cropPoints.clear();
             this.pCounter = 0;
+           
         }
-        
-        if(this.polys.size() >= 0){
+        if(this.polys.size() > 0 ){
             for(int j = 0;j<this.polys.size();j++) {
                 this.polys.get(j).paint(g);
             }
         }
-        
-        
     }
     
     public static void main(String[] args){
