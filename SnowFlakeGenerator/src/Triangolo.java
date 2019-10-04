@@ -1,14 +1,10 @@
+import java.awt.Color;
 import java.awt.Graphics;
-
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 
 /**
  *
- * @author andre
+ * @author André Da Silva
+ * @version 04.10.19
  */
 public class Triangolo  {
     
@@ -43,14 +39,11 @@ public class Triangolo  {
         pointY[2] = this.posY + this.height+30;  
         return pointY;
     }
-    
- 
-    
+   
     public void paint(Graphics g){
         
         int[] pointsX = pointsXdefinition();
         int[] pointsY = pointsYdefinition();
-        
         g.fillPolygon(pointsX, pointsY,3);
         
     }

@@ -3,6 +3,7 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
 import java.io.Console;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,28 +19,54 @@ import javax.swing.JFrame;
  *
  * @author andre
  */
-public class SnowFlakeFrame extends JFrame implements MouseListener {
+public class SnowFlakeFrame extends JFrame implements MouseListener,MouseMotionListener {
     
-    Triangolo a;
-    List<CropPoint> cropPoints;
-    boolean lastPoint = false;
+    private Triangolo a;
+    private List<Polygon> polys;
+    private List<CropPoint> cropPoints;
+    private int pCounter = 0;
+    private boolean definePoly = true; 
     
     public SnowFlakeFrame(){
         super("SnowFlake Generator");
         this.setSize(300,400);
         this.setBackground(Color.BLUE);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        cropPoints = new ArrayList<CropPoint>();
+        this.cropPoints = new ArrayList<CropPoint>();
         this.addMouseListener(this);
+        this.addMouseMotionListener(this);
     }
     
     @Override
     public void mouseClicked(MouseEvent e) {
         
-        CropPoint point = new CropPoint(e.getX(),e.getY());
-        cropPoints.add(point);
-        repaint();
-        
+        if(e.getButton() == MouseEvent.BUTTON1){
+            
+            if(this.definePoly){
+                
+                CropPoint point = new CropPoint(e.getX(),e.getY());
+                
+                if(this.pCounter >= 3){
+                    if(cropPoints.get(0).contains(e.getX(),e.getY())){
+                        this.definePoly = false;
+                        point = new CropPoint(cropPoints.get(0).getX(),cropPoints.get(0).getY());
+                        
+                    }
+                }
+                cropPoints.add(point);
+                cropPoints.get(cropPoints.size()-1).setLastPoint(true);
+                for(int i = 0; i<cropPoints.size()-1; i++) {
+                        cropPoints.get(i).setLastPoint(false);
+                }
+                if(this.definePoly == false){
+                    for(int i = 0; i<cropPoints.size(); i++) {
+                        cropPoints.get(i).poligonDefined(true);
+                    }
+                }
+                this.pCounter++;
+                repaint();
+            }
+        }        
     }
 
     @Override
@@ -58,6 +85,14 @@ public class SnowFlakeFrame extends JFrame implements MouseListener {
     public void mouseExited(MouseEvent arg0) {
     }
     
+    @Override
+    public void mouseDragged(MouseEvent arg0) {
+    }
+
+    @Override
+    public void mouseMoved(MouseEvent arg0) {
+    }
+    
     public void paint(Graphics g){
         
         super.paint(g);
@@ -68,15 +103,37 @@ public class SnowFlakeFrame extends JFrame implements MouseListener {
         this.a.paint(g);
         int i = 0;
         for(CropPoint p : cropPoints){
+            
             p.paint(g);
             if(i >= 1){
                 g.setColor(Color.black);
                 g.drawLine(cropPoints.get(i).getX(),cropPoints.get(i).getY(),cropPoints.get(i-1).getX(),cropPoints.get(i-1).getY());
             }
             i++;
-        }  
+        }
+        
+        if(this.definePoly == false){
+            int[] pointsX = new int[cropPoints.size()];
+            int[] pointsY = new int[cropPoints.size()];
+            
+            for(int j = 0;j<cropPoints.size();j++) {
+                  pointsX[j] = cropPoints.get(j).getX();
+                  pointsY[j] = cropPoints.get(j).getY();
+            }
+            this.polys.add(new Polygon(pointsX,pointsY,this.cropPoints.size()));
+            this.definePoly = true;
+            this.cropPoints.clear();
+            this.pCounter = 0;
+        }
+        
+        if(this.polys.size() >= 0){
+            for(int j = 0;j<this.polys.size();j++) {
+                this.polys.get(j).paint(g);
+            }
+        }
+        
+        
     }
-    
     
     public static void main(String[] args){
         
@@ -84,6 +141,4 @@ public class SnowFlakeFrame extends JFrame implements MouseListener {
         b.setVisible(true);
       
     }
-    
-
 }

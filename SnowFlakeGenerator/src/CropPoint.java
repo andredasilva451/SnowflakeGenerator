@@ -3,21 +3,18 @@ import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.Rectangle;
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 /**
- *
- * @author andre
+ * 
+ * @author André Da Silva
+ * @version 04.10.19
  */
 public class CropPoint {
 
     private int posX;
     private int posY;
     private final int CROP_POINT_SIZE = 8;
+    private boolean isLastPoint;
+    private boolean polyDefined;
     
     public CropPoint(int posX,int posY){
   
@@ -39,14 +36,28 @@ public class CropPoint {
     public boolean contains(int x, int y){
         
         Point p = new Point(x,y);
-        Rectangle r = new Rectangle(this.posX,this.posY,CROP_POINT_SIZE,CROP_POINT_SIZE);    
-        return r.contains(p);
+        Point center = new Point(this.posX+CROP_POINT_SIZE/2,this.posY+CROP_POINT_SIZE/2);  
+        return center.distance(p) <= CROP_POINT_SIZE/2;
+    }
+    
+    public void setLastPoint(boolean s){
+        this.isLastPoint = s;
+    }
+    public void poligonDefined(boolean s){
+        this.polyDefined = s;
     }
     
     
     public void paint(Graphics g){
          
-        g.setColor(Color.red);
+        if(this.isLastPoint){
+            g.setColor(Color.green);
+        }else{
+            g.setColor(Color.red);
+        }
+        if(this.polyDefined){
+            g.setColor(Color.orange);
+        }
         g.fillOval(this.posX, this.posY,CROP_POINT_SIZE,CROP_POINT_SIZE);
     }
     
