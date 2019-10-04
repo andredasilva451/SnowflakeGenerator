@@ -33,6 +33,15 @@ public class CropPoint {
         return this.posY + CROP_POINT_SIZE/2;
     }
     
+    public void setX(int newX){
+        this.posX = newX;
+    }
+    
+    public void setY(int newY){
+    
+        this.posY = newY;
+    }
+    
     public boolean contains(int x, int y){
         
         Point p = new Point(x,y);

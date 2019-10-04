@@ -44,6 +44,7 @@ public class Triangolo  {
         
         int[] pointsX = pointsXdefinition();
         int[] pointsY = pointsYdefinition();
+        g.setColor(Color.WHITE);
         g.fillPolygon(pointsX, pointsY,3);
         
     }

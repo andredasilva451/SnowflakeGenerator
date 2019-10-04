@@ -1,6 +1,7 @@
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Point;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
@@ -24,15 +25,18 @@ public class SnowFlakeFrame extends JFrame implements MouseListener,MouseMotionL
     private Triangolo a;
     private List<Polygon> polys;
     private List<CropPoint> cropPoints;
+    private List<CropPoint> allCropPoints;
     private int pCounter = 0;
     private boolean definePoly = true; 
+    private boolean isNewPoly = false;
     
     public SnowFlakeFrame(){
         super("SnowFlake Generator");
         this.setSize(300,400);
-        this.setBackground(Color.BLUE);
+        this.setBackground(Color.lightGray);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.cropPoints = new ArrayList<CropPoint>();
+        this.allCropPoints = new ArrayList<CropPoint>();
         this.polys = new ArrayList<Polygon>();
         this.addMouseListener(this);
         this.addMouseMotionListener(this);
@@ -87,7 +91,17 @@ public class SnowFlakeFrame extends JFrame implements MouseListener,MouseMotionL
     }
     
     @Override
-    public void mouseDragged(MouseEvent arg0) {
+    public void mouseDragged(MouseEvent e) {
+        
+        if(this.cropPoints.size() > 0){
+            for(int i = 0; i<cropPoints.size(); i++) {
+                if(cropPoints.get(i).contains(e.getX(),e.getY())){
+                   cropPoints.get(i).setX(e.getX());
+                   cropPoints.get(i).setY(e.getY());                
+                }
+            }
+             repaint();
+        }
     }
 
     @Override
@@ -95,11 +109,9 @@ public class SnowFlakeFrame extends JFrame implements MouseListener,MouseMotionL
     }
     
     public void paint(Graphics g){
-        
         super.paint(g);
         int coordX = this.getWidth()/4;
         int coordY = this.getHeight()/4;
-        g.setColor(Color.gray);
         this.a = new Triangolo(coordX,coordY,this.getWidth()/2,this.getHeight()/2);
         this.a.paint(g);
         int i = 0;
@@ -108,7 +120,7 @@ public class SnowFlakeFrame extends JFrame implements MouseListener,MouseMotionL
             p.paint(g);
             if(i >= 1){
                 g.setColor(Color.black);
-                g.drawLine(cropPoints.get(i).getX(),cropPoints.get(i).getY(),cropPoints.get(i-1).getX(),cropPoints.get(i-1).getY());
+                g.drawLine(cropPoints.get(i).getX(),cropPoints.get(i).getY(),cropPoints.get(i-1).getX(),cropPoints.get(i-1).getY());          
             }
             i++;
         }
@@ -125,9 +137,10 @@ public class SnowFlakeFrame extends JFrame implements MouseListener,MouseMotionL
             Polygon p = new Polygon(pointsX,pointsY,this.cropPoints.size());
             this.polys.add(p);
             this.definePoly = true;
+            this.allCropPoints.addAll(this.cropPoints);
             this.cropPoints.clear();
-            this.pCounter = 0;
-           
+            this.isNewPoly = true;
+            this.pCounter = 0;      
         }
         if(this.polys.size() > 0 ){
             for(int j = 0;j<this.polys.size();j++) {

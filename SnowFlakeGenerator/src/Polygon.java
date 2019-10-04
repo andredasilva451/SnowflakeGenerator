@@ -27,7 +27,7 @@ public class Polygon {
     
     public void paint(Graphics g){
     
-          g.setColor(Color.white);
+          g.setColor(Color.LIGHT_GRAY);
           g.fillPolygon(pointsX, pointsY,this.nPoints);
     }
 
