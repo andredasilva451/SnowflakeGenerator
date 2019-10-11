@@ -1,13 +1,20 @@
 
+import java.awt.Button;
 import java.awt.Color;
+import java.awt.Frame;
 import java.awt.Graphics;
 import java.awt.Point;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.Console;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 
 /*
@@ -20,7 +27,7 @@ import javax.swing.JFrame;
  *
  * @author andre
  */
-public class SnowFlakeFrame extends JFrame implements MouseListener,MouseMotionListener {
+public class SnowFlakeFrame extends Frame implements MouseListener,MouseMotionListener {
     
     private Triangolo a;
     private List<CropPolygon> polys;
@@ -29,17 +36,31 @@ public class SnowFlakeFrame extends JFrame implements MouseListener,MouseMotionL
     private int pCounter = 0;
     private boolean definePoly = true; 
     private boolean isNewPoly = false;
+    private int mouseX = 0;
+    private int mouseY = 0;
+    private int curCropX = 0;
+    private int curCropY = 0;
+    private Button genera;
     
     public SnowFlakeFrame(){
         super("SnowFlake Generator");
         this.setSize(300,400);
-        this.setBackground(Color.lightGray);
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setBackground(Color.LIGHT_GRAY);
+        //this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.cropPoints = new ArrayList<CropPoint>();
         this.allCropPoints = new ArrayList<CropPoint>();
         this.polys = new ArrayList<CropPolygon>();
         this.addMouseListener(this);
         this.addMouseMotionListener(this);
+        this.genera = new Button("Genera");
+        this.genera.setBounds(100,100,100,100);
+        this.genera.setActionCommand("Genera");
+        this.genera.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            }
+        });
     }
     
     @Override
@@ -69,13 +90,31 @@ public class SnowFlakeFrame extends JFrame implements MouseListener,MouseMotionL
                     }
                 }
                 this.pCounter++;
-                repaint();
             }
-        }        
+            else if(this.definePoly == false){
+                defineCropPolygon();
+                this.cropPoints.clear();
+                this.allCropPoints.addAll(this.cropPoints);
+            }
+        }
+        repaint();
     }
 
     @Override
-    public void mousePressed(MouseEvent arg0) {
+    public void mousePressed(MouseEvent e) {
+        
+        if(this.cropPoints.size() > 0){
+            for(int i = 0; i<cropPoints.size(); i++) {
+                if(cropPoints.get(i).contains(e.getX(),e.getY())){
+                    
+                    this.mouseX = e.getXOnScreen();
+                    this.mouseY = e.getYOnScreen();
+                    this.curCropX = this.cropPoints.get(i).getX();
+                    this.curCropY = this.cropPoints.get(i).getY();
+                }
+            }
+        }
+        repaint();
     }
 
     @Override
@@ -96,12 +135,21 @@ public class SnowFlakeFrame extends JFrame implements MouseListener,MouseMotionL
         if(this.cropPoints.size() > 0){
             for(int i = 0; i<cropPoints.size(); i++) {
                 if(cropPoints.get(i).contains(e.getX(),e.getY())){
-                   cropPoints.get(i).setX(e.getX());
-                   cropPoints.get(i).setY(e.getY());                
+                    int curX = e.getXOnScreen() - this.mouseX;
+                    int curY = e.getYOnScreen() - this.mouseY;
+                    cropPoints.get(i).setX(this.curCropX+curX);
+                    cropPoints.get(i).setY(this.curCropY+curY);                
                 }
             }
-             repaint();
+            if(this.polys.size() > 0){
+                this.polys.remove(this.polys.get(this.polys.size()-1));
+                this.definePoly = false;
+                defineCropPolygon();
+            }
+            
         }
+        repaint();
+        
     }
 
     @Override
@@ -109,14 +157,14 @@ public class SnowFlakeFrame extends JFrame implements MouseListener,MouseMotionL
     }
     
     public void paint(Graphics g){
-        super.paint(g);
+        //super.paint(g);
         int coordX = this.getWidth()/4;
         int coordY = this.getHeight()/4;
         this.a = new Triangolo(coordX,coordY,this.getWidth()/2,this.getHeight()/2);
         this.a.paint(g);
         int i = 0;
         for(CropPoint p : cropPoints){
-            
+
             p.paint(g);
             if(i >= 1){
                 g.setColor(Color.black);
@@ -124,8 +172,17 @@ public class SnowFlakeFrame extends JFrame implements MouseListener,MouseMotionL
             }
             i++;
         }
-        
+        if(this.polys.size() > 0 ){
+            for(int j = 0;j<this.polys.size();j++) {
+                this.polys.get(j).paint(g);
+            }
+        }
+    }
+    
+    public void defineCropPolygon(){
+    
         if(this.definePoly == false){
+            
             int[] pointsX = new int[cropPoints.size()];
             int[] pointsY = new int[cropPoints.size()];
             
@@ -137,22 +194,21 @@ public class SnowFlakeFrame extends JFrame implements MouseListener,MouseMotionL
             CropPolygon p = new CropPolygon(pointsX,pointsY,this.cropPoints.size());
             this.polys.add(p);
             this.definePoly = true;
-            this.allCropPoints.addAll(this.cropPoints);
-            this.cropPoints.clear();
             this.isNewPoly = true;
             this.pCounter = 0;      
-        }
-        if(this.polys.size() > 0 ){
-            for(int j = 0;j<this.polys.size();j++) {
-                this.polys.get(j).paint(g);
-            }
         }
     }
     
     public static void main(String[] args){
         
         SnowFlakeFrame b = new SnowFlakeFrame();
-        b.setVisible(true);
-      
+        b.setVisible(true); 
+        b.addWindowListener(new WindowAdapter() {
+            public void windowClosing(WindowEvent we) {
+                System.exit(0);
+            }
+        });
     }
+    
+    
 }

@@ -26,7 +26,7 @@ public class Triangolo  {
         int[] pointX = new int[3];
         pointX[0] = this.posX;
         pointX[1] = this.posX + this.width;
-        pointX[2] = this.posX + (this.width/2);
+        pointX[2] = this.posX + this.width;
         return pointX;
     
     }
@@ -35,7 +35,7 @@ public class Triangolo  {
         
         int[] pointY = new int[3];
         pointY[0] = this.posY;
-        pointY[1] = this.posY+(this.height/5);
+        pointY[1] = this.posY;
         pointY[2] = this.posY + this.height+30;  
         return pointY;
     }
@@ -44,7 +44,7 @@ public class Triangolo  {
         
         int[] pointsX = pointsXdefinition();
         int[] pointsY = pointsYdefinition();
-        g.setColor(Color.WHITE);
+        g.setColor(Color.BLUE);
         g.fillPolygon(pointsX, pointsY,3);
         
     }
