@@ -37,6 +37,8 @@ public class SnowFlakeFrame extends Frame implements MouseListener,MouseMotionLi
     private boolean definePoly = true;
     private Point lastPoint;
     private Button genera;
+    private int lastScreenWidth;
+    private int lastScreenHeight;
     
     public SnowFlakeFrame(){
         super("SnowFlake Generator");
@@ -51,6 +53,10 @@ public class SnowFlakeFrame extends Frame implements MouseListener,MouseMotionLi
         this.genera = new Button("Genera");
         this.genera.setBounds(100,100,100,100);
         this.genera.setActionCommand("Genera");
+        
+        this.lastScreenWidth = this.getWidth();
+        this.lastScreenHeight = this.getHeight();
+        
         this.genera.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -137,8 +143,8 @@ public class SnowFlakeFrame extends Frame implements MouseListener,MouseMotionLi
                 }
             }
             if(this.polys.size() > 0 && this.definePoly == false){
-                this.polys.remove(this.polys.get(this.polys.size()-1));
                 this.definePoly = false;
+                this.polys.remove(this.polys.get(this.polys.size()-1));
                 defineCropPolygon();
             }
             repaint();   
@@ -152,6 +158,7 @@ public class SnowFlakeFrame extends Frame implements MouseListener,MouseMotionLi
     public void paint(Graphics g){
         int coordX = this.getWidth()/4;
         int coordY = this.getHeight()/4;
+              
         this.a = new Triangolo(coordX,coordY,this.getWidth()/2,this.getHeight()/2);
         this.a.paint(g);
         int i = 0;
@@ -168,7 +175,7 @@ public class SnowFlakeFrame extends Frame implements MouseListener,MouseMotionLi
             for(int j = 0;j<this.polys.size();j++) {
                 this.polys.get(j).paint(g);
             }
-        }
+        }     
     }
     
     private void defineCropPolygon(){
