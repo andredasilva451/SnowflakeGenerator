@@ -12,13 +12,13 @@ import java.awt.Graphics;
  *
  * @author andre
  */
-public class Polygon {
+public class CropPolygon {
     
     private int[] pointsX;
     private int[] pointsY;
     private int nPoints;
     
-    public Polygon(int[] pointsX, int[] pointsY,int nPoints){
+    public CropPolygon(int[] pointsX, int[] pointsY,int nPoints){
         
         this.pointsX = pointsX;
         this.pointsY = pointsY;

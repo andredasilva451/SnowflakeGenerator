@@ -23,7 +23,7 @@ import javax.swing.JFrame;
 public class SnowFlakeFrame extends JFrame implements MouseListener,MouseMotionListener {
     
     private Triangolo a;
-    private List<Polygon> polys;
+    private List<CropPolygon> polys;
     private List<CropPoint> cropPoints;
     private List<CropPoint> allCropPoints;
     private int pCounter = 0;
@@ -37,7 +37,7 @@ public class SnowFlakeFrame extends JFrame implements MouseListener,MouseMotionL
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.cropPoints = new ArrayList<CropPoint>();
         this.allCropPoints = new ArrayList<CropPoint>();
-        this.polys = new ArrayList<Polygon>();
+        this.polys = new ArrayList<CropPolygon>();
         this.addMouseListener(this);
         this.addMouseMotionListener(this);
     }
@@ -134,7 +134,7 @@ public class SnowFlakeFrame extends JFrame implements MouseListener,MouseMotionL
                   pointsY[j] = cropPoints.get(j).getY();
             }
             
-            Polygon p = new Polygon(pointsX,pointsY,this.cropPoints.size());
+            CropPolygon p = new CropPolygon(pointsX,pointsY,this.cropPoints.size());
             this.polys.add(p);
             this.definePoly = true;
             this.allCropPoints.addAll(this.cropPoints);
