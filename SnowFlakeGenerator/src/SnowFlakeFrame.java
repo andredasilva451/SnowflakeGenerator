@@ -36,10 +36,7 @@ public class SnowFlakeFrame extends Frame implements MouseListener,MouseMotionLi
     private int pCounter = 0;
     private boolean definePoly = true; 
     private boolean isNewPoly = false;
-    private int mouseX = 0;
-    private int mouseY = 0;
-    private int curCropX = 0;
-    private int curCropY = 0;
+    private Point lastPoint;
     private Button genera;
     
     public SnowFlakeFrame(){
@@ -52,6 +49,7 @@ public class SnowFlakeFrame extends Frame implements MouseListener,MouseMotionLi
         this.polys = new ArrayList<CropPolygon>();
         this.addMouseListener(this);
         this.addMouseMotionListener(this);
+        this.lastPoint = new Point();
         this.genera = new Button("Genera");
         this.genera.setBounds(100,100,100,100);
         this.genera.setActionCommand("Genera");
@@ -90,8 +88,7 @@ public class SnowFlakeFrame extends Frame implements MouseListener,MouseMotionLi
                     }
                 }
                 this.pCounter++;
-            }
-            else if(this.definePoly == false){
+            }else if(this.definePoly == false){
                 defineCropPolygon();
                 this.cropPoints.clear();
                 this.allCropPoints.addAll(this.cropPoints);
@@ -103,18 +100,6 @@ public class SnowFlakeFrame extends Frame implements MouseListener,MouseMotionLi
     @Override
     public void mousePressed(MouseEvent e) {
         
-        if(this.cropPoints.size() > 0){
-            for(int i = 0; i<cropPoints.size(); i++) {
-                if(cropPoints.get(i).contains(e.getX(),e.getY())){
-                    
-                    this.mouseX = e.getXOnScreen();
-                    this.mouseY = e.getYOnScreen();
-                    this.curCropX = this.cropPoints.get(i).getX();
-                    this.curCropY = this.cropPoints.get(i).getY();
-                }
-            }
-        }
-        repaint();
     }
 
     @Override
@@ -133,12 +118,10 @@ public class SnowFlakeFrame extends Frame implements MouseListener,MouseMotionLi
     public void mouseDragged(MouseEvent e) {
         
         if(this.cropPoints.size() > 0){
+            this.lastPoint = e.getPoint();
             for(int i = 0; i<cropPoints.size(); i++) {
                 if(cropPoints.get(i).contains(e.getX(),e.getY())){
-                    int curX = e.getXOnScreen() - this.mouseX;
-                    int curY = e.getYOnScreen() - this.mouseY;
-                    cropPoints.get(i).setX(this.curCropX+curX);
-                    cropPoints.get(i).setY(this.curCropY+curY);                
+                    cropPoints.get(i).setPoint(this.lastPoint);           
                 }
             }
             if(this.polys.size() > 0){
@@ -146,10 +129,8 @@ public class SnowFlakeFrame extends Frame implements MouseListener,MouseMotionLi
                 this.definePoly = false;
                 defineCropPolygon();
             }
-            
+            repaint();   
         }
-        repaint();
-        
     }
 
     @Override
@@ -157,7 +138,6 @@ public class SnowFlakeFrame extends Frame implements MouseListener,MouseMotionLi
     }
     
     public void paint(Graphics g){
-        //super.paint(g);
         int coordX = this.getWidth()/4;
         int coordY = this.getHeight()/4;
         this.a = new Triangolo(coordX,coordY,this.getWidth()/2,this.getHeight()/2);
