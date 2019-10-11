@@ -12,7 +12,7 @@ public class CropPoint {
 
     private int posX;
     private int posY;
-    private final int CROP_POINT_SIZE = 8;
+    private final int CROP_POINT_SIZE = 10;
     private boolean isLastPoint;
     private boolean polyDefined;
     

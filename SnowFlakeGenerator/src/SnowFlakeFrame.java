@@ -34,8 +34,7 @@ public class SnowFlakeFrame extends Frame implements MouseListener,MouseMotionLi
     private List<CropPoint> cropPoints;
     private List<CropPoint> allCropPoints;
     private int pCounter = 0;
-    private boolean definePoly = true; 
-    private boolean isNewPoly = false;
+    private boolean definePoly = true;
     private Point lastPoint;
     private Button genera;
     
@@ -101,9 +100,9 @@ public class SnowFlakeFrame extends Frame implements MouseListener,MouseMotionLi
             if(this.definePoly){
                 for(int i = 0; i<cropPoints.size(); i++) {
                     if(cropPoints.get(i).contains(e.getX(),e.getY())){
-                        for(int j = i; j<cropPoints.size(); j++) {
-                            this.cropPoints.remove(this.cropPoints.get(j));
-                        }
+                        
+                        this.cropPoints.remove(this.cropPoints.get(i));
+                        cropPoints.get(this.cropPoints.size()-1).setLastPoint(true);
                     }
                 }
             }
@@ -139,7 +138,7 @@ public class SnowFlakeFrame extends Frame implements MouseListener,MouseMotionLi
                     cropPoints.get(i).setPoint(this.lastPoint);           
                 }
             }
-            if(this.polys.size() > 0){
+            if(this.polys.size() > 0 && this.definePoly == false){
                 this.polys.remove(this.polys.get(this.polys.size()-1));
                 this.definePoly = false;
                 defineCropPolygon();
@@ -174,7 +173,7 @@ public class SnowFlakeFrame extends Frame implements MouseListener,MouseMotionLi
         }
     }
     
-    public void defineCropPolygon(){
+    private void defineCropPolygon(){
     
         if(this.definePoly == false){
             
@@ -189,7 +188,6 @@ public class SnowFlakeFrame extends Frame implements MouseListener,MouseMotionLi
             CropPolygon p = new CropPolygon(pointsX,pointsY,this.cropPoints.size());
             this.polys.add(p);
             this.definePoly = true;
-            this.isNewPoly = true;
             this.pCounter = 0;      
         }
     }
