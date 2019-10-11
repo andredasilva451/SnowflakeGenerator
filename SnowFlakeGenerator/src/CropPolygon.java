@@ -27,7 +27,7 @@ public class CropPolygon {
     
     public void paint(Graphics g){
     
-          g.setColor(Color.LIGHT_GRAY);
+          g.setColor(Color.BLUE);
           g.fillPolygon(pointsX, pointsY,this.nPoints);
     }
 

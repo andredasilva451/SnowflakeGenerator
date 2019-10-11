@@ -42,7 +42,7 @@ public class SnowFlakeFrame extends Frame implements MouseListener,MouseMotionLi
     public SnowFlakeFrame(){
         super("SnowFlake Generator");
         this.setSize(300,400);
-        this.setBackground(Color.LIGHT_GRAY);
+        this.setBackground(Color.BLUE);
         //this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.cropPoints = new ArrayList<CropPoint>();
         this.allCropPoints = new ArrayList<CropPoint>();
@@ -93,8 +93,23 @@ public class SnowFlakeFrame extends Frame implements MouseListener,MouseMotionLi
                 this.cropPoints.clear();
                 this.allCropPoints.addAll(this.cropPoints);
             }
+            repaint();
         }
-        repaint();
+        
+        if(e.getButton() == MouseEvent.BUTTON3){
+           
+            if(this.definePoly){
+                for(int i = 0; i<cropPoints.size(); i++) {
+                    if(cropPoints.get(i).contains(e.getX(),e.getY())){
+                        for(int j = i; j<cropPoints.size(); j++) {
+                            this.cropPoints.remove(this.cropPoints.get(j));
+                        }
+                    }
+                }
+            }
+            repaint();
+        }
+        
     }
 
     @Override
@@ -143,12 +158,12 @@ public class SnowFlakeFrame extends Frame implements MouseListener,MouseMotionLi
         this.a = new Triangolo(coordX,coordY,this.getWidth()/2,this.getHeight()/2);
         this.a.paint(g);
         int i = 0;
-        for(CropPoint p : cropPoints){
+        for(CropPoint p : this.cropPoints){
 
             p.paint(g);
             if(i >= 1){
                 g.setColor(Color.black);
-                g.drawLine(cropPoints.get(i).getX(),cropPoints.get(i).getY(),cropPoints.get(i-1).getX(),cropPoints.get(i-1).getY());          
+                g.drawLine(this.cropPoints.get(i).getX(),this.cropPoints.get(i).getY(),this.cropPoints.get(i-1).getX(),this.cropPoints.get(i-1).getY());          
             }
             i++;
         }
