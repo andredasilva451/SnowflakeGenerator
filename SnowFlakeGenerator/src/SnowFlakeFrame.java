@@ -40,9 +40,8 @@ public class SnowFlakeFrame extends Frame implements MouseListener,MouseMotionLi
     
     public SnowFlakeFrame(){
         super("SnowFlake Generator");
-        this.setSize(300,400);
+        this.setSize(500,600);
         this.setBackground(Color.BLUE);
-        //this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.cropPoints = new ArrayList<CropPoint>();
         this.allCropPoints = new ArrayList<CropPoint>();
         this.polys = new ArrayList<CropPolygon>();
@@ -107,8 +106,7 @@ public class SnowFlakeFrame extends Frame implements MouseListener,MouseMotionLi
                 }
             }
             repaint();
-        }
-        
+        }    
     }
 
     @Override
