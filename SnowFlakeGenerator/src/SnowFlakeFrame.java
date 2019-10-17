@@ -1,6 +1,7 @@
 
 import java.awt.Button;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Frame;
 import java.awt.Graphics;
 import java.awt.Point;
@@ -42,7 +43,8 @@ public class SnowFlakeFrame extends Frame implements MouseListener,MouseMotionLi
     
     public SnowFlakeFrame(){
         super("SnowFlake Generator");
-        this.setSize(500,600);
+        this.setSize(1024,768);
+        this.setMinimumSize(new Dimension(1024,768));
         this.setBackground(Color.BLUE);
         this.cropPoints = new ArrayList<CropPoint>();
         this.allCropPoints = new ArrayList<CropPoint>();
@@ -156,10 +158,11 @@ public class SnowFlakeFrame extends Frame implements MouseListener,MouseMotionLi
     }
     
     public void paint(Graphics g){
-        int coordX = this.getWidth()/4;
-        int coordY = this.getHeight()/4;
-              
-        this.a = new Triangolo(coordX,coordY,this.getWidth()/2,this.getHeight()/2);
+  
+        
+        MatrixModel m = new MatrixModel(1,1,150,this.getHeight(),this.getWidth(),1,1);
+
+        this.a = new Triangolo((int)m.getDXYSize()[0],(int)m.getDXYSize()[1],(int)m.getCellSize()[0],(int)m.getCellSize()[1]);
         this.a.paint(g);
         int i = 0;
         for(CropPoint p : this.cropPoints){

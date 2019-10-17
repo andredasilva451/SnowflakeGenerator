@@ -63,7 +63,7 @@ public class MatrixModel {
 		this.ratioX = ratioX;
 		this.ratioY = ratioY;
 		this.hContainer -= (this.margin*2) - 33;
-		this.wContainer -= (this.margin*2);
+		this.wContainer -= (this.margin*2) - 14;
 		
 	}
 	
@@ -81,9 +81,14 @@ public class MatrixModel {
 			
 		}else{ // adattamento in larghezza
 		   
-			cs[0] = (this.wContainer-14)/this.cols;
-		}	
-		cs[1] = (cs[0]*ratioY)/ratioX;
+			cs[0] = (this.wContainer)/this.cols;
+		}
+                
+                cs[1] = (cs[0]*ratioY)/ratioX;
+                if(cs[1] > this.hContainer){
+                    cs[1] = cs[1] - (cs[1]-this.hContainer);
+                }
+                cs[0] = cs[0] - this.margin*2;
 		return cs;
 	}
 	
@@ -99,16 +104,15 @@ public class MatrixModel {
 		if((this.wContainer)/this.cols > (this.hContainer)/this.rows){ // adattamento in altezza
 			
 			dxy[1] = this.margin;
-			dxy[0] = this.margin+(this.wContainer - (this.cols * ((this.hContainer/this.rows))))/2;
+			dxy[0] = this.margin+(this.wContainer - (this.cols * ((this.hContainer/this.rows))))/2+this.margin;
 		}else{ //adattamento in larghezza
 			
 			dxy[1] = this.margin+(this.hContainer - (this.rows * (this.wContainer/this.cols)))/2;
-			dxy[0] = this.margin+8;
+			dxy[0] = this.margin*2+8;
 		}
 		return dxy;
 	}
 	
-	public static void main(String[] args){
-		
+	public static void main(String[] args){		
 	}
 }
