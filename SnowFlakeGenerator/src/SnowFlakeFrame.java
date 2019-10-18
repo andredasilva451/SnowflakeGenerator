@@ -142,7 +142,7 @@ public class SnowFlakeFrame extends Frame implements MouseListener,MouseMotionLi
      * verifica se il cursore si trovi sopra per poter effettuare lo spostamento.
      * Funziona sia prime che dopo (solo in caso non venga già disegnato) 
      * la generazione del poligono.
-     * @param e Componente grafico.
+     * @param e Evento del mouse.
      */
     @Override
     public void mouseDragged(MouseEvent e) {
@@ -162,6 +162,14 @@ public class SnowFlakeFrame extends Frame implements MouseListener,MouseMotionLi
     public void mouseMoved(MouseEvent arg0) {
     }
     
+    /**
+     * Si occupa di disegnare ogni elemento grafico necessario:
+     * - Il triangolo, che viene reso proprozionale al frame grazie all'oggetto
+     * MatrixModel
+     * - I vari crop Points con rispettiva linea.
+     * - I vari poligoni generati dai crop Points.
+     * @param g Componente grafico.
+     */
     public void paint(Graphics g){
   
         super.paint(g);
@@ -186,6 +194,13 @@ public class SnowFlakeFrame extends Frame implements MouseListener,MouseMotionLi
         }     
     }
     
+    /**
+     * Se l'attributo definePoly è false,
+     * crea un oggetto di tipo CropPolygon con i crop Points
+     * definiti che viene in seguito aggiunto alla lista di
+     * CropPolygons. Inoltre, alla fine, definePoly viene
+     * settato a true e il contatore di Crop Points azzerato.
+     */
     private void defineCropPolygon(){
     
         if(this.definePoly == false){
