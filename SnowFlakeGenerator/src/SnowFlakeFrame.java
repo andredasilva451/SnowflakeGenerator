@@ -1,4 +1,3 @@
-
 import java.awt.Button;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -18,15 +17,10 @@ import java.util.List;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 /**
  *
- * @author andre
+ * @author André Da Silva
+ * @version 18.10.19
  */
 public class SnowFlakeFrame extends Frame implements MouseListener,MouseMotionListener {
     
@@ -56,7 +50,6 @@ public class SnowFlakeFrame extends Frame implements MouseListener,MouseMotionLi
         this.genera = new Button("Genera");
         this.genera.setBounds(100,100,100,100);
         this.genera.setActionCommand("Genera");
-        
         this.lastScreenWidth = this.getWidth();
         this.lastScreenHeight = this.getHeight();
         
@@ -68,6 +61,31 @@ public class SnowFlakeFrame extends Frame implements MouseListener,MouseMotionLi
         });
     }
     
+    /**
+     * In caso di click sx del mouse, si occupa di creare i cropPoints
+     * per la creazione dei CropPolygon:
+     *   - Verifica prima di tutto se l'attributo definePoly è true affinché
+     *     ci si trovi in fase di creazione dei crop Points.
+     *   - Se la condizione precedente è vera, Crea un oggetto di tipo CropPoint
+     *     alle Coordinate del mouse.
+     *   - Se il numero di punti creati, stabiliti dall'attributo pCounter, è maggiore di
+     *     3, verifica se l'ultimo punto creato si trovi alla stessa coordinata del primo punto
+     *     affinché si possa definire il poligono, se questa condizione è quindi vera, definePoly viene
+     *     settato a false ed il cropPoint appena definito assumerà le stesse coordinate del primo cropPoint.
+     *   - Viene aggiunto l'attuale cropPoint alla lista cropPoints.
+     *   - All'ultimo Crop Point definito, viene settato come ultimo punto tramite il metodo setLastPoint
+     *     che permetterà di disegnarlo di colore verde, mentre per tutti gli altri viene settato false.
+     *   - Se la variabile definePoly è false, setta per ogni cropPoint della lista di 
+     *     crop Points, tramite il metodo polygonDefined, affinchè essi possano essere di colore arancione. 
+     *   - Se la variabile definePoly è false (da non confondere con la condizione precedente), richiama il metodo
+     *   - definePolygon, aggiunge alla lista allCropPoints i valori dell'attuale lista di crop points (cropPoints)
+     *   - e pulisce quest'ultima.
+     * In caso di click del tasto dx del mouse invece:
+     *   - Verifica sempre se definePoly è true.
+     *   - Se la condizione precedente è soddisfatta, verifica se il cursore si trova sopra ad un elemento
+     *   - della lista di cropPoints, se si, rimuove il punto.
+     * @param e Evento del mouse.
+     */
     @Override
     public void mouseClicked(MouseEvent e) {
         
@@ -95,7 +113,7 @@ public class SnowFlakeFrame extends Frame implements MouseListener,MouseMotionLi
                     }
                 }
                 this.pCounter++;
-            }else if(this.definePoly == false){
+            }else if(this.definePoly == false){       
                 defineCropPolygon();
                 this.allCropPoints.addAll(this.cropPoints);
                 this.cropPoints.clear();
@@ -136,11 +154,11 @@ public class SnowFlakeFrame extends Frame implements MouseListener,MouseMotionLi
     }
     
     /**
-     * Evento del mouse che permette di modificare la posizione dei punti:
+     * In caso di dragging del mouse:
      * Verifica prima di tutto se è presente almeno 1 crop Point, 
      * dopodiché, per ogni punto della lista di Crop Point,
      * verifica se il cursore si trovi sopra per poter effettuare lo spostamento.
-     * Funziona sia prime che dopo (solo in caso non venga già disegnato) 
+     * Funziona sia prima che dopo (solo in caso non venga già disegnato) 
      * la generazione del poligono.
      * @param e Evento del mouse.
      */
@@ -171,10 +189,22 @@ public class SnowFlakeFrame extends Frame implements MouseListener,MouseMotionLi
      * @param g Componente grafico.
      */
     public void paint(Graphics g){
-  
         super.paint(g);
         MatrixModel m = new MatrixModel(1,1,150,this.getHeight(),this.getWidth(),1,1);
-
+        
+       /* if(this.lastScreenHeight != this.getHeight()){
+            for(CropPoint p : this.cropPoints){
+                int newY = p.getY() + (this.getHeight()-this.lastScreenHeight);
+                p.setY(newY);
+            }
+        }
+        if(this.lastScreenWidth != this.getWidth()){
+            for(CropPoint p : this.cropPoints){
+                int newX = p.getX() + (this.getWidth()-this.lastScreenWidth);
+                p.setX(newX);
+            }
+        }*/
+        
         this.a = new Triangolo((int)m.getDXYSize()[0],(int)m.getDXYSize()[1],(int)m.getCellSize()[0],(int)m.getCellSize()[1]);
         this.a.paint(g);
         int i = 0;
@@ -191,7 +221,8 @@ public class SnowFlakeFrame extends Frame implements MouseListener,MouseMotionLi
             for(int j = 0;j<this.polys.size();j++) {
                 this.polys.get(j).paint(g);
             }
-        }     
+        }    
+        
     }
     
     /**
@@ -216,7 +247,6 @@ public class SnowFlakeFrame extends Frame implements MouseListener,MouseMotionLi
             this.polys.add(p);
             this.definePoly = true;
             this.pCounter = 0;   
-            System.out.println(this.polys);
         }
     }
     
