@@ -22,7 +22,7 @@ import javax.swing.JFrame;
  * @author André Da Silva
  * @version 18.10.19
  */
-public class SnowFlakeFrame extends Frame implements MouseListener,MouseMotionListener {
+public class SnowFlakePanel extends Frame implements MouseListener,MouseMotionListener {
     
     private Triangolo a;
     private List<CropPolygon> polys;
@@ -36,7 +36,7 @@ public class SnowFlakeFrame extends Frame implements MouseListener,MouseMotionLi
     private int lastScreenHeight;
     private int polyCounter = 0;
     
-    public SnowFlakeFrame(){
+    public SnowFlakePanel(){
         super("SnowFlake Generator");
         this.setSize(1024,768);
         this.setMinimumSize(new Dimension(1024,768));
@@ -254,7 +254,7 @@ public class SnowFlakeFrame extends Frame implements MouseListener,MouseMotionLi
     
     public static void main(String[] args){
         
-        SnowFlakeFrame b = new SnowFlakeFrame();
+        SnowFlakePanel b = new SnowFlakePanel();
         b.setVisible(true); 
         b.addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent we) {
