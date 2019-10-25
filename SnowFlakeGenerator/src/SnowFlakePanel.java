@@ -36,6 +36,12 @@ public class SnowFlakePanel extends JPanel implements MouseListener,MouseMotionL
     private int lastScreenWidth;
     private int lastScreenHeight;
     private int polyCounter = 0;
+    private int lastX;
+    private int lastY;
+    private boolean drag = false;
+    private int offsetX;
+    private int offsetY;
+    private int pointIndex;
     
     public SnowFlakePanel(){
         
@@ -129,10 +135,26 @@ public class SnowFlakePanel extends JPanel implements MouseListener,MouseMotionL
     @Override
     public void mousePressed(MouseEvent e) {
         
+        this.lastX = e.getX();
+        this.lastY = e.getY();
+        
+        for(int i = 0; i<cropPoints.size(); i++) {
+            if(cropPoints.get(i).contains(this.lastX,this.lastY)){
+                
+                this.drag = true;
+                this.offsetX = this.lastX - this.cropPoints.get(i).getX();
+                this.offsetY = this.lastY - this.cropPoints.get(i).getY();
+                this.pointIndex = i;
+            }
+        }
+        
+        
+        
     }
 
     @Override
     public void mouseReleased(MouseEvent arg0) {
+        this.drag = false;
     }
 
     @Override
@@ -156,13 +178,15 @@ public class SnowFlakePanel extends JPanel implements MouseListener,MouseMotionL
     public void mouseDragged(MouseEvent e) {
         
         if(this.cropPoints.size() > 0){
-            this.lastPoint = e.getPoint();
-            for(int i = 0; i<cropPoints.size(); i++) {
-                if(cropPoints.get(i).contains(e.getX(),e.getY())){
-                    cropPoints.get(i).setPoint(this.lastPoint);           
-                }
+           
+            if(this.drag){
+                int x = e.getX() - this.offsetX;
+                int y = e.getY() - this.offsetY;
+                Point newCoords = new Point(x,y);
+                this.cropPoints.get(this.pointIndex).setPoint(newCoords);
+                repaint();    
             }
-            repaint();   
+                   
         }
     }
 
@@ -182,20 +206,19 @@ public class SnowFlakePanel extends JPanel implements MouseListener,MouseMotionL
         super.paintComponent(g);
         MatrixModel m = new MatrixModel(1,1,100,this.getHeight(),this.getWidth(),9,16);
         
-        /*if(this.lastScreenHeight != this.getHeight()){
-            for(CropPoint p : this.cropPoints){
-                
-                int newY = p.getY() + (this.lastScreenHeight-this.getHeight());
+        if(this.lastScreenHeight != this.getHeight()){
+            for(CropPoint p : this.cropPoints){        
+                int newY = p.getY() - (this.lastScreenHeight-this.getHeight());
                 p.setY(newY);
             }
-        }*/
+            this.lastScreenHeight = this.getHeight();
+        }
         if(this.lastScreenWidth != this.getWidth()){
             for(CropPoint p : this.cropPoints){
                 int newX = p.getX() - (this.lastScreenWidth-this.getWidth());
                 p.setX(newX);
             }
             this.lastScreenWidth = this.getWidth();
-            this.lastScreenHeight = this.getHeight();
         }
         
         this.a = new Triangolo((int)m.getDXYSize()[0],(int)m.getDXYSize()[1],(int)m.getCellSize()[0],(int)m.getCellSize()[1]);
@@ -216,7 +239,6 @@ public class SnowFlakePanel extends JPanel implements MouseListener,MouseMotionL
             }
         }
     }
-    
     
     /**
      * Se l'attributo definePoly è false,
@@ -243,14 +265,14 @@ public class SnowFlakePanel extends JPanel implements MouseListener,MouseMotionL
         }
     }
     
-    /*public static void main(String[] args){
+    /**
+     * Permette di resettare tutti i punti e i poligoni generati.
+     */
+    public void pointReset(){
         
-        SnowFlakePanel b = new SnowFlakePanel();
-        b.setVisible(true); 
-        /*b.addWindowListener(new WindowAdapter() {
-            public void windowClosing(WindowEvent we) {
-                System.exit(0);
-            }
-        });*/
-    //}
+        this.cropPoints = new ArrayList<CropPoint>();
+        this.allCropPoints = new ArrayList<CropPoint>();
+        this.polys = new ArrayList<CropPolygon>();
+        repaint();
+    }
 }
