@@ -94,11 +94,13 @@ public class SnowFlakePanel extends JPanel implements MouseListener,MouseMotionL
                 if(this.pCounter >= 3){
                     if(cropPoints.get(0).contains(e.getX(),e.getY())){
                         this.definePoly = false;
-                        point = new CropPoint(cropPoints.get(0).getX(),cropPoints.get(0).getY());
+                        
                         
                     }
                 }
-                cropPoints.add(point);
+                if(this.definePoly){
+                    cropPoints.add(point);
+                }
                 cropPoints.get(cropPoints.size()-1).setLastPoint(true);
                 for(int i = 0; i<cropPoints.size()-1; i++) {
                         cropPoints.get(i).setLastPoint(false);
@@ -233,6 +235,16 @@ public class SnowFlakePanel extends JPanel implements MouseListener,MouseMotionL
             }
             i++;
         }
+        if(this.definePoly == false){
+            
+            int x1 = this.cropPoints.get(0).getX();
+            int y1 = this.cropPoints.get(0).getY();
+            int x2 = this.cropPoints.get(this.cropPoints.size()-1).getX();
+            int y2 = this.cropPoints.get(this.cropPoints.size()-1).getY();
+            g.drawLine(x1,y1,x2,y2); 
+            
+        }
+        
         if(this.polys.size() > 0 ){
             for(int j = 0;j<this.polys.size();j++) {
                 this.polys.get(j).paint(g);
