@@ -71,6 +71,7 @@ public class CropPoint {
         return center.distance(p) <= CROP_POINT_SIZE/2;
     }
     
+    
     public void setLastPoint(boolean s){
         this.isLastPoint = s;
     }

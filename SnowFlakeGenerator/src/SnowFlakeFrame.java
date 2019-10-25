@@ -192,18 +192,21 @@ public class SnowFlakeFrame extends Frame implements MouseListener,MouseMotionLi
         super.paint(g);
         MatrixModel m = new MatrixModel(1,1,150,this.getHeight(),this.getWidth(),1,1);
         
-       /* if(this.lastScreenHeight != this.getHeight()){
+        /*if(this.lastScreenHeight != this.getHeight()){
             for(CropPoint p : this.cropPoints){
-                int newY = p.getY() + (this.getHeight()-this.lastScreenHeight);
+                
+                int newY = p.getY() + (this.lastScreenHeight-this.getHeight());
                 p.setY(newY);
             }
-        }
+        }*/
         if(this.lastScreenWidth != this.getWidth()){
             for(CropPoint p : this.cropPoints){
-                int newX = p.getX() + (this.getWidth()-this.lastScreenWidth);
+                int newX = p.getX() - (this.lastScreenWidth-this.getWidth());
                 p.setX(newX);
             }
-        }*/
+            this.lastScreenWidth = this.getWidth();
+            this.lastScreenHeight = this.getHeight();
+        }
         
         this.a = new Triangolo((int)m.getDXYSize()[0],(int)m.getDXYSize()[1],(int)m.getCellSize()[0],(int)m.getCellSize()[1]);
         this.a.paint(g);
@@ -221,8 +224,7 @@ public class SnowFlakeFrame extends Frame implements MouseListener,MouseMotionLi
             for(int j = 0;j<this.polys.size();j++) {
                 this.polys.get(j).paint(g);
             }
-        }    
-        
+        }
     }
     
     /**
