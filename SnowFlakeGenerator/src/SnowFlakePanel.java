@@ -3,6 +3,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Frame;
 import java.awt.Graphics;
+import java.awt.Panel;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -16,13 +17,14 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JPanel;
 
 /**
  *
  * @author André Da Silva
  * @version 18.10.19
  */
-public class SnowFlakePanel extends Frame implements MouseListener,MouseMotionListener {
+public class SnowFlakePanel extends JPanel implements MouseListener,MouseMotionListener {
     
     private Triangolo a;
     private List<CropPolygon> polys;
@@ -31,15 +33,12 @@ public class SnowFlakePanel extends Frame implements MouseListener,MouseMotionLi
     private int pCounter = 0;
     private boolean definePoly = true;
     private Point lastPoint;
-    private Button genera;
     private int lastScreenWidth;
     private int lastScreenHeight;
     private int polyCounter = 0;
     
     public SnowFlakePanel(){
-        super("SnowFlake Generator");
-        this.setSize(1024,768);
-        this.setMinimumSize(new Dimension(1024,768));
+        
         this.setBackground(Color.BLUE);
         this.cropPoints = new ArrayList<CropPoint>();
         this.allCropPoints = new ArrayList<CropPoint>();
@@ -47,18 +46,9 @@ public class SnowFlakePanel extends Frame implements MouseListener,MouseMotionLi
         this.addMouseListener(this);
         this.addMouseMotionListener(this);
         this.lastPoint = new Point();
-        this.genera = new Button("Genera");
-        this.genera.setBounds(100,100,100,100);
-        this.genera.setActionCommand("Genera");
         this.lastScreenWidth = this.getWidth();
         this.lastScreenHeight = this.getHeight();
         
-        this.genera.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-            }
-        });
     }
     
     /**
@@ -188,9 +178,9 @@ public class SnowFlakePanel extends Frame implements MouseListener,MouseMotionLi
      * - I vari poligoni generati dai crop Points.
      * @param g Componente grafico.
      */
-    public void paint(Graphics g){
-        super.paint(g);
-        MatrixModel m = new MatrixModel(1,1,150,this.getHeight(),this.getWidth(),1,1);
+    public void paintComponent(Graphics g){
+        super.paintComponent(g);
+        MatrixModel m = new MatrixModel(1,1,100,this.getHeight(),this.getWidth(),9,16);
         
         /*if(this.lastScreenHeight != this.getHeight()){
             for(CropPoint p : this.cropPoints){
@@ -227,6 +217,7 @@ public class SnowFlakePanel extends Frame implements MouseListener,MouseMotionLi
         }
     }
     
+    
     /**
      * Se l'attributo definePoly è false,
      * crea un oggetto di tipo CropPolygon con i crop Points
@@ -252,16 +243,14 @@ public class SnowFlakePanel extends Frame implements MouseListener,MouseMotionLi
         }
     }
     
-    public static void main(String[] args){
+    /*public static void main(String[] args){
         
         SnowFlakePanel b = new SnowFlakePanel();
         b.setVisible(true); 
-        b.addWindowListener(new WindowAdapter() {
+        /*b.addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent we) {
                 System.exit(0);
             }
-        });
-    }
-    
-    
+        });*/
+    //}
 }

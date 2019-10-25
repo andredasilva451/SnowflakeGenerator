@@ -62,8 +62,8 @@ public class MatrixModel {
 		this.wContainer = wContainer;
 		this.ratioX = ratioX;
 		this.ratioY = ratioY;
-		this.hContainer -= (this.margin*2) - 33;
-		this.wContainer -= (this.margin*2) - 14;
+		this.hContainer -= (this.margin*2);
+		this.wContainer -= (this.margin*2);
 		
 	}
 	
@@ -105,10 +105,11 @@ public class MatrixModel {
 			
 			dxy[1] = this.margin;
 			dxy[0] = this.margin+(this.wContainer - (this.cols * ((this.hContainer/this.rows))))/2+this.margin;
-		}else{ //adattamento in larghezza
+		
+                }else{ //adattamento in larghezza
 			
 			dxy[1] = this.margin+(this.hContainer - (this.rows * (this.wContainer/this.cols)))/2;
-			dxy[0] = this.margin*2+8;
+			dxy[0] = this.margin;
 		}
 		return dxy;
 	}
