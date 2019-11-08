@@ -1,5 +1,13 @@
 
 import java.awt.Dimension;
+import java.io.BufferedWriter;
+import javax.swing.JFileChooser;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -44,6 +52,11 @@ public class SnowFlakeFrame extends javax.swing.JFrame {
         jPanel1.setBackground(new java.awt.Color(0, 153, 255));
 
         SalvaPuntiButton.setText("Salva Punti");
+        SalvaPuntiButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                SalvaPuntiButtonActionPerformed(evt);
+            }
+        });
 
         ImportaPuntiButton.setText("Importa punti");
 
@@ -113,12 +126,38 @@ public class SnowFlakeFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void GeneraButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_GeneraButtonActionPerformed
-        // TODO add your handling code here:
+       
+        
+        
+        
+        
     }//GEN-LAST:event_GeneraButtonActionPerformed
 
     private void ResetButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ResetButtonActionPerformed
         this.snowFlakePanel.pointReset();
     }//GEN-LAST:event_ResetButtonActionPerformed
+
+    private void SalvaPuntiButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SalvaPuntiButtonActionPerformed
+       
+        JFileChooser fileChooser = new JFileChooser();
+        
+        fileChooser.setDialogTitle("Specify a file to save");   
+
+        int userSelection = fileChooser.showSaveDialog(this);
+        
+        if (userSelection == JFileChooser.APPROVE_OPTION) {
+                         
+            File fileToSave = fileChooser.getSelectedFile();  //File da salvare
+            try {
+                fileToSave = this.snowFlakePanel.writePoints(fileToSave);
+            } catch (IOException ex) {
+                Logger.getLogger(SnowFlakeFrame.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            System.out.println("Save as file: " + fileToSave.getAbsolutePath());
+                  
+        }
+        
+    }//GEN-LAST:event_SalvaPuntiButtonActionPerformed
 
     /**
      * @param args the command line arguments

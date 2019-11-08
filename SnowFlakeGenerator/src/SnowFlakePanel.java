@@ -13,6 +13,10 @@ import java.awt.event.MouseMotionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.Console;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JButton;
@@ -28,8 +32,8 @@ public class SnowFlakePanel extends JPanel implements MouseListener,MouseMotionL
     
     private Triangolo a;
     private List<CropPolygon> polys;
-    private List<CropPoint> cropPoints;
-    private List<CropPoint> allCropPoints;
+    private ArrayList<CropPoint> cropPoints;
+    private ArrayList<ArrayList<CropPoint>> allCropPoints;
     private int pCounter = 0;
     private boolean definePoly = true;
     private Point lastPoint;
@@ -47,7 +51,7 @@ public class SnowFlakePanel extends JPanel implements MouseListener,MouseMotionL
         
         this.setBackground(Color.BLUE);
         this.cropPoints = new ArrayList<CropPoint>();
-        this.allCropPoints = new ArrayList<CropPoint>();
+        this.allCropPoints = new ArrayList<ArrayList<CropPoint>>();
         this.polys = new ArrayList<CropPolygon>();
         this.addMouseListener(this);
         this.addMouseMotionListener(this);
@@ -113,7 +117,7 @@ public class SnowFlakePanel extends JPanel implements MouseListener,MouseMotionL
                 this.pCounter++;
             }else if(this.definePoly == false){       
                 defineCropPolygon();
-                this.allCropPoints.addAll(this.cropPoints);
+                this.allCropPoints.add(this.cropPoints);
                 this.cropPoints.clear();
             }
             repaint();
@@ -122,11 +126,11 @@ public class SnowFlakePanel extends JPanel implements MouseListener,MouseMotionL
         if(e.getButton() == MouseEvent.BUTTON3){
            
             if(this.definePoly){
-                for(int i = 0; i<cropPoints.size(); i++) {
-                    if(cropPoints.get(i).contains(e.getX(),e.getY())){
-                        
+                
+                for(int i = 0; i<cropPoints.size()-1; i++) {
+                    if(this.cropPoints.get(i).contains(e.getX(),e.getY())){                    
                         this.cropPoints.remove(this.cropPoints.get(i));
-                        cropPoints.get(this.cropPoints.size()-1).setLastPoint(true);
+                        this.cropPoints.get(this.cropPoints.size()-1).setLastPoint(true);      
                     }
                 }
             }
@@ -148,10 +152,7 @@ public class SnowFlakePanel extends JPanel implements MouseListener,MouseMotionL
                 this.offsetY = this.lastY - this.cropPoints.get(i).getY();
                 this.pointIndex = i;
             }
-        }
-        
-        
-        
+        }     
     }
 
     @Override
@@ -187,8 +188,7 @@ public class SnowFlakePanel extends JPanel implements MouseListener,MouseMotionL
                 Point newCoords = new Point(x,y);
                 this.cropPoints.get(this.pointIndex).setPoint(newCoords);
                 repaint();    
-            }
-                   
+            }             
         }
     }
 
@@ -283,8 +283,33 @@ public class SnowFlakePanel extends JPanel implements MouseListener,MouseMotionL
     public void pointReset(){
         
         this.cropPoints = new ArrayList<CropPoint>();
-        this.allCropPoints = new ArrayList<CropPoint>();
+        this.allCropPoints = new ArrayList<ArrayList<CropPoint>>();
         this.polys = new ArrayList<CropPolygon>();
+        this.pCounter = 0;
+        this.polyCounter = 0;
+        this.definePoly = true;
         repaint();
     }
+    
+    public File writePoints(File file) throws IOException{
+          
+        FileWriter fileWriter = new FileWriter(file);
+        PrintWriter printWriter = new PrintWriter(fileWriter);
+        //printWriter.print("Some String");
+        //printWriter.printf("Product name is %s and its price is %d $", "iPhone", 1000);
+        
+        
+        for(int i = 0; i < this.allCropPoints.size(); i++){
+           printWriter.print("Poligono "  + (i+1) + ":");
+            for(int j = 0; i < this.allCropPoints.get(i).size();j++){
+                
+                String curPoint = this.allCropPoints.get(i).get(j).toStringPoints();
+                printWriter.print(curPoint);
+            }
+            printWriter.println();
+        }
+        printWriter.close();
+        return file;
+    }
+    
 }

@@ -49,6 +49,13 @@ public class CropPoint {
     
     }
     
+    public String toStringPoints(){
+    
+        return this.posX + "," + this.posY;
+    }
+    
+    
+    
     public Point getPoint(){
     
         Point p = new Point();
