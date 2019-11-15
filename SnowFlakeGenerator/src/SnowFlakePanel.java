@@ -289,6 +289,7 @@ public class SnowFlakePanel extends JPanel implements MouseListener,MouseMotionL
         this.polyCounter = 0;
         this.definePoly = true;
         repaint();
+        
     }
     
     /**
@@ -302,7 +303,6 @@ public class SnowFlakePanel extends JPanel implements MouseListener,MouseMotionL
         PrintWriter printWriter = new PrintWriter(fileWriter);
        
         for(int i = 0; i < this.polys.size(); i++){
-           printWriter.print("Poligono" + (i+1) + ": ");
            printWriter.println(this.polys.get(i).toString());
         }
         printWriter.close();
