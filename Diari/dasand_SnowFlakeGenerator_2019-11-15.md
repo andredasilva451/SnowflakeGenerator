@@ -17,4 +17,4 @@ I punti non sono ancora responsive.
 Implementazione 51.5%
 
 ## Programma di massima per la prossima giornata di lavoro
-sviluppo SW (punti responvi).
+sviluppo SW (punti responsive e inizio creazione fiocco).
