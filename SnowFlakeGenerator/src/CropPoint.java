@@ -15,7 +15,9 @@ public class CropPoint {
     private final int CROP_POINT_SIZE = 10;
     private boolean isLastPoint;
     private boolean polyDefined;
-
+    private double percentageX;
+    private double percentageY;
+    
     public CropPoint(int posX,int posY){
   
          this.posX = posX - CROP_POINT_SIZE/2;
@@ -52,17 +54,7 @@ public class CropPoint {
     
         return this.posY + CROP_POINT_SIZE/2;
     }
-    
-    public int getPercentageX(){
-        
-        return this.percentageX;
-    }
-    
-    public int getPercentageY(){
-        
-        return this.percentageY;
-    }
-    
+      
     public void setX(int newX){
         this.posX = newX;
     }
