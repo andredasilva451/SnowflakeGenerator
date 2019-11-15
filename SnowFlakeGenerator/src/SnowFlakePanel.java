@@ -291,22 +291,19 @@ public class SnowFlakePanel extends JPanel implements MouseListener,MouseMotionL
         repaint();
     }
     
+    /**
+     * Scrive i punti di tutti i poligoni in un file.
+     * @param file File in cui salvare i punti
+     * @return File con i punti scritti al suo interno
+     */
     public File writePoints(File file) throws IOException{
           
         FileWriter fileWriter = new FileWriter(file);
         PrintWriter printWriter = new PrintWriter(fileWriter);
-        //printWriter.print("Some String");
-        //printWriter.printf("Product name is %s and its price is %d $", "iPhone", 1000);
-        
-        
-        for(int i = 0; i < this.allCropPoints.size(); i++){
-           printWriter.print("Poligono "  + (i+1) + ":");
-            for(int j = 0; i < this.allCropPoints.get(i).size();j++){
-                
-                String curPoint = this.allCropPoints.get(i).get(j).toStringPoints();
-                printWriter.print(curPoint);
-            }
-            printWriter.println();
+       
+        for(int i = 0; i < this.polys.size(); i++){
+           printWriter.print("Poligono" + (i+1) + ": ");
+           printWriter.println(this.polys.get(i).toString());
         }
         printWriter.close();
         return file;
