@@ -15,13 +15,33 @@ public class CropPoint {
     private final int CROP_POINT_SIZE = 10;
     private boolean isLastPoint;
     private boolean polyDefined;
-    
+
     public CropPoint(int posX,int posY){
   
          this.posX = posX - CROP_POINT_SIZE/2;
          this.posY = posY - CROP_POINT_SIZE/2;
         
-    }   
+    }
+    
+    public CropPoint(int posX,int posY,int wContainer,int hContainer, int percentage){
+  
+        //int oldPosX = posX;
+        //int oldPosY = posY;
+        this.posX = posX - CROP_POINT_SIZE/2;
+        this.posY = posY - CROP_POINT_SIZE/2;
+        
+        
+        
+        
+        /*this.percentageX = (this.posX*100)/wContainer;
+        this.percentageY = (this.posY*100)/hContainer;
+        double posXd = ((double)this.percentageX/100)*wContainer;
+        this.posX = (int)posXd;
+        double posYd = ((double)this.percentageY/100)*hContainer;
+        this.posY = (int)posYd;*/
+        
+    }
+    
     
     public int getX(){
     
@@ -31,6 +51,16 @@ public class CropPoint {
     public int getY(){
     
         return this.posY + CROP_POINT_SIZE/2;
+    }
+    
+    public int getPercentageX(){
+        
+        return this.percentageX;
+    }
+    
+    public int getPercentageY(){
+        
+        return this.percentageY;
     }
     
     public void setX(int newX){
@@ -53,8 +83,6 @@ public class CropPoint {
     
         return this.posX + "," + this.posY;
     }
-    
-    
     
     public Point getPoint(){
     
@@ -85,6 +113,7 @@ public class CropPoint {
     public void poligonDefined(boolean s){
         this.polyDefined = s;
     }
+    
     
     
     public void paint(Graphics g){

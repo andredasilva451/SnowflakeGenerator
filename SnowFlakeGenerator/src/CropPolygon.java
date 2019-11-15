@@ -19,7 +19,7 @@ public class CropPolygon {
         this.pointsY = pointsY;
         this.nPoints = nPoints;
     }
-        
+            
     public void paint(Graphics g){
     
           g.setColor(Color.BLUE);

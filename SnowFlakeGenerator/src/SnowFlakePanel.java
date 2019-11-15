@@ -46,6 +46,7 @@ public class SnowFlakePanel extends JPanel implements MouseListener,MouseMotionL
     private int offsetX;
     private int offsetY;
     private int pointIndex;
+    private MatrixModel m;
     
     public SnowFlakePanel(){
         
@@ -93,7 +94,8 @@ public class SnowFlakePanel extends JPanel implements MouseListener,MouseMotionL
             
             if(this.definePoly){
                 
-                CropPoint point = new CropPoint(e.getX(),e.getY());
+               
+                CropPoint point = new CropPoint(e.getX(),e.getY(),this.getWidth(),this.getHeight());
                 
                 if(this.pCounter >= 3){
                     if(cropPoints.get(0).contains(e.getX(),e.getY())){
@@ -191,7 +193,7 @@ public class SnowFlakePanel extends JPanel implements MouseListener,MouseMotionL
             }             
         }
     }
-
+   
     @Override
     public void mouseMoved(MouseEvent arg0) {
     }
@@ -206,29 +208,22 @@ public class SnowFlakePanel extends JPanel implements MouseListener,MouseMotionL
      */
     public void paintComponent(Graphics g){
         super.paintComponent(g);
-        MatrixModel m = new MatrixModel(1,1,100,this.getHeight(),this.getWidth(),9,16);
-        
-        if(this.lastScreenHeight != this.getHeight()){
-            for(CropPoint p : this.cropPoints){        
-                int newY = p.getY() - (this.lastScreenHeight-this.getHeight());
-                p.setY(newY);
-            }
-            this.lastScreenHeight = this.getHeight();
-        }
-        if(this.lastScreenWidth != this.getWidth()){
-            for(CropPoint p : this.cropPoints){
-                int newX = p.getX() - (this.lastScreenWidth-this.getWidth());
-                p.setX(newX);
-            }
-            this.lastScreenWidth = this.getWidth();
-        }
+        this.m = new MatrixModel(1,1,100,this.getHeight(),this.getWidth(),9,16);
+       
         
         this.a = new Triangolo((int)m.getDXYSize()[0],(int)m.getDXYSize()[1],(int)m.getCellSize()[0],(int)m.getCellSize()[1]);
         this.a.paint(g);
         int i = 0;
         for(CropPoint p : this.cropPoints){
-
+            
+            
+            if(this.lastScreenHeight != this.getHeight() || this.lastScreenWidth != this.getWidth()){
+             
+                p = new CropPoint(p.getX(),p.getY(),this.getWidth(),this.getHeight());
+               
+            }
             p.paint(g);
+            
             if(i >= 1){
                 g.setColor(Color.black);
                 g.drawLine(this.cropPoints.get(i).getX(),this.cropPoints.get(i).getY(),this.cropPoints.get(i-1).getX(),this.cropPoints.get(i-1).getY());          
@@ -250,6 +245,8 @@ public class SnowFlakePanel extends JPanel implements MouseListener,MouseMotionL
                 this.polys.get(j).paint(g);
             }
         }
+        this.lastScreenHeight = this.getHeight();
+        this.lastScreenWidth = this.getWidth();
     }
     
     /**
