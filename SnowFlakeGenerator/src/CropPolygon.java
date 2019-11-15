@@ -28,7 +28,7 @@ public class CropPolygon {
     
     public Polygon toPolygon(){
     
-        return new Polygon(this.pointsX,this.pointsY,3);
+        return new Polygon(this.pointsX,this.pointsY,this.nPoints);
     
     }
     
