@@ -3,8 +3,11 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Frame;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Panel;
 import java.awt.Point;
+import java.awt.Polygon;
+import java.awt.Shape;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
@@ -12,6 +15,9 @@ import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.awt.geom.AffineTransform;
+import java.awt.geom.Area;
+import java.awt.geom.PathIterator;
 import java.io.Console;
 import java.io.File;
 import java.io.FileWriter;
@@ -47,6 +53,8 @@ public class SnowFlakePanel extends JPanel implements MouseListener,MouseMotionL
     private int offsetY;
     private int pointIndex;
     private MatrixModel m;
+    private boolean flakeGenerated = false;
+    private Area croppedTriangle;
     
     public SnowFlakePanel(){
         
@@ -95,7 +103,9 @@ public class SnowFlakePanel extends JPanel implements MouseListener,MouseMotionL
             if(this.definePoly){
                 
                
-                CropPoint point = new CropPoint(e.getX(),e.getY(),this.getWidth(),this.getHeight());
+                double percentageX = (e.getX()*100)/this.getWidth();
+                double percentageY = (e.getY()*100)/this.getHeight();
+                CropPoint point = new CropPoint(e.getX(),e.getY(),percentageX,percentageY);
                 
                 if(this.pCounter >= 3){
                     if(cropPoints.get(0).contains(e.getX(),e.getY())){
@@ -187,8 +197,11 @@ public class SnowFlakePanel extends JPanel implements MouseListener,MouseMotionL
             if(this.drag){
                 int x = e.getX() - this.offsetX;
                 int y = e.getY() - this.offsetY;
+                double percentageX = (x*100)/this.getWidth();
+                double percentageY = (y*100)/this.getHeight();
                 Point newCoords = new Point(x,y);
                 this.cropPoints.get(this.pointIndex).setPoint(newCoords);
+                this.cropPoints.get(this.pointIndex).setPercentages(percentageX, percentageY);
                 repaint();    
             }             
         }
@@ -207,46 +220,86 @@ public class SnowFlakePanel extends JPanel implements MouseListener,MouseMotionL
      * @param g Componente grafico.
      */
     public void paintComponent(Graphics g){
+        
         super.paintComponent(g);
-        this.m = new MatrixModel(1,1,100,this.getHeight(),this.getWidth(),9,16);
+        
+        if(this.flakeGenerated == false){
+            this.m = new MatrixModel(1,1,100,this.getHeight(),this.getWidth(),9,16);
+
+
+            this.a = new Triangolo((int)m.getDXYSize()[0],(int)m.getDXYSize()[1],(int)m.getCellSize()[0],(int)m.getCellSize()[1]);
+            this.a.paint(g);
+            int i = 0;
+            for(CropPoint p : this.cropPoints){
+
+
+                if(this.lastScreenHeight != this.getHeight() || this.lastScreenWidth != this.getWidth()){
+
+                    p.refreshPosition(this.getWidth(),this.getHeight());
+
+                }
+                p.paint(g);
+
+                if(i >= 1){
+                    g.setColor(Color.black);
+                    g.drawLine(this.cropPoints.get(i).getX(),this.cropPoints.get(i).getY(),this.cropPoints.get(i-1).getX(),this.cropPoints.get(i-1).getY());          
+                }
+                i++;
+            }
+            if(this.definePoly == false){
+
+                int x1 = this.cropPoints.get(0).getX();
+                int y1 = this.cropPoints.get(0).getY();
+                int x2 = this.cropPoints.get(this.cropPoints.size()-1).getX();
+                int y2 = this.cropPoints.get(this.cropPoints.size()-1).getY();
+                g.drawLine(x1,y1,x2,y2); 
+
+            }
+
+            if(this.polys.size() > 0 ){
+                for(int j = 0;j<this.polys.size();j++) {
+                    if(this.lastScreenHeight != this.getHeight() || this.lastScreenWidth != this.getWidth()){    
+                        this.polys.get(j).RefreshPositions(this.getWidth(),this.getHeight());
+                    }
+                    this.polys.get(j).paint(g);
+                }
+            }
+            this.lastScreenHeight = this.getHeight();
+            this.lastScreenWidth = this.getWidth();
+        
+        }else if(this.flakeGenerated){
+            
+            Area cropArea = new Area();
+            this.croppedTriangle = new Area(this.a.toPolygon());
        
-        
-        this.a = new Triangolo((int)m.getDXYSize()[0],(int)m.getDXYSize()[1],(int)m.getCellSize()[0],(int)m.getCellSize()[1]);
-        this.a.paint(g);
-        int i = 0;
-        for(CropPoint p : this.cropPoints){
-            
-            
-            if(this.lastScreenHeight != this.getHeight() || this.lastScreenWidth != this.getWidth()){
-             
-                p = new CropPoint(p.getX(),p.getY(),this.getWidth(),this.getHeight());
-               
+            for(int i = 0; i < this.polys.size(); i++){
+           
+                Area curPolyArea = new Area(this.polys.get(i).toPolygon());
+                cropArea.add(curPolyArea);
             }
-            p.paint(g);
+            this.croppedTriangle.subtract(cropArea);
+            this.removeAll();
+            repaint();
+            System.out.println("Fiocco generato!");
+            Graphics2D g2d = (Graphics2D) g.create();
+            g2d.setColor(Color.white);    
+            g2d.scale(0.5,0.5);
+            g2d.fill(this.croppedTriangle);
+            AffineTransform at = new AffineTransform();
+            at.translate(this.croppedTriangle.getBounds().width-this.croppedTriangle.getBounds2D().getX(),this.croppedTriangle.getBounds2D().getY()-100);
+            g2d.fill(mirrorAlongX(at.createTransformedShape(this.croppedTriangle).getBounds2D().getCenterX(),this.croppedTriangle));
             
-            if(i >= 1){
-                g.setColor(Color.black);
-                g.drawLine(this.cropPoints.get(i).getX(),this.cropPoints.get(i).getY(),this.cropPoints.get(i-1).getX(),this.cropPoints.get(i-1).getY());          
-            }
-            i++;
+           
         }
-        if(this.definePoly == false){
-            
-            int x1 = this.cropPoints.get(0).getX();
-            int y1 = this.cropPoints.get(0).getY();
-            int x2 = this.cropPoints.get(this.cropPoints.size()-1).getX();
-            int y2 = this.cropPoints.get(this.cropPoints.size()-1).getY();
-            g.drawLine(x1,y1,x2,y2); 
-            
-        }
-        
-        if(this.polys.size() > 0 ){
-            for(int j = 0;j<this.polys.size();j++) {
-                this.polys.get(j).paint(g);
-            }
-        }
-        this.lastScreenHeight = this.getHeight();
-        this.lastScreenWidth = this.getWidth();
+    }
+    
+    private static Shape mirrorAlongX(double x, Shape shape)
+    {
+        AffineTransform at = new AffineTransform();
+        at.translate(x, 0);
+        at.scale(-1, 1);
+        at.translate(-x, 0);
+        return at.createTransformedShape(shape);
     }
     
     /**
@@ -262,12 +315,19 @@ public class SnowFlakePanel extends JPanel implements MouseListener,MouseMotionL
             
             int[] pointsX = new int[cropPoints.size()];
             int[] pointsY = new int[cropPoints.size()];
+            double[] percentagesX = new double[cropPoints.size()];
+            double[] percentagesY = new double[cropPoints.size()];
             
             for(int j = 0;j<cropPoints.size();j++) {
                   pointsX[j] = cropPoints.get(j).getX();
                   pointsY[j] = cropPoints.get(j).getY();
             }
-            CropPolygon p = new CropPolygon(pointsX,pointsY,this.cropPoints.size());
+            for(int j = 0;j<cropPoints.size();j++) {
+                  percentagesX[j] = cropPoints.get(j).getPercentageX();
+                  percentagesY[j] = cropPoints.get(j).getPercentageY();
+            }
+            
+            CropPolygon p = new CropPolygon(pointsX,pointsY,this.cropPoints.size(),percentagesX,percentagesY);
             this.polys.add(p);
             this.definePoly = true;
             this.pCounter = 0;   
@@ -285,6 +345,7 @@ public class SnowFlakePanel extends JPanel implements MouseListener,MouseMotionL
         this.pCounter = 0;
         this.polyCounter = 0;
         this.definePoly = true;
+        this.flakeGenerated = false;
         repaint();
         
     }
@@ -306,4 +367,22 @@ public class SnowFlakePanel extends JPanel implements MouseListener,MouseMotionL
         return file;
     }
     
+    public void genSnowFlake(){
+    
+        this.flakeGenerated = true;
+        
+    }
+      
+    
+    public void readPoints(File file){
+        
+        
+    
+    }
+    
+    
+    public void saveSnowFlake(String type){
+    
+    
+    }
 }

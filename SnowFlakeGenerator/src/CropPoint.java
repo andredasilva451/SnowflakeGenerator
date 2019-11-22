@@ -18,6 +18,7 @@ public class CropPoint {
     private double percentageX;
     private double percentageY;
     
+    //per punti statici.
     public CropPoint(int posX,int posY){
   
          this.posX = posX - CROP_POINT_SIZE/2;
@@ -25,23 +26,23 @@ public class CropPoint {
         
     }
     
-    public CropPoint(int posX,int posY,int wContainer,int hContainer, int percentage){
+    //punti responsive.
+    public CropPoint(int posX,int posY, double percentageX, double percentageY){
   
-        //int oldPosX = posX;
-        //int oldPosY = posY;
         this.posX = posX - CROP_POINT_SIZE/2;
         this.posY = posY - CROP_POINT_SIZE/2;
+        this.percentageX = percentageX;
+        this.percentageY = percentageY;
+            
+    }
+    
+     public void refreshPosition(int wContainer, int hContainer){
         
-        
-        
-        
-        /*this.percentageX = (this.posX*100)/wContainer;
-        this.percentageY = (this.posY*100)/hContainer;
         double posXd = ((double)this.percentageX/100)*wContainer;
-        this.posX = (int)posXd;
         double posYd = ((double)this.percentageY/100)*hContainer;
-        this.posY = (int)posYd;*/
-        
+        this.posX = (int)posXd;
+        this.posY = (int)posYd;
+         
     }
     
     
@@ -54,6 +55,17 @@ public class CropPoint {
     
         return this.posY + CROP_POINT_SIZE/2;
     }
+    
+     public double getPercentageX(){
+    
+        return this.percentageX;
+    }
+    
+    public double getPercentageY(){
+    
+        return this.percentageY;
+    }
+    
       
     public void setX(int newX){
         this.posX = newX;
@@ -62,6 +74,12 @@ public class CropPoint {
     public void setY(int newY){
     
         this.posY = newY;
+    }
+    
+    public void setPercentages(double newPercentageX,double newPercentageY){
+        this.percentageX = newPercentageX;
+        this.percentageY = newPercentageY;
+        
     }
     
     public void setPoint(Point p){
@@ -105,8 +123,6 @@ public class CropPoint {
     public void poligonDefined(boolean s){
         this.polyDefined = s;
     }
-    
-    
     
     public void paint(Graphics g){
          

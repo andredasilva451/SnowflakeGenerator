@@ -1,5 +1,6 @@
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Polygon;
 
 /**
  *
@@ -12,6 +13,8 @@ public class Triangolo  {
     private int posY;
     private int width;
     private int height;
+    private int[] pointX;
+    private int[] pointY;
     
     public Triangolo(int posX,int posY, int width, int height){
     
@@ -19,25 +22,31 @@ public class Triangolo  {
         this.posY = posY;
         this.width = width;
         this.height = height;
+        this.pointX = new int[3];
+        this.pointY = new int[3];
     }
     
     private int[] pointsXdefinition(){
        
-        int[] pointX = new int[3];
-        pointX[0] = this.posX;
-        pointX[1] = this.posX + this.width;
-        pointX[2] = this.posX + this.width;
+        this.pointX[0] = this.posX;
+        this.pointX[1] = this.posX + this.width;
+        this.pointX[2] = this.posX + this.width;
         return pointX;
     
     }
     
     private int[] pointsYdefinition(){
         
-        int[] pointY = new int[3];
-        pointY[0] = this.posY;
-        pointY[1] = this.posY;
-        pointY[2] = this.posY + this.height+30;  
+        this.pointY[0] = this.posY;
+        this.pointY[1] = this.posY;
+        this.pointY[2] = this.posY + this.height+30;  
         return pointY;
+    }
+    
+    public Polygon toPolygon(){
+    
+        return new Polygon(this.pointX,pointY,3);
+    
     }
    
     public void paint(Graphics g){

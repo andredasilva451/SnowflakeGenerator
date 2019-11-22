@@ -120,11 +120,7 @@ public class SnowFlakeFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void GeneraButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_GeneraButtonActionPerformed
-       
-        
-        
-        
-        
+       this.snowFlakePanel.genSnowFlake();
     }//GEN-LAST:event_GeneraButtonActionPerformed
 
     private void ResetButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ResetButtonActionPerformed
