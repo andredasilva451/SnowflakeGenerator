@@ -39,7 +39,7 @@ public class Triangolo  {
         
         this.pointY[0] = this.posY;
         this.pointY[1] = this.posY;
-        this.pointY[2] = this.posY + this.height+30;  
+        this.pointY[2] = this.posY + this.height;  
         return pointY;
     }
     

@@ -224,7 +224,7 @@ public class SnowFlakePanel extends JPanel implements MouseListener,MouseMotionL
         super.paintComponent(g);
         
         if(this.flakeGenerated == false){
-            this.m = new MatrixModel(1,1,100,this.getHeight(),this.getWidth(),9,16);
+            this.m = new MatrixModel(1,1,100,this.getHeight(),this.getWidth(),1,2);
 
 
             this.a = new Triangolo((int)m.getDXYSize()[0],(int)m.getDXYSize()[1],(int)m.getCellSize()[0],(int)m.getCellSize()[1]);
@@ -271,25 +271,55 @@ public class SnowFlakePanel extends JPanel implements MouseListener,MouseMotionL
             
             Area cropArea = new Area();
             this.croppedTriangle = new Area(this.a.toPolygon());
-       
+            
             for(int i = 0; i < this.polys.size(); i++){
            
                 Area curPolyArea = new Area(this.polys.get(i).toPolygon());
                 cropArea.add(curPolyArea);
+                
             }
             this.croppedTriangle.subtract(cropArea);
             this.removeAll();
             repaint();
-            System.out.println("Fiocco generato!");
             Graphics2D g2d = (Graphics2D) g.create();
             g2d.setColor(Color.white);    
             g2d.scale(0.5,0.5);
             g2d.fill(this.croppedTriangle);
-            AffineTransform at = new AffineTransform();
-            at.translate(this.croppedTriangle.getBounds().width-this.croppedTriangle.getBounds2D().getX(),this.croppedTriangle.getBounds2D().getY()-100);
-            g2d.fill(mirrorAlongX(at.createTransformedShape(this.croppedTriangle).getBounds2D().getCenterX(),this.croppedTriangle));
-            
-           
+            Shape r2 = mirrorAlongX(this.croppedTriangle.getBounds2D().getMaxX()+1,this.croppedTriangle);
+            g2d.fill(r2);
+            Shape r3 = mirrorAlongY(this.croppedTriangle.getBounds2D().getMaxY(),this.croppedTriangle);
+            g2d.fill(r3);
+            Shape r4 = mirrorAlongY(r2.getBounds2D().getMaxY(),r2);
+            g2d.fill(r4);
+            Shape r5 = mirrorAlongX(r4.getBounds2D().getMaxX()+1,r4);
+            g2d.rotate(Math.toRadians(-57),r5.getBounds2D().getMinX(),r5.getBounds2D().getMaxY());
+            g2d.fill(r5);
+            Shape r6 = mirrorAlongX(r5.getBounds2D().getMaxX()+1,r5);
+            g2d.fill(r6);
+            Shape r7 = mirrorAlongY(r5.getBounds2D().getMinY(),r5);
+            g2d.fill(r7);
+            Shape r8 = mirrorAlongX(r7.getBounds2D().getMaxX()+1,r7);
+            g2d.fill(r8);
+            Shape r9 = mirrorAlongX(r2.getBounds2D().getMaxX()+1,r2);
+            g2d.setColor(Color.black);
+            //g2d.rotate(Math.toRadians(-57),r9.getBounds2D().getMinX(),r9.getBounds2D().getMinY());
+            g2d.fill(r9);
+            /*Shape r3 = mirrorAlongX(r2.getBounds2D().getMaxX()+1,r2);
+            g2d.setColor(Color.black);
+            g2d.rotate(Math.toRadians(10),r3.getBounds2D().getMinX(),r3.getBounds2D().getMaxY());
+            g2d.fill(r3);
+            Shape r4 = mirrorAlongX(r3.getBounds2D().getMaxX()+2,r3);
+            g2d.fill(r4);
+            Shape r5 = mirrorAlongX(r4.getBounds2D().getMaxX()+2,r4);
+            g2d.rotate(Math.toRadians(57),r5.getBounds2D().getX(), r5.getBounds2D().getY());
+            g2d.fill(r5);
+            Shape r6 = mirrorAlongX(r5.getBounds2D().getMaxX()+2,r5);
+            g2d.fill(r6);
+            Shape r7 = mirrorAlongX(r6.getBounds2D().getMaxX()+2,r6);
+            g2d.rotate(Math.toRadians(57),r7.getBounds2D().getX(), r7.getBounds2D().getY());
+            g2d.fill(r7);
+            Shape r8 = mirrorAlongX(r7.getBounds2D().getMaxX()+2,r7);
+            g2d.fill(r8);*/
         }
     }
     
@@ -301,6 +331,16 @@ public class SnowFlakePanel extends JPanel implements MouseListener,MouseMotionL
         at.translate(-x, 0);
         return at.createTransformedShape(shape);
     }
+    
+    private static Shape mirrorAlongY(double y, Shape shape)
+    {
+        AffineTransform at = new AffineTransform();
+        at.translate(0, y);
+        at.scale(1,-1);
+        at.translate(0,-y);
+        return at.createTransformedShape(shape);
+    }
+   
     
     /**
      * Se l'attributo definePoly è false,

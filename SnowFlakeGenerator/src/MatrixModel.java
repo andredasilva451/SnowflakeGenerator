@@ -36,12 +36,12 @@ public class MatrixModel {
 	/**
 	 * Proporzione X della matrice.
 	*/
-	private int ratioX;
+	private double ratioX;
 	
 	/**
 	 * Proporzione Y della matrice.
 	*/
-	private int ratioY;
+	private double ratioY;
 	
 	/**
 	 * Costruttore per instanziare un oggetto di tipo MatrixModel.
@@ -53,7 +53,7 @@ public class MatrixModel {
 	 * @param ratioX Proporzione X della matrice.
 	 * @param ratioY Proporzione Y della matrice.
 	*/
-	public MatrixModel(int rows,int cols,int margin, int hContainer, int wContainer, int ratioX, int ratioY){
+	public MatrixModel(int rows,int cols,int margin, int hContainer, int wContainer, double ratioX, double ratioY){
 		
 		this.rows = rows;
 		this.cols = cols;
@@ -85,9 +85,9 @@ public class MatrixModel {
 		}
                 
                 cs[1] = (cs[0]*ratioY)/ratioX;
-                if(cs[1] > this.hContainer){
+                /*if(cs[1] > this.hContainer){
                     cs[1] = cs[1] - (cs[1]-this.hContainer);
-                }
+                }*/
                 cs[0] = cs[0] - this.margin*2;
 		return cs;
 	}
@@ -104,7 +104,7 @@ public class MatrixModel {
 		if((this.wContainer)/this.cols > (this.hContainer)/this.rows){ // adattamento in altezza
 			
 			dxy[1] = this.margin;
-			dxy[0] = this.margin+(this.wContainer - (this.cols * ((this.hContainer/this.rows))))/2+this.margin;
+			dxy[0] = this.margin+(this.wContainer - (this.cols * (this.hContainer/this.rows)))/2;
 		
                 }else{ //adattamento in larghezza
 			
