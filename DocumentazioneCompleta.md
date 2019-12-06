@@ -116,35 +116,10 @@ SAMT, Sezione informatica modulo 306 + progetti.
 ### Analisi del dominio
 
   Essendo al terzo anno della sezione informatica della scuola Arti e Mestieri di Trevano, occorre
-  essere capaci di progettare e sviluppare un progetto in modo autonomo, sia per il prossimo anno che in futuro in un'azienda. 
+  essere capaci di progettare e sviluppare un progetto in modo autonomo, sia per l'esame del prossimo anno che in futuro in un'azienda. 
   Per questo, nel primo semestre, è stato deciso di affidarci a tutti lo stesso progetto, cioè un generatore di fiocchi
-  di neve.
+  di neve, di cui dobbiamo occuparci della progettazione con tutte le varie fasi (analisi,progettazione,implementazione,test).
   
-  
-  Questo capitolo dovrebbe descrivere il contesto in cui il prodotto verrà
-  utilizzato, da questa analisi dovrebbero scaturire le risposte a quesiti
-  quali ad esempio:
-
-  -   Background/Situazione iniziale
-
-  -   Quale è e come è organizzato il contesto in cui il prodotto dovrà
-      funzionare?
-
-  -   Come viene risolto attualmente il problema? Esiste già un prodotto
-      simile?
-
-  -   Chi sono gli utenti? Che bisogni hanno? Come e dove lavorano?
-
-  -   Che competenze/conoscenze/cultura posseggono gli utenti in relazione
-      con il problema?
-
-  -   Esistono convenzioni/standard applicati nel dominio?
-
-  -   Che conoscenze teoriche bisogna avere/acquisire per poter operare
-      efficacemente nel dominio?
-
-  -   …
-
 ### Analisi e specifica dei requisiti
 
 
@@ -214,6 +189,7 @@ in questo capitolo.
 #### Librerie
 - Java Swing
 - Java AWT
+- Java IO
 
 #### Piattaforma
 Qualsiasi Sistema operativo (Windows,Mac OS, distribuzioni Linux, etc.)
@@ -307,12 +283,22 @@ ripetibile alle stesse condizioni.
 
 |Test Case      | TC-001                               |
 |---------------|--------------------------------------|
-|**Nome**       |Import a card, but not shown with the GUI |
-|**Riferimento**|REQ-012                               |
-|**Descrizione**|Import a card with KIC, KID and KIK keys with no obfuscation, but not shown with the GUI |
-|**Prerequisiti**|Store on local PC: Profile\_1.2.001.xml (appendix n\_n) and Cards\_1.2.001.txt (appendix n\_n) |
-|**Procedura**     | - Go to “Cards manager” menu, in main page click “Import Profiles” link, Select the “1.2.001.xml” file, Import the Profile - Go to “Cards manager” menu, in main page click “Import Cards” link, Select the “1.2.001.txt” file, Delete the cards, Select the “1.2.001.txt” file, Import the cards |
-|**Risultati attesi** |Keys visible in the DB (OtaCardKey) but not visible in the GUI (Card details) |
+|**Nome**       |Generazione triangolo centrato proporzionalmente |
+|**Riferimento**|REQ-07,REQ-08                               |
+|**Descrizione**|Aprendo il SW, si crea un triangolo centrato e proporzionale al pannello |
+|**Prerequisiti**| Aprire il SW |
+|**Procedura**   | Aprire il SW tramite il file .jar o NetBeans |
+|**Risultati attesi** | Il triangolo è presente centrato e ridimensionando il frame, si adatta ad esso |
+
+|Test Case      | TC-002                               |
+|---------------|--------------------------------------|
+|**Nome**       |Creazione punti ritaglio |
+|**Riferimento**|REQ-09                              |
+|**Descrizione**|è possibile generare dei 'punti ritaglio' al fine di creare dei 'poligoni ritaglio'|
+|**Prerequisiti**| Aprire il SW, possedere un mouse |
+|**Procedura**   | Aprire il SW tramite il file .jar o NetBeans, Cliccare con il tasto Sx in un punto qualsiasi del frame |
+|**Risultati attesi** | I punti ritaglio vengono creati e sono collegati tra di loro in caso non venga ancora definito il poligono |
+
 
 
 ### Risultati test
