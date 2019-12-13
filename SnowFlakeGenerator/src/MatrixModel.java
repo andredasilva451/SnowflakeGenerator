@@ -73,23 +73,20 @@ public class MatrixModel {
 	*/
 	public double[] getCellSize(){
 		
-		double[] cs = new double[2];
-		
-		if((this.wContainer)/this.cols > (this.hContainer)/this.rows){ // adattamento in altezza
-			
-			cs[0] = (this.hContainer)/this.rows;
-			
-		}else{ // adattamento in larghezza
-		   
-			cs[0] = (this.wContainer)/this.cols;
-		}
+            double[] cs = new double[2];
+            
+            if (this.wContainer / this.hContainer  > (this.cols * this.ratioX) / (this.rows * this.ratioY)) {
+                    
+                cs[1] = this.hContainer / this.rows;
+                cs[0] = cs[1] * this.ratioX / this.ratioY;
+                      
+            }else{
                 
-                cs[1] = (cs[0]*ratioY)/ratioX;
-                /*if(cs[1] > this.hContainer){
-                    cs[1] = cs[1] - (cs[1]-this.hContainer);
-                }*/
-                cs[0] = cs[0] - this.margin*2;
-		return cs;
+                cs[0] = this.wContainer / this.rows;
+                cs[1] = cs[0] * this.ratioY / this.ratioX;
+                
+            }
+            return cs;
 	}
 	
 	/**
@@ -101,16 +98,19 @@ public class MatrixModel {
 		
 		double[] dxy = new double[2]; //0 = x, 1 = y
 		
-		if((this.wContainer)/this.cols > (this.hContainer)/this.rows){ // adattamento in altezza
-			
-			dxy[1] = this.margin;
-			dxy[0] = this.margin+(this.wContainer - (this.cols * (this.hContainer/this.rows)))/2;
-		
-                }else{ //adattamento in larghezza
-			
-			dxy[1] = this.margin+(this.hContainer - (this.rows * (this.wContainer/this.cols)))/2;
-			dxy[0] = this.margin;
-		}
+                if (this.wContainer / this.hContainer  > (this.cols * this.ratioX) / (this.rows * this.ratioY)) {
+                    
+                    dxy[1] = this.margin;
+                    int width = (int)this.getCellSize()[0] * this.cols;
+                    dxy[0] = (this.wContainer - width) / 2;
+                    
+                }else{
+                
+                    dxy[0] = this.margin;
+                    int height = (int)this.getCellSize()[1] * this.rows;
+                    dxy[1] = (this.hContainer - height) / 2;
+                    
+                }                
 		return dxy;
 	}
 	

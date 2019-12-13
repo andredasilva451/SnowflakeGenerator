@@ -1,32 +1,16 @@
-import java.awt.Button;
 import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Frame;
 import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.Panel;
 import java.awt.Point;
-import java.awt.Polygon;
-import java.awt.Shape;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
-import java.awt.geom.AffineTransform;
 import java.awt.geom.Area;
-import java.awt.geom.PathIterator;
-import java.io.Console;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
-import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 /**
@@ -36,25 +20,90 @@ import javax.swing.JPanel;
  */
 public class SnowFlakePanel extends JPanel implements MouseListener,MouseMotionListener {
     
+    /**
+     * Triangolo da da cui trarre il fiocco di neve.
+     */
     private Triangolo a;
+    
+    /**
+     * Lista di tutti i poligoni di ritaglio creati.
+     */
     private List<CropPolygon> polys;
+    
+    /**
+     * Lista di tutti i punti ritaglio creati.
+     */
     private ArrayList<CropPoint> cropPoints;
+    
+    /**
+     * Lista di liste con tutti i punti creati.
+     */
     private ArrayList<ArrayList<CropPoint>> allCropPoints;
+    
+    /**
+     * Numero di punti creati.
+     */
     private int pCounter = 0;
+    
+    /**
+     * Flag per identificare se l'utente sta creando un poligono.
+     */
     private boolean definePoly = true;
-    private Point lastPoint;
+    
+    /**
+     * Ultima larghezza salvata del Pannello.
+     */
     private int lastScreenWidth;
+    
+    /**
+     * Ultima altezza salvata del Pannello.
+     */
     private int lastScreenHeight;
-    private int polyCounter = 0;
+    
+    /**
+     * Ultima coordinata X della pressione del mouse.
+     */
     private int lastX;
+    
+    /**
+     * Ultima coordinata Y della pressione del mouse.
+     */
     private int lastY;
+    
+    /**
+     * Permette di capire se il mouse viene trascinato.
+     */
     private boolean drag = false;
+    
+    /**
+     * Coordinata X del dragging rispetto a quella della pressione del mouse.
+     */
     private int offsetX;
+    
+    /**
+     * Coordinata Y del dragging rispetto a quella della pressione del mouse.
+     */
     private int offsetY;
+    
+    /**
+     * Indica qual'è il punto da dover trascinare.
+     */
     private int pointIndex;
+    
+    /**
+     * Permette di definire la proporzione del Triangolo in base alla grandezza del pannello.
+     */
     private MatrixModel m;
+    
+    /**
+     * Flag che indica se il fiocco di neve viene generato.
+     */
     private boolean flakeGenerated = false;
-    private Area croppedTriangle;
+    
+    /**
+     * Istanza di Fiocco di neve.
+     */
+    private SnowFlake sf;
     
     public SnowFlakePanel(){
         
@@ -64,7 +113,6 @@ public class SnowFlakePanel extends JPanel implements MouseListener,MouseMotionL
         this.polys = new ArrayList<CropPolygon>();
         this.addMouseListener(this);
         this.addMouseMotionListener(this);
-        this.lastPoint = new Point();
         this.lastScreenWidth = this.getWidth();
         this.lastScreenHeight = this.getHeight();
         
@@ -109,9 +157,7 @@ public class SnowFlakePanel extends JPanel implements MouseListener,MouseMotionL
                 
                 if(this.pCounter >= 3){
                     if(cropPoints.get(0).contains(e.getX(),e.getY())){
-                        this.definePoly = false;
-                        
-                        
+                        this.definePoly = false;   
                     }
                 }
                 if(this.definePoly){
@@ -224,19 +270,25 @@ public class SnowFlakePanel extends JPanel implements MouseListener,MouseMotionL
         super.paintComponent(g);
         
         if(this.flakeGenerated == false){
-            this.m = new MatrixModel(1,1,100,this.getHeight(),this.getWidth(),1,2);
-
-
+            this.m = new MatrixModel(1,1,25,this.getHeight(),this.getWidth(),1,1.73);
             this.a = new Triangolo((int)m.getDXYSize()[0],(int)m.getDXYSize()[1],(int)m.getCellSize()[0],(int)m.getCellSize()[1]);
             this.a.paint(g);
             int i = 0;
+            
+            if(this.polys.size() > 0 ){
+                for(int j = 0;j<this.polys.size();j++) {
+                    if(this.lastScreenHeight != this.getHeight() || this.lastScreenWidth != this.getWidth()){    
+                        this.polys.get(j).RefreshPositions(this.getWidth(),this.getHeight());
+                    }
+                    this.polys.get(j).paint(g);
+                }
+            }
+            
             for(CropPoint p : this.cropPoints){
-
 
                 if(this.lastScreenHeight != this.getHeight() || this.lastScreenWidth != this.getWidth()){
 
                     p.refreshPosition(this.getWidth(),this.getHeight());
-
                 }
                 p.paint(g);
 
@@ -255,92 +307,16 @@ public class SnowFlakePanel extends JPanel implements MouseListener,MouseMotionL
                 g.drawLine(x1,y1,x2,y2); 
 
             }
-
-            if(this.polys.size() > 0 ){
-                for(int j = 0;j<this.polys.size();j++) {
-                    if(this.lastScreenHeight != this.getHeight() || this.lastScreenWidth != this.getWidth()){    
-                        this.polys.get(j).RefreshPositions(this.getWidth(),this.getHeight());
-                    }
-                    this.polys.get(j).paint(g);
-                }
-            }
             this.lastScreenHeight = this.getHeight();
             this.lastScreenWidth = this.getWidth();
-        
+            
         }else if(this.flakeGenerated){
             
-            Area cropArea = new Area();
-            this.croppedTriangle = new Area(this.a.toPolygon());
+            this.sf = new SnowFlake(this.a,this.polys,this.getWidth(),this.getHeight());
+            this.sf.paint(g);
             
-            for(int i = 0; i < this.polys.size(); i++){
-           
-                Area curPolyArea = new Area(this.polys.get(i).toPolygon());
-                cropArea.add(curPolyArea);
-                
-            }
-            this.croppedTriangle.subtract(cropArea);
-            this.removeAll();
-            repaint();
-            Graphics2D g2d = (Graphics2D) g.create();
-            g2d.setColor(Color.white);    
-            g2d.scale(0.5,0.5);
-            g2d.fill(this.croppedTriangle);
-            Shape r2 = mirrorAlongX(this.croppedTriangle.getBounds2D().getMaxX()+1,this.croppedTriangle);
-            g2d.fill(r2);
-            Shape r3 = mirrorAlongY(this.croppedTriangle.getBounds2D().getMaxY(),this.croppedTriangle);
-            g2d.fill(r3);
-            Shape r4 = mirrorAlongY(r2.getBounds2D().getMaxY(),r2);
-            g2d.fill(r4);
-            Shape r5 = mirrorAlongX(r4.getBounds2D().getMaxX()+1,r4);
-            g2d.rotate(Math.toRadians(-57),r5.getBounds2D().getMinX(),r5.getBounds2D().getMaxY());
-            g2d.fill(r5);
-            Shape r6 = mirrorAlongX(r5.getBounds2D().getMaxX()+1,r5);
-            g2d.fill(r6);
-            Shape r7 = mirrorAlongY(r5.getBounds2D().getMinY(),r5);
-            g2d.fill(r7);
-            Shape r8 = mirrorAlongX(r7.getBounds2D().getMaxX()+1,r7);
-            g2d.fill(r8);
-            Shape r9 = mirrorAlongX(r2.getBounds2D().getMaxX()+1,r2);
-            g2d.setColor(Color.black);
-            //g2d.rotate(Math.toRadians(-57),r9.getBounds2D().getMinX(),r9.getBounds2D().getMinY());
-            g2d.fill(r9);
-            /*Shape r3 = mirrorAlongX(r2.getBounds2D().getMaxX()+1,r2);
-            g2d.setColor(Color.black);
-            g2d.rotate(Math.toRadians(10),r3.getBounds2D().getMinX(),r3.getBounds2D().getMaxY());
-            g2d.fill(r3);
-            Shape r4 = mirrorAlongX(r3.getBounds2D().getMaxX()+2,r3);
-            g2d.fill(r4);
-            Shape r5 = mirrorAlongX(r4.getBounds2D().getMaxX()+2,r4);
-            g2d.rotate(Math.toRadians(57),r5.getBounds2D().getX(), r5.getBounds2D().getY());
-            g2d.fill(r5);
-            Shape r6 = mirrorAlongX(r5.getBounds2D().getMaxX()+2,r5);
-            g2d.fill(r6);
-            Shape r7 = mirrorAlongX(r6.getBounds2D().getMaxX()+2,r6);
-            g2d.rotate(Math.toRadians(57),r7.getBounds2D().getX(), r7.getBounds2D().getY());
-            g2d.fill(r7);
-            Shape r8 = mirrorAlongX(r7.getBounds2D().getMaxX()+2,r7);
-            g2d.fill(r8);*/
         }
     }
-    
-    private static Shape mirrorAlongX(double x, Shape shape)
-    {
-        AffineTransform at = new AffineTransform();
-        at.translate(x, 0);
-        at.scale(-1, 1);
-        at.translate(-x, 0);
-        return at.createTransformedShape(shape);
-    }
-    
-    private static Shape mirrorAlongY(double y, Shape shape)
-    {
-        AffineTransform at = new AffineTransform();
-        at.translate(0, y);
-        at.scale(1,-1);
-        at.translate(0,-y);
-        return at.createTransformedShape(shape);
-    }
-   
     
     /**
      * Se l'attributo definePoly è false,
@@ -383,11 +359,9 @@ public class SnowFlakePanel extends JPanel implements MouseListener,MouseMotionL
         this.allCropPoints = new ArrayList<ArrayList<CropPoint>>();
         this.polys = new ArrayList<CropPolygon>();
         this.pCounter = 0;
-        this.polyCounter = 0;
         this.definePoly = true;
         this.flakeGenerated = false;
-        repaint();
-        
+        repaint();      
     }
     
     /**
@@ -407,22 +381,43 @@ public class SnowFlakePanel extends JPanel implements MouseListener,MouseMotionL
         return file;
     }
     
+    /**
+     * Se il tasto Genera del Frame viene premuto, richiama questo metodo
+     * che setta il flag "FlakeGenerated" a true affinchè si impedisca all'utente
+     * di creare punti e poligoni in quanto il fiocco viene generato.
+     * Inoltre, rimuove tutti gli elementi dal Panel ed esegue un repaint.
+     */
     public void genSnowFlake(){
     
         this.flakeGenerated = true;
+        this.removeAll();
+        repaint();
         
     }
-      
-    
+     
+    /**
+     * Legge i punti da un file binario.
+     * @param file File da leggere.
+     */
     public void readPoints(File file){
         
         
     
     }
     
-    
+    /**
+     * Esegue un render del fiocco di neve specificando il tipo
+     * di salvataggio (png o svg).
+     * @param type Il tipo di render da eseguire (raster o vettoriale). 
+     */
     public void saveSnowFlake(String type){
     
-    
+        if(type.equals("png")){
+        
+            
+            
+        }else if(type.equals("svg")){
+        
+        }
     }
 }

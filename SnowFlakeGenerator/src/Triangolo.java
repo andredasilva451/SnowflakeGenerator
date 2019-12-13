@@ -48,6 +48,16 @@ public class Triangolo  {
         return new Polygon(this.pointX,pointY,3);
     
     }
+    
+    public int getWidth(){
+        
+        return this.width;
+    }
+    
+    public int getHeight(){
+    
+        return this.height;
+    }
    
     public void paint(Graphics g){
         

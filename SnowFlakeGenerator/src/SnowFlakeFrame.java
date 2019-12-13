@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 /**
  *
@@ -35,15 +36,28 @@ public class SnowFlakeFrame extends javax.swing.JFrame {
     private void initComponents() {
 
         snowFlakePanel = new SnowFlakePanel();
-        jPanel1 = new javax.swing.JPanel();
+        ButtonsPanel = new javax.swing.JPanel();
         SalvaPuntiButton = new javax.swing.JButton();
         ImportaPuntiButton = new javax.swing.JButton();
         GeneraButton = new javax.swing.JButton();
         ResetButton = new javax.swing.JButton();
+        salvaPNGButton = new javax.swing.JButton();
+        salvaSVGButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jPanel1.setBackground(new java.awt.Color(0, 153, 255));
+        javax.swing.GroupLayout snowFlakePanelLayout = new javax.swing.GroupLayout(snowFlakePanel);
+        snowFlakePanel.setLayout(snowFlakePanelLayout);
+        snowFlakePanelLayout.setHorizontalGroup(
+            snowFlakePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+        snowFlakePanelLayout.setVerticalGroup(
+            snowFlakePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 711, Short.MAX_VALUE)
+        );
+
+        ButtonsPanel.setBackground(new java.awt.Color(0, 153, 255));
 
         SalvaPuntiButton.setText("Salva Punti");
         SalvaPuntiButton.addActionListener(new java.awt.event.ActionListener() {
@@ -51,15 +65,24 @@ public class SnowFlakeFrame extends javax.swing.JFrame {
                 SalvaPuntiButtonActionPerformed(evt);
             }
         });
+        ButtonsPanel.add(SalvaPuntiButton);
 
         ImportaPuntiButton.setText("Importa punti");
+        ImportaPuntiButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ImportaPuntiButtonActionPerformed(evt);
+            }
+        });
+        ButtonsPanel.add(ImportaPuntiButton);
 
+        GeneraButton.setBackground(new java.awt.Color(255, 255, 255));
         GeneraButton.setText("Genera");
         GeneraButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 GeneraButtonActionPerformed(evt);
             }
         });
+        ButtonsPanel.add(GeneraButton);
 
         ResetButton.setText("Reset");
         ResetButton.addActionListener(new java.awt.event.ActionListener() {
@@ -67,33 +90,25 @@ public class SnowFlakeFrame extends javax.swing.JFrame {
                 ResetButtonActionPerformed(evt);
             }
         });
+        ButtonsPanel.add(ResetButton);
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(SalvaPuntiButton)
-                .addGap(18, 18, 18)
-                .addComponent(ImportaPuntiButton)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 541, Short.MAX_VALUE)
-                .addComponent(ResetButton, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(GeneraButton, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(GeneraButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(ImportaPuntiButton)
-                    .addComponent(SalvaPuntiButton)
-                    .addComponent(ResetButton))
-                .addContainerGap())
-        );
+        salvaPNGButton.setText("Salva (png)");
+        salvaPNGButton.setEnabled(false);
+        salvaPNGButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                salvaPNGButtonActionPerformed(evt);
+            }
+        });
+        ButtonsPanel.add(salvaPNGButton);
+
+        salvaSVGButton.setText("Salva (svg)");
+        salvaSVGButton.setEnabled(false);
+        salvaSVGButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                salvaSVGButtonActionPerformed(evt);
+            }
+        });
+        ButtonsPanel.add(salvaSVGButton);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -103,16 +118,16 @@ public class SnowFlakeFrame extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(snowFlakePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(ButtonsPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 1004, Short.MAX_VALUE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(ButtonsPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(2, 2, 2)
-                .addComponent(snowFlakePanel, javax.swing.GroupLayout.DEFAULT_SIZE, 765, Short.MAX_VALUE)
+                .addComponent(snowFlakePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -149,6 +164,25 @@ public class SnowFlakeFrame extends javax.swing.JFrame {
         
     }//GEN-LAST:event_SalvaPuntiButtonActionPerformed
 
+    private void salvaSVGButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_salvaSVGButtonActionPerformed
+        this.snowFlakePanel.saveSnowFlake("svg");
+    }//GEN-LAST:event_salvaSVGButtonActionPerformed
+
+    private void ImportaPuntiButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ImportaPuntiButtonActionPerformed
+        
+        JFileChooser chooser = new JFileChooser();
+        int returnVal = chooser.showOpenDialog(null);
+        if(returnVal == JFileChooser.APPROVE_OPTION) {
+            
+            File fileToRead = chooser.getSelectedFile();
+            this.snowFlakePanel.readPoints(fileToRead);
+        }
+    }//GEN-LAST:event_ImportaPuntiButtonActionPerformed
+
+    private void salvaPNGButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_salvaPNGButtonActionPerformed
+        this.snowFlakePanel.saveSnowFlake("png");
+    }//GEN-LAST:event_salvaPNGButtonActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -161,7 +195,8 @@ public class SnowFlakeFrame extends javax.swing.JFrame {
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    //javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    javax.swing.UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
                     break;
                 }
             }
@@ -185,11 +220,13 @@ public class SnowFlakeFrame extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel ButtonsPanel;
     private javax.swing.JButton GeneraButton;
     private javax.swing.JButton ImportaPuntiButton;
     private javax.swing.JButton ResetButton;
     private javax.swing.JButton SalvaPuntiButton;
-    private javax.swing.JPanel jPanel1;
+    private javax.swing.JButton salvaPNGButton;
+    private javax.swing.JButton salvaSVGButton;
     private SnowFlakePanel snowFlakePanel;
     // End of variables declaration//GEN-END:variables
 }
