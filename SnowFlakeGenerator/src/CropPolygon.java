@@ -9,10 +9,29 @@ import java.awt.Polygon;
  */
 public class CropPolygon {
     
+    /**
+     * Tutte le coordinate X dei vari punti del poligono.
+     */
     private int[] pointsX;
+    
+    /**
+     * Tutte le coordinate Y dei vari punti del poligono.
+     */
     private int[] pointsY;
+    
+    /**
+     * Percentuale X della posizione dei punti del poligono.
+     */
     private double[] percentagesX;
+    
+    /**
+     * Percentuale Y della posizione dei punti del poligono.
+     */
     private double[] percentagesY;
+    
+    /**
+     * Numero di punti che formano il poligono.
+     */
     private int nPoints;
     
     
@@ -45,7 +64,6 @@ public class CropPolygon {
             this.pointsY[i] = (int)posYd;
         }
     }
-    
             
     public void paint(Graphics g){
     
@@ -58,7 +76,6 @@ public class CropPolygon {
         return new Polygon(this.pointsX,this.pointsY,this.nPoints);
     
     }
-    
     
     /**
      * Crea una stringa contenente le percentuali X e Y

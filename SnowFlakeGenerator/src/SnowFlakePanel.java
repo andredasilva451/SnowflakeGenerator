@@ -4,6 +4,7 @@ import java.awt.Point;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
+import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -14,6 +15,9 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
 /**
@@ -442,15 +446,26 @@ public class SnowFlakePanel extends JPanel implements MouseListener,MouseMotionL
      * Esegue un render del fiocco di neve specificando il tipo
      * di salvataggio (png o svg).
      * @param type Il tipo di render da eseguire (raster o vettoriale). 
+     * @return  File PNG/SVG.
      */
-    public void saveSnowFlake(String type){
+    public File saveSnowFlake(String type,String path){
     
         if(type.equals("png")){
-        
             
+            BufferedImage img = new BufferedImage(this.getWidth(),this.getHeight(), BufferedImage.TYPE_INT_RGB);
+            this.paint(img.getGraphics());
+            File out = new File(path);
+            try {
+                ImageIO.write(img,"png", out);   
+            } catch (IOException ex) {
+                Logger.getLogger(SnowFlakePanel.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            return out;
             
         }else if(type.equals("svg")){
-        
+            
+            
         }
+        return null;
     }
 }

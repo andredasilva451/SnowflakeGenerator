@@ -165,16 +165,15 @@ public class SnowFlakeFrame extends javax.swing.JFrame {
             System.out.println("Save as file: " + fileToSave.getAbsolutePath());
                   
         }
-        
     }//GEN-LAST:event_SalvaPuntiButtonActionPerformed
 
     private void salvaSVGButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_salvaSVGButtonActionPerformed
-        this.snowFlakePanel.saveSnowFlake("svg");
+        //this.snowFlakePanel.saveSnowFlake("svg");
     }//GEN-LAST:event_salvaSVGButtonActionPerformed
 
     private void ImportaPuntiButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ImportaPuntiButtonActionPerformed
         
-        JFileChooser chooser = new JFileChooser();
+        JFileChooser chooser = new JFileChooser(); 
         int returnVal = chooser.showOpenDialog(null);
         if(returnVal == JFileChooser.APPROVE_OPTION) {
             
@@ -188,7 +187,19 @@ public class SnowFlakeFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_ImportaPuntiButtonActionPerformed
 
     private void salvaPNGButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_salvaPNGButtonActionPerformed
-        this.snowFlakePanel.saveSnowFlake("png");
+
+        JFileChooser fileChooser = new JFileChooser();      
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("PNG files (.png)", "png");
+        fileChooser.setFileFilter(filter);
+        int userSelection = fileChooser.showSaveDialog(this);
+        
+        if (userSelection == JFileChooser.APPROVE_OPTION) {
+                         
+            File fileToSave = fileChooser.getSelectedFile();  //File da salvare
+            fileToSave = this.snowFlakePanel.saveSnowFlake("png",fileToSave.getAbsolutePath());
+            System.out.println("Save as file: " + fileToSave.getAbsolutePath());
+            
+        }
     }//GEN-LAST:event_salvaPNGButtonActionPerformed
 
     /**
