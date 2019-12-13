@@ -69,18 +69,13 @@ public class CropPolygon {
     public String toString(){
     
         String s = "";
-        s += "X: ";
         for(int i = 0; i < this.pointsX.length; i++){
             
-            s += this.percentagesX[i] + (i==this.percentagesX.length-1? "% ":"%, ");
-        
+            s += this.percentagesX[i] + (i==this.percentagesX.length-1? "|":"-");    
         }
-        s += "  Y: ";
-        
         for(int i = 0; i < this.pointsY.length; i++){
             
-            s += this.percentagesY[i] + (i==this.percentagesY.length-1? "% ":"%, ");
-        
+            s += this.percentagesY[i] + (i==this.percentagesY.length-1? "|":"-");
         }
         return s;
     }

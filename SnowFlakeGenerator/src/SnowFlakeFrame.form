@@ -107,7 +107,7 @@
         </Component>
         <Component class="javax.swing.JButton" name="salvaPNGButton">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Salva (png)"/>
+            <Property name="text" type="java.lang.String" value="Salva (PNG)"/>
             <Property name="enabled" type="boolean" value="false"/>
           </Properties>
           <Events>
@@ -116,7 +116,7 @@
         </Component>
         <Component class="javax.swing.JButton" name="salvaSVGButton">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Salva (svg)"/>
+            <Property name="text" type="java.lang.String" value="Salva (SVG)"/>
             <Property name="enabled" type="boolean" value="false"/>
           </Properties>
           <Events>

@@ -4,12 +4,15 @@ import java.awt.Point;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
-import java.awt.geom.Area;
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import javax.swing.JPanel;
 
@@ -146,6 +149,7 @@ public class SnowFlakePanel extends JPanel implements MouseListener,MouseMotionL
     @Override
     public void mouseClicked(MouseEvent e) {
         
+        //aggiunta punti
         if(e.getButton() == MouseEvent.BUTTON1){
             
             if(this.definePoly){
@@ -161,15 +165,18 @@ public class SnowFlakePanel extends JPanel implements MouseListener,MouseMotionL
                     }
                 }
                 if(this.definePoly){
-                    cropPoints.add(point);
+                    this.cropPoints.add(point);
+                }
+                if(this.pCounter == 0){
+                    this.cropPoints.get(0).setFirstPoint(true);
                 }
                 cropPoints.get(cropPoints.size()-1).setLastPoint(true);
                 for(int i = 0; i<cropPoints.size()-1; i++) {
-                        cropPoints.get(i).setLastPoint(false);
+                        this.cropPoints.get(i).setLastPoint(false);
                 }
                 if(this.definePoly == false){
                     for(int i = 0; i<cropPoints.size(); i++) {
-                        cropPoints.get(i).poligonDefined(true);
+                        this.cropPoints.get(i).poligonDefined(true);
                     }
                 }
                 this.pCounter++;
@@ -180,7 +187,7 @@ public class SnowFlakePanel extends JPanel implements MouseListener,MouseMotionL
             }
             repaint();
         }
-        
+        //rimozione punti
         if(e.getButton() == MouseEvent.BUTTON3){
            
             if(this.definePoly){
@@ -188,7 +195,8 @@ public class SnowFlakePanel extends JPanel implements MouseListener,MouseMotionL
                 for(int i = 0; i<cropPoints.size()-1; i++) {
                     if(this.cropPoints.get(i).contains(e.getX(),e.getY())){                    
                         this.cropPoints.remove(this.cropPoints.get(i));
-                        this.cropPoints.get(this.cropPoints.size()-1).setLastPoint(true);      
+                        this.cropPoints.get(this.cropPoints.size()-1).setLastPoint(true);
+                        this.cropPoints.get(0).setFirstPoint(true);
                     }
                 }
             }
@@ -391,18 +399,43 @@ public class SnowFlakePanel extends JPanel implements MouseListener,MouseMotionL
     
         this.flakeGenerated = true;
         this.removeAll();
-        repaint();
-        
+        repaint();  
     }
      
     /**
      * Legge i punti da un file binario.
      * @param file File da leggere.
+     * @throws java.io.FileNotFoundException
      */
-    public void readPoints(File file){
+    public void readPoints(File file) throws FileNotFoundException, IOException {
         
-        
-    
+        BufferedReader in = new BufferedReader(new FileReader(file));    
+        this.pointReset();
+        String st;
+        while ((st = in.readLine()) != null) {
+            for(int i = 0; i < st.length()-1;i++){
+                if(st.charAt(i) == '|'){   
+                    String x = st.substring(0,i);
+                    String y = st.substring(i+1,st.length()-1);
+                    String[] splitX = x.split("-");
+                    String[] splitY = y.split("-");
+                    if(splitX.length == splitY.length){
+                        for(int j = 0; j < splitX.length; j++){
+                            CropPoint p = new CropPoint(0,0,(int)Double.parseDouble(splitX[j]),(int)Double.parseDouble(splitY[j]));
+                            p.refreshPosition(this.getWidth(),this.getHeight());
+                            this.cropPoints.add(p);
+                        }
+                        this.definePoly = false;
+                        this.defineCropPolygon();
+                        this.allCropPoints.add(this.cropPoints);
+                        this.cropPoints.clear();
+                    }else{
+                        System.out.println("Impossibile!");
+                    }
+                }
+            }
+        }
+        repaint();
     }
     
     /**

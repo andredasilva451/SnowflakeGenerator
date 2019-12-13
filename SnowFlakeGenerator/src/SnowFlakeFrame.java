@@ -92,7 +92,7 @@ public class SnowFlakeFrame extends javax.swing.JFrame {
         });
         ButtonsPanel.add(ResetButton);
 
-        salvaPNGButton.setText("Salva (png)");
+        salvaPNGButton.setText("Salva (PNG)");
         salvaPNGButton.setEnabled(false);
         salvaPNGButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -101,7 +101,7 @@ public class SnowFlakeFrame extends javax.swing.JFrame {
         });
         ButtonsPanel.add(salvaPNGButton);
 
-        salvaSVGButton.setText("Salva (svg)");
+        salvaSVGButton.setText("Salva (SVG)");
         salvaSVGButton.setEnabled(false);
         salvaSVGButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -136,10 +136,14 @@ public class SnowFlakeFrame extends javax.swing.JFrame {
 
     private void GeneraButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_GeneraButtonActionPerformed
        this.snowFlakePanel.genSnowFlake();
+       this.salvaPNGButton.setEnabled(true);
+       this.salvaSVGButton.setEnabled(true);
     }//GEN-LAST:event_GeneraButtonActionPerformed
 
     private void ResetButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ResetButtonActionPerformed
         this.snowFlakePanel.pointReset();
+        this.salvaPNGButton.setEnabled(false);
+        this.salvaSVGButton.setEnabled(false);
     }//GEN-LAST:event_ResetButtonActionPerformed
 
     private void SalvaPuntiButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SalvaPuntiButtonActionPerformed
@@ -175,7 +179,11 @@ public class SnowFlakeFrame extends javax.swing.JFrame {
         if(returnVal == JFileChooser.APPROVE_OPTION) {
             
             File fileToRead = chooser.getSelectedFile();
-            this.snowFlakePanel.readPoints(fileToRead);
+            try {
+                this.snowFlakePanel.readPoints(fileToRead);
+            } catch (IOException ex) {
+                Logger.getLogger(SnowFlakeFrame.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }//GEN-LAST:event_ImportaPuntiButtonActionPerformed
 

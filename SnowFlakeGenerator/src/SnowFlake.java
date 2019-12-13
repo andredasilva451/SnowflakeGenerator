@@ -1,4 +1,3 @@
-
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -8,7 +7,7 @@ import java.awt.geom.Area;
 import java.util.List;
 
 /**
- * Si occupa di generare il fiocco di neve.
+ * Classe che rappresenta un modello astratto di un fiocco di neve.
  * @author André Da Silva
  */
 public class SnowFlake {
@@ -40,10 +39,10 @@ public class SnowFlake {
         }
         croppedTriangle.subtract(cropArea);
         Graphics2D g2d = (Graphics2D) g.create();
-        //MatrixModel m = new MatrixModel(1,1,200,this.wContainer,this.hContainer,1,1);
         g2d.setColor(Color.white);    
         g2d.scale(0.4,0.4);
-        g2d.translate(this.wContainer-this.a.getWidth(),this.hContainer-this.a.getHeight());
+        g2d.translate(this.wContainer-this.a.getWidth(),this.hContainer-this.a.getHeight()/1.25);
+        
         g2d.rotate(Math.toRadians(-30),croppedTriangle.getBounds2D().getMaxX(),croppedTriangle.getBounds2D().getMaxY());
         g2d.fill(croppedTriangle);
         Shape r2 = mirrorAlongX(croppedTriangle.getBounds2D().getMaxX(),croppedTriangle);
@@ -73,6 +72,12 @@ public class SnowFlake {
         g2d.fill(r14);
     }
     
+    /**
+     * Specchia nell'asse X una forma (Shape)
+     * @param x Punto in cui bisogna traslare la nuova forma specchiata.
+     * @param shape La forma da specchiare.
+     * @return 
+     */
     private static Shape mirrorAlongX(double x, Shape shape)
     {
         AffineTransform at = new AffineTransform();
@@ -82,6 +87,12 @@ public class SnowFlake {
         return at.createTransformedShape(shape);
     }
     
+    /**
+     * Specchia nell'asse Y una forma (Shape)
+     * @param y Punto in cui bisogna traslare la nuova forma specchiata.
+     * @param shape La forma da specchiare.
+     * @return 
+     */
     private static Shape mirrorAlongY(double y, Shape shape)
     {
         AffineTransform at = new AffineTransform();

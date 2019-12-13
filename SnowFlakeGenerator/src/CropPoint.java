@@ -14,6 +14,7 @@ public class CropPoint {
     private int posY;
     private final int CROP_POINT_SIZE = 10;
     private boolean isLastPoint;
+    private boolean isFirstPoint;
     private boolean polyDefined;
     private double percentageX;
     private double percentageY;
@@ -26,7 +27,7 @@ public class CropPoint {
         
     }
     
-    //punti responsive.
+    //per punti responsive.
     public CropPoint(int posX,int posY, double percentageX, double percentageY){
   
         this.posX = posX - CROP_POINT_SIZE/2;
@@ -36,6 +37,12 @@ public class CropPoint {
             
     }
     
+    /**
+     * Aggiorna la posizione del punto in base alla dimensione del contenitore
+     * e la percentuale che occupa.
+     * @param wContainer Larghezza del contenitore.
+     * @param hContainer Altezza del contenitore.
+     */
      public void refreshPosition(int wContainer, int hContainer){
         
         double posXd = ((double)this.percentageX/100)*wContainer;
@@ -120,6 +127,11 @@ public class CropPoint {
     public void setLastPoint(boolean s){
         this.isLastPoint = s;
     }
+    
+    public void setFirstPoint(boolean s){
+        this.isFirstPoint = s;
+    }
+    
     public void poligonDefined(boolean s){
         this.polyDefined = s;
     }
@@ -128,6 +140,8 @@ public class CropPoint {
          
         if(this.isLastPoint){
             g.setColor(Color.green);
+        }else if(this.isFirstPoint){
+            g.setColor(Color.cyan);
         }else{
             g.setColor(Color.red);
         }
