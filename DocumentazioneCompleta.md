@@ -164,9 +164,6 @@ requisiti.
 
 ### Use case
 
-I casi d’uso rappresentano l’interazione tra i vari attori e le
-funzionalità del prodotto.
-
 ![alt text](https://github.com/andredasilva451/SnowflakeGenerator/blob/master/UseCase.png)
 
 ### Pianificazione
