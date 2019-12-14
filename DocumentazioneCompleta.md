@@ -222,6 +222,11 @@ dell’interfaccia utente. La progettazione delle interfacce è basata
 sulle informazioni ricavate durante la fase di analisi e realizzata
 tramite mockups.
 
+L'interfaccia del software sarà composta da 2 frame:
+
+- MenuFrame: Schermata iniziale con tasto "avvia" per utilizzare il SW, tasto "about" per delle informazioni sul software ed il tasto "esci" per poter chiudere il tutto.
+- 
+
 ![alt text](https://github.com/andredasilva451/SnowflakeGenerator/blob/master/design.png)
 
 ### Design procedurale
@@ -313,16 +318,88 @@ ripetibile alle stesse condizioni.
 |**Procedura**   | Dopo aver creato un punto ritaglio, tener premuto il tasto sx su di esso e trascinarlo con il mouse. |
 |**Risultati attesi** | Il punto selezionato si sposta seguendo correttamente il cursore. In caso di piu punti creati, anche il filo connesso ad esso si muove e segue il punto. |
 
+|Test Case      | TC-005                               |
+|---------------|--------------------------------------|
+|**Nome**       |Generazione poligono di ritaglio |
+|**Riferimento**|REQ-09                             |
+|**Descrizione**|è possibile generare un poligono di ritaglio tramite chiusura dei punti ritaglio |
+|**Prerequisiti**| Aver generarato 2 punti |
+|**Procedura**   | Dopo aver creato 2 punti, il terzo dovrà essere fatto sopra il primo affinchè venga chiuso. A questo punto, il colore dei punti risulterà essere Arancione e premendo il tasto sx del mouse, si genera il poligono. |
+|**Risultati attesi** | Viene generato un poligono blu dove prima vi erano i punti ritaglio. |
+
+|Test Case      | TC-006                               |
+|---------------|--------------------------------------|
+|**Nome**       |Reset dei punti ritaglio |
+|**Riferimento**|REQ-10                             |
+|**Descrizione**|è possibile resettare i punti e i poligoni ritagli creati |
+|**Prerequisiti**| Aver generato almeno 1 punto o 1 poligono ritaglio |
+|**Procedura**   | Dopo aver fatto almeno 1 punto o poligono di ritaglio, premere il tasto 'reset', presente nel pannello dei bottoni |
+|**Risultati attesi** | Tutti gli elementi creati (punti o poligoni) vengono eliminati. Se il tasto viene premuto dopo aver già generato il fiocco, quest'ultimo si eliminerà e si ritornerà alla modalità di ritaglio del triangolo. |
+
+|Test Case      | TC-007                               |
+|---------------|--------------------------------------|
+|**Nome**       |Generazione fiocco |
+|**Riferimento**|REQ-11                             |
+|**Descrizione**|è possibile generare un fiocco di neve |
+|**Prerequisiti**| Apertura SW |
+|**Procedura**   | Premere il tasto 'genera' del pannello con tutti i pulsanti. Si consiglia di aver generato prima un poligono ritaglio sul triangolo per poter vedere il risultato dei ritagli. |
+|**Risultati attesi** | Si genera il fiocco di neve (con o senza ritagli).  |
+
+|Test Case      | TC-008                               |
+|---------------|--------------------------------------|
+|**Nome**       |Salvataggio dei punti ritaglio |
+|**Riferimento**|REQ-14, REQ-17                        |
+|**Descrizione**|è possibile salvare tutti i punti di ritaglio fatti sul triangolo |
+|**Prerequisiti**| Aver generato almeno 1 poligono ritaglio |
+|**Procedura**   | Creare un poligono di ritaglio, dopodiché, premere il tasto 'salva punti' e scegliere nome e dove salvare il file con i punti. (ogni formato binario è accettato) |
+|**Risultati attesi** | Si viene a creare un file binario (es. .txt) con le coordinate dei punti creati. |
+
+|Test Case      | TC-009                               |
+|---------------|--------------------------------------|
+|**Nome**       |Salvataggio fiocco di neve            |
+|**Riferimento**|REQ-14, REQ-15, REQ-16                       |
+|**Descrizione**|è possibile salvare il fiocco generato in formato png o svg. |
+|**Prerequisiti**| Aver generato il fiocco di neve |
+|**Procedura**   | Dopo aver generato il fiocco di neve, premere il tasto salva e scegliere se salvare in png o svg, dimensioni, nome e la directory. |
+|**Risultati attesi** | Si viene a creare un file png o svg con il fiocco di neve disegnato. |
+
+|Test Case      | TC-010                               |
+|---------------|--------------------------------------|
+|**Nome**       |Import dei punti ritaglio            |
+|**Riferimento**|REQ-18                     |
+|**Descrizione**|è possibile importare i punti ritaglio creati in precedenza. |
+|**Prerequisiti**| Aver già creato e salvato dei punti ritaglio di uno o piu poligoni |
+|**Procedura**   | Premere il tasto 'importa punti' e scegliere il file binario dei punti. |
+|**Risultati attesi** | Si viene a creare il o i poligoni di ritaglio nella posizione dei punti importati. |
+
+|Test Case      | TC-011                               |
+|---------------|--------------------------------------|
+|**Nome**       |Generazione in tempo reale del fiocco            |
+|**Riferimento**|REQ-12                     |
+|**Descrizione**|Ad ogni poligono generato, si crea un'anteprima del fiocco con i tagli fatti |
+|**Prerequisiti**| Aprire il SW |
+|**Procedura**   | Creare un poligono di ritaglio.  |
+|**Risultati attesi** | Nel piccolo pannello a destra, si viene a generare un fiocco con i tagli fatti. |
 
 
 
 ### Risultati test
 
-Tabella riassuntiva in cui si inseriscono i test riusciti e non del
-prodotto finale. Se un test non riesce e viene corretto l’errore, questo
-dovrà risultare nel documento finale come riuscito (la procedura della
-correzione apparirà nel diario), altrimenti dovrà essere descritto
-l’errore con eventuali ipotesi di correzione.
+| Test Case | Stato | Osservazioni  |
+|-----------|-------|---------------|
+|   TC-001  | Riuscito |            |
+|   TC-002  | Riuscito |            |
+|   TC-003  | Riuscito |            |
+|   TC-004  | Riuscito | Non è presente nessun tasto per lo switch creazione/elimina, ma l'operazione viene eseguita con i tasti sx o dx|
+|   TC-005 | Riuscito |             |
+|   TC-006 | Riuscito |             |
+|   TC-007 | Riuscito |             |
+|   TC-008 | Riuscito |             |
+|   TC-009 | Riuscito | Non è possibile scegliere la dimensione con cui salvare l'immagine |
+|   TC-010 | Riuscito |             |
+|   TC-011 | Non Riuscito |             |
+
+
 
 ### Mancanze/limitazioni conosciute
 
