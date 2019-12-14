@@ -383,28 +383,27 @@ ripetibile alle stesse condizioni.
 
 ### Risultati test
 
-| Test Case | Stato | Osservazioni  |
-|-----------|-------|---------------|
-|   TC-001  | Riuscito |            |
-|   TC-002  | Riuscito |            |
-|   TC-003  | Riuscito |            |
-|   TC-004  | Riuscito | Non è presente nessun tasto per lo switch creazione/elimina, ma l'operazione viene eseguita con i tasti sx o dx|
-|   TC-005 | Riuscito |             |
-|   TC-006 | Riuscito |             |
-|   TC-007 | Riuscito |             |
-|   TC-008 | Riuscito |             |
-|   TC-009 | Riuscito | Non è possibile scegliere la dimensione con cui salvare l'immagine |
-|   TC-010 | Riuscito |             |
-|   TC-011 | Non Riuscito |             |
+| Test Case | Stato | 
+|-----------|-------|
+|   TC-001  | Riuscito |            
+|   TC-002  | Riuscito |            
+|   TC-003  | Riuscito |           
+|   TC-004  | Riuscito |
+|   TC-005 | Riuscito |             
+|   TC-006 | Riuscito |             
+|   TC-007 | Riuscito |             
+|   TC-008 | Riuscito |             
+|   TC-009 | Riuscito |  
+|   TC-010 | Riuscito |             
+|   TC-011 | Non Riuscito |             
 
 
 
 ### Mancanze/limitazioni conosciute
 
-Descrizione con motivazione di eventuali elementi mancanti o non
-completamente implementati, al di fuori dei test case. Non devono essere
-riportati gli errori e i problemi riscontrati e poi risolti durante il
-progetto.
+- Non è presente nessun tasto per lo switch creazione/elimina, ma l'operazione viene eseguita con i tasti sinistro o destro del mouse.
+- Non è possibile scegliere la dimensione con cui salvare l'immagine.
+- La preview del fiocco di neve non funziona.
 
 ## Consuntivo
 
