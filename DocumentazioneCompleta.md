@@ -219,11 +219,11 @@ Descrive:
 
 L'interfaccia del software sarà composta da 2 frame:
 
-- Menu Frame: Schermata iniziale con tasto "avvia" per utilizzare il SW, tasto "about" per delle informazioni sul software ed il tasto "esci" per poter chiudere il tutto.
-- SnowFlak eFrame: Frame principale del SW, composto da vari Panel, ognuno con il proprio scopo:
-   - SnowFlake Panel: Pannello dove viene generato il triangolo, i tagli ed il fiocco di neve.
-   - Buttons Panel: Pannello con i vari bottoni per il salvataggio, generazione fiocco, etc.
-   - Options Panel: Pannello che includerà varie opzoni facoltative (es. colore sfondo), inoltre include il PreviewPanel che mostra l'anteprima del fiocco di neve.
+- **Menu Frame**: Schermata iniziale con tasto "avvia" per utilizzare il SW, tasto "about" per delle informazioni sul software ed il tasto "esci" per poter chiudere il tutto.
+- **SnowFlake Frame**: Frame principale del SW, composto da vari Panel, ognuno con il proprio scopo:
+   - **SnowFlake Panel**: Pannello dove viene generato il triangolo, i tagli ed il fiocco di neve.
+   - **Buttons Panel**: Pannello con i vari bottoni per il salvataggio, generazione fiocco, etc.
+   - **Options Panel**: Pannello che includerà varie opzoni facoltative (es. colore sfondo), inoltre include il **PreviewPanel** che mostrerà l'anteprima del fiocco di neve.
 
 ![alt text](https://github.com/andredasilva451/SnowflakeGenerator/blob/master/design.png)
 
