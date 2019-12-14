@@ -189,6 +189,7 @@ in questo capitolo.
 - Java Swing
 - Java AWT
 - Java IO
+- ImageTracer
 
 #### Piattaforma
 Qualsiasi Sistema operativo (Windows,Mac OS, distribuzioni Linux, etc.)
@@ -214,22 +215,14 @@ Descrive:
 
 -   Eventuale sitemap
 
-### Design dei dati e database
-
-Descrizione delle strutture di dati utilizzate dal programma in base
-agli attributi e le relazioni degli oggetti in uso.
-
-### Schema E-R, schema logico e descrizione.
-
-Se il diagramma E-R viene modificato, sulla doc dovrà apparire l’ultima
-versione, mentre le vecchie saranno sui diari.
-
 ### Design delle interfacce
 
 Descrizione delle interfacce interne ed esterne del sistema e
 dell’interfaccia utente. La progettazione delle interfacce è basata
 sulle informazioni ricavate durante la fase di analisi e realizzata
 tramite mockups.
+
+![alt text](https://github.com/andredasilva451/SnowflakeGenerator/blob/master/design.png)
 
 ### Design procedurale
 
@@ -270,6 +263,10 @@ componenti utilizzati. Eventualmente questa va allegata.
 
 Per eventuali dettagli si possono inserire riferimenti ai diari.
 
+## Diagramma UML
+
+
+
 ## Test
 
 ### Protocollo di test
@@ -294,9 +291,28 @@ ripetibile alle stesse condizioni.
 |**Nome**       |Creazione punti ritaglio |
 |**Riferimento**|REQ-09                              |
 |**Descrizione**|è possibile generare dei 'punti ritaglio' al fine di creare dei 'poligoni ritaglio'|
-|**Prerequisiti**| Aprire il SW, possedere un mouse |
+|**Prerequisiti**| Aprire il SW, mouse |
 |**Procedura**   | Aprire il SW tramite il file .jar o NetBeans, Cliccare con il tasto Sx in un punto qualsiasi del frame |
 |**Risultati attesi** | I punti ritaglio vengono creati e sono collegati tra di loro in caso non venga ancora definito il poligono |
+
+|Test Case      | TC-003                               |
+|---------------|--------------------------------------|
+|**Nome**       |Eliminazione punti ritaglio |
+|**Riferimento**|REQ-13                             |
+|**Descrizione**|è possibile eliminare 'punti ritaglio' creati|
+|**Prerequisiti**| Aver generarato almeno 1 punto |
+|**Procedura**   | Dopo aver creato un punto ritaglio, premendoci sopra con il tasto destro dovrebbe eliminarsi. In caso si avesse già creato altri punti, essi continuano ad essere connessi tra di loro senza problemi |
+|**Risultati attesi** | Il punto selezionato non c'è piu, la struttura di punti precedentemente creata continua ad esistere correttamente |
+
+|Test Case      | TC-004                               |
+|---------------|--------------------------------------|
+|**Nome**       |Spostamento punti ritaglio |
+|**Riferimento**|REQ-13                             |
+|**Descrizione**|è possibile spostare i punti ritaglio selezionati |
+|**Prerequisiti**| Aver generarato almeno 1 punto |
+|**Procedura**   | Dopo aver creato un punto ritaglio, tener premuto il tasto sx su di esso e trascinarlo con il mouse. |
+|**Risultati attesi** | Il punto selezionato si sposta seguendo correttamente il cursore. In caso di piu punti creati, anche il filo connesso ad esso si muove e segue il punto. |
+
 
 
 
