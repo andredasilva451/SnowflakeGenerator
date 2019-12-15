@@ -268,7 +268,7 @@ Per eventuali dettagli si possono inserire riferimenti ai diari.
 
 **Triangolo**
 
-Per generare il triangolo è stata creata una classe apparte di nome 'Triangolo' che richiede, per essere istanziata, le coordinate x e y del punto in cui disegnare il triangolo, ed infine larghezza e altezza. Per disegnare il triangolo si prendono le coordinate degli spigoli che vengono salvate in due array, uno per le X ed uno per le Y, definiti tramite 2 metodi:
+Per generare il triangolo è stata creata una classe a parte di nome 'Triangolo' che richiede, per essere istanziata, le coordinate x e y del punto in cui disegnare il triangolo, ed infine larghezza e altezza. Per disegnare il triangolo si prendono le coordinate degli spigoli che vengono salvate in due array, uno per le X ed uno per le Y, definiti tramite 2 metodi:
 
 ```java
 
@@ -360,7 +360,7 @@ public double[] getDXYSize(){
 	 return dxy;
 }
 ```
-Dato che in questo caso quello che si vuole ridimensionare non è una matrice ma un triangolo, è stata instanziata nel seguente modo nel metodo paint:
+Dato che in questo caso quello che si vuole ridimensionare non è una matrice ma un triangolo, è stata instanziata nel seguente modo nel metodo paint del panel SnowFlakePanel:
 ```java
  this.m = new MatrixModel(1,1,25,this.getHeight(),this.getWidth(),1,1.73);
 ```
@@ -371,8 +371,24 @@ E alla fine il triangolo viene istanziato usando i metodi della classe:
 this.a = new Triangolo((int)m.getDXYSize()[0],(int)m.getDXYSize()[1],(int)m.getCellSize()[0],(int)m.getCellSize()[1]);
 this.a.paint(g);
 ```
+**CropPoints**
 
-
+Per rappresentare i punti creati è stata creata la classe CropPoints. Non è stata utilizzata la già presente classe Point della libreria AWT in quanto, al fine di rendere i punti 'Responsive', cioè che mantengono la loro posizione in caso di ingradimento o rimpicciolimento del frame, vengono passati alla creazione, oltre alle coordinate in cui bisogna disegnare il punto, anche la percentuale X e Y calcolate moltiplicando per 100 le coordinate X e Y e dividendole rispettivamente per la larghezza e l'altezza del SnowFlakePanel.
+```java
+ double percentageX = (e.getX()*100)/this.getWidth();
+ double percentageY = (e.getY()*100)/this.getHeight();
+ CropPoint point = new CropPoint(e.getX(),e.getY(),percentageX,percentageY);
+```
+Al fine di riaggiornare quindi le posizioni dei punti in base al cambiamento di dimensioni del Frame, è stato creato il metodo refreshPosition che calcola la nuova posizione utilizzando le percentuali salvate:
+```java
+public void refreshPosition(int wContainer, int hContainer){
+ 	
+	double posXd = ((double)this.percentageX/100)*wContainer;
+        double posYd = ((double)this.percentageY/100)*hContainer;
+        this.posX = (int)posXd;
+        this.posY = (int)posYd;
+}
+```
 
 
 
