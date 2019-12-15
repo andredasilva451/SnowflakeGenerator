@@ -409,6 +409,31 @@ public boolean contains(int x, int y){
  }
 ```
 
+**CropPolygon**
+
+Per rappresentare invece i poligoni di ritaglio generati tramite i CropPoints, è stato deciso di creare la classe CropPolygon. Come per i CropPoints, anche in questo caso era possibile utilizzare la classe Polygon di AWT, ma come per i CropPoints era necessario che anche i poligoni fossero responsive. Per l'instanziazzione di un oggetto di questa classe, è necessario, in modo simile a Polygon, passare 2 array con le coordinate X e Y dei punti, 2 array con le percentuali delle coordinate X e Y dei punti ed infine il numero di punti da creare.
+Anche questa classe possiede il metodo RefreshPositions, ma in questo caso, vengono passati ogni valore dei 2 array X e Y e aggiornati nello stesso modo dei CropPoints:
+
+```java
+ public void RefreshPositions(int wContainer, int hContainer){
+    
+        for(int i = 0; i < this.pointsX.length; i++){
+            
+              double posXd = ((double)this.percentagesX[i]/100)*wContainer;
+              this.pointsX[i] = (int)posXd;
+        }
+        for(int i = 0; i < this.pointsY.length; i++){
+            
+            double posYd = ((double)this.percentagesY[i]/100)*hContainer;
+            this.pointsY[i] = (int)posYd;
+        }
+    }
+```
+Sono presenti anche i metodi ToPolygon, che come per il triangolo, permette la conversione in Poligono, e toString, che ritorna una stringa contenente le percentuali X e Y al fine di poter salvare i punti in un file.
+
+
+
+
 
 
 ## Diagramma UML
