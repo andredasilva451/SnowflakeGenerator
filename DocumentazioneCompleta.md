@@ -389,10 +389,11 @@ public void refreshPosition(int wContainer, int hContainer){
         this.posY = (int)posYd;
 }
 ```
-Inoltre anche il painting dei punti viene definito qui, sempre tramite paint di AWT, dove in base allo "stato" del punto, il colore cambia: - Ciano: Primo punto creato.
-	- Verde: Ultimo punto creato.
-	- Arancione: Significa che i punti ritaglio vengono chiusi.
-	- Rosso: Punto "Normale" (non è ne ultimo ne primo, ne viene definita la chiusura dei punti)
+Inoltre anche il painting dei punti viene definito qui, sempre tramite paint di AWT, dove in base allo "stato" del punto, il colore cambia: 
+- Ciano: Primo punto creato.
+- Verde: Ultimo punto creato.
+- Arancione: Significa che i punti ritaglio vengono chiusi.
+- Rosso: Punto "Normale" (non è ne ultimo ne primo, ne viene definita la chiusura dei punti)
 
 ![alt text](https://github.com/andredasilva451/SnowflakeGenerator/blob/master/screens/screen2.PNG)
 ![alt text](https://github.com/andredasilva451/SnowflakeGenerator/blob/master/screens/screen3.PNG)
