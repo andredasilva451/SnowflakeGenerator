@@ -310,7 +310,7 @@ Tra gli altri metodi importanti è presente anche **ToPolygon**, che converte il
 
 **Matrix Model**
 
-Affinchè il Triangolo venga centrato e sia sempre proprozionale al Pannello, è stato necessario utilizzare una classe, già creata l'anno scorso per il modulo 226A, cioè **MatrixModel**. Questa riceve il numero di righe e colonne della matrice, margine, cioè la distanza dai bordi del contenitore, altezza e larghezza del contenitore e il ratio, cioè la differenza di proprozione tra la larghezza e la lunghezza di una cella. Al fine di calcolare il tutto, questa classe si avvale dei seguenti 2 metodi:
+Affinchè il Triangolo venga centrato e sia sempre proprozionale al pannello, è stato necessario utilizzare una classe, già creata l'anno scorso per il modulo 226A, cioè **MatrixModel**. Questa riceve il numero di righe e colonne della matrice, margine, cioè la distanza dai bordi del contenitore, altezza e larghezza del contenitore e il ratio, cioè la differenza di proprozione tra la larghezza e la lunghezza di una cella. Al fine di calcolare il tutto, questa classe si avvale dei seguenti 2 metodi:
 
 ```java
 /**
@@ -360,15 +360,16 @@ public double[] getDXYSize(){
 	 return dxy;
 }
 ```
-Dato che in questo caso quello che si vuole ridimensionare non è una matrice ma un triangolo, ed è stata quindi instanziata nel seguente modo:
+Dato che in questo caso quello che si vuole ridimensionare non è una matrice ma un triangolo, è stata instanziata nel seguente modo nel metodo paint:
 ```java
  this.m = new MatrixModel(1,1,25,this.getHeight(),this.getWidth(),1,1.73);
 ```
-Come numero di righe e colonne viene inviato 1, come margine 25 e proporzioni 1:1.73 in quanto in un triangolo 30 60 90 (necessario al fine di creare un fiocco di neve, che non è altro che un esagono) l'altezza vale \sqrt{3} (=1.73) rispetto alla base.
+Come numero di righe e colonne viene inviato 1, come margine 25 e proporzioni 1:1.73 in quanto in un triangolo 30 60 90 (necessario al fine di creare un fiocco di neve, che non è altro che un esagono) l'altezza vale radice di 3 (=1.73) rispetto alla base.
 
 E alla fine il triangolo viene istanziato usando i metodi della classe:
 ```java
 this.a = new Triangolo((int)m.getDXYSize()[0],(int)m.getDXYSize()[1],(int)m.getCellSize()[0],(int)m.getCellSize()[1]);
+this.a.paint(g);
 ```
 
 
