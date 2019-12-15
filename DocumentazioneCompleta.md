@@ -266,6 +266,38 @@ componenti utilizzati. Eventualmente questa va allegata.
 
 Per eventuali dettagli si possono inserire riferimenti ai diari.
 
+**Triangolo**
+
+Per generare il triangolo è stata creata una classe apparte di nome 'Triangolo' che richiede, per essere istanziata, le coordinate x e y del punto in cui disegnare il triangolo, ed infine larghezza e altezza. Per disegnare il triangolo si prendono le coordinate degli spigoli che vengono salvate in due array, uno per le X ed uno per le Y, definiti tramite 2 metodi:
+
+```java
+
+private int[] pointsXdefinition(){
+       
+        this.pointX[0] = this.posX;
+        this.pointX[1] = this.posX + this.width;
+        this.pointX[2] = this.posX + this.width;
+        return pointX;
+    
+    }
+    
+    private int[] pointsYdefinition(){
+        
+        this.pointY[0] = this.posY;
+        this.pointY[1] = this.posY;
+        this.pointY[2] = this.posY + this.height;  
+        return pointY;
+    }
+
+```
+
+
+
+
+
+
+
+
 ## Diagramma UML
 
 
@@ -273,12 +305,6 @@ Per eventuali dettagli si possono inserire riferimenti ai diari.
 ## Test
 
 ### Protocollo di test
-
-Definire in modo accurato tutti i test che devono essere realizzati per
-garantire l’adempimento delle richieste formulate nei requisiti. I test
-fungono da garanzia di qualità del prodotto. Ogni test deve essere
-ripetibile alle stesse condizioni.
-
 
 |Test Case      | TC-001                               |
 |---------------|--------------------------------------|
