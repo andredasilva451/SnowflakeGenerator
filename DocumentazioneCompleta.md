@@ -314,56 +314,57 @@ Affinchè il Triangolo venga centrato e sia sempre proprozionale al Pannello, è
 
 ```java
 /**
-	 * Ritorna un array contenente la larghezza e l'altezza di una cella della matrice (0 = larghezza, 1 = altezza). 
-	 * @return cs array contenente larghezza e altezza.
-	*/
-	public double[] getCellSize(){
+ * Ritorna un array contenente la larghezza e l'altezza di una cella della matrice (0 = larghezza, 1 = altezza). 
+ * @return cs array contenente larghezza e altezza.
+ */
+public double[] getCellSize(){
 		
-            double[] cs = new double[2];
+	double[] cs = new double[2];
             
-            if (this.wContainer / this.hContainer  > (this.cols * this.ratioX) / (this.rows * this.ratioY)) {
+        if (this.wContainer / this.hContainer  > (this.cols * this.ratioX) / (this.rows * this.ratioY)) {
                     
-                cs[1] = this.hContainer / this.rows;
+        	cs[1] = this.hContainer / this.rows;
                 cs[0] = cs[1] * this.ratioX / this.ratioY;
                       
-            }else{
+        }else{
                 
                 cs[0] = this.wContainer / this.rows;
                 cs[1] = cs[0] * this.ratioY / this.ratioX;
                 
-            }
+        }
             return cs;
-	}
-	/**
-	 * Ritorna un array contenente le coordinate X e Y affinche la matrice
-	 * sia centrata (0 = x, 1 = y). 
-	 * @return dxy array contenente le coordinate X e Y per il centramento.
-	*/
-	public double[] getDXYSize(){
+}
+
+/**
+ * Ritorna un array contenente le coordinate X e Y affinche la matrice
+ * sia centrata (0 = x, 1 = y). 
+ * @return dxy array contenente le coordinate X e Y per il centramento.
+*/
+public double[] getDXYSize(){
 		
-		double[] dxy = new double[2]; //0 = x, 1 = y
+	double[] dxy = new double[2]; //0 = x, 1 = y
 		
-                if (this.wContainer / this.hContainer  > (this.cols * this.ratioX) / (this.rows * this.ratioY)) {
+        if (this.wContainer / this.hContainer  > (this.cols * this.ratioX) / (this.rows * this.ratioY)) {
                     
-                    dxy[1] = this.margin;
-                    int width = (int)this.getCellSize()[0] * this.cols;
-                    dxy[0] = (this.wContainer - width) / 2;
+        	dxy[1] = this.margin;
+                int width = (int)this.getCellSize()[0] * this.cols;
+                dxy[0] = (this.wContainer - width) / 2;
                     
-                }else{
+        }else{
                 
-                    dxy[0] = this.margin;
-                    int height = (int)this.getCellSize()[1] * this.rows;
-                    dxy[1] = (this.hContainer - height) / 2;
+                dxy[0] = this.margin;
+                int height = (int)this.getCellSize()[1] * this.rows;
+                dxy[1] = (this.hContainer - height) / 2;
                     
-                }                
-		return dxy;
-	}
+         }                
+	 return dxy;
+}
 ```
 Dato che in questo caso quello che si vuole ridimensionare non è una matrice ma un triangolo, ed è stata quindi instanziata nel seguente modo:
 ```java
  this.m = new MatrixModel(1,1,25,this.getHeight(),this.getWidth(),1,1.73);
 ```
-Come numero di righe e colonne viene inviato 1, come margine 25 e proporzioni 1:1.73 in quanto in un triangolo 30 60 90 (necessario al fine di creare un fiocco di neve, che non è altro che un esagono) l'altezza vale $\sqrt{3}$ (=1.73) rispetto alla base.
+Come numero di righe e colonne viene inviato 1, come margine 25 e proporzioni 1:1.73 in quanto in un triangolo 30 60 90 (necessario al fine di creare un fiocco di neve, che non è altro che un esagono) l'altezza vale \sqrt{3} (=1.73) rispetto alla base.
 
 E alla fine il triangolo viene istanziato usando i metodi della classe:
 ```java
