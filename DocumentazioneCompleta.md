@@ -389,7 +389,7 @@ public void refreshPosition(int wContainer, int hContainer){
         this.posY = (int)posYd;
 }
 ```
-Inoltre anche il painting dei punti viene definito qui, sempre tramite paint di AWT, dove in base allo "stato" del punto, il colore cambia: 
+Inoltre anche il painting dei punti viene definito qui, sempre tramite paint di AWT, dove la grandezza di un punto è rappresentato dalla costante CROP_POINT_SIZE (default 10) e dove in base allo "stato" del punto, il colore cambia: 
 - Ciano: Primo punto creato.
 - Verde: Ultimo punto creato.
 - Arancione: Significa che i punti ritaglio vengono chiusi.
@@ -398,7 +398,16 @@ Inoltre anche il painting dei punti viene definito qui, sempre tramite paint di 
 ![alt text](https://github.com/andredasilva451/SnowflakeGenerator/blob/master/screens/screen2.PNG)
 ![alt text](https://github.com/andredasilva451/SnowflakeGenerator/blob/master/screens/screen3.PNG)
 
-
+Per il cambio di stato, esistono i metodi setFirstPoint, setLastPoint e poligonDefined.
+Infine, oltre a setter e getter vari, è presente anche il metodo contains(x,y) che permette di verificare se il punto passato tramite parametri è contenuto nel punto. Ciò viene utilizzato per verificare la chiusura dei puntie per l'eliminazione e il dragging di essi.
+```java 
+public boolean contains(int x, int y){
+        
+        Point p = new Point(x,y);
+        Point center = new Point(this.posX+CROP_POINT_SIZE/2,this.posY+CROP_POINT_SIZE/2);  
+        return center.distance(p) <= CROP_POINT_SIZE/2;
+ }
+```
 
 
 
