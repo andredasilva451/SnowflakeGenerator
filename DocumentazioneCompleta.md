@@ -290,6 +290,23 @@ private int[] pointsXdefinition(){
     }
 
 ```
+Infine per disegnare il Triangolo, si utilizza il metodo paint della liberia AWT:
+
+```java
+
+public void paint(Graphics g){
+        
+        //Creazione dei 2 array con le coordinate:
+        int[] pointsX = pointsXdefinition();
+        int[] pointsY = pointsYdefinition();
+        
+        g.setColor(this.color);
+        //disegno
+        g.fillPolygon(pointsX, pointsY,3);
+        
+}
+```
+Tra gli altri metodi importanti è presente anche **ToPolygon**, che converte il Triangolo in un poligono, utile poi per la creazione del fiocco.
 
 
 
