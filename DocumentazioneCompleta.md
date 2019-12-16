@@ -436,7 +436,7 @@ Sono presenti anche i metodi ToPolygon(), che come per il triangolo, permette la
 
 Di seguito uno screen di esempio di un poligono, tratto dai punti visti nelle 2 immagini precedenti:
 
-![alt text](https://github.com/andredasilva451/SnowflakeGenerator/blob/master/screens/screen4.PNG)
+![alt text](https://github.com/andredasilva451/SnowflakeGenerator/blob/master/screens/screen4.png)
 
 
 
