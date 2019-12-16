@@ -586,7 +586,7 @@ Codice:
 Per la definizione dei poligoni di ritaglio, viene utilizzato il metodo definePolygon() il quale viene chiamato 2 volte:
 
 - Quando viene cliccato il tasto sinistro del mouse mentre la variabile definePoly si trova a false.
-- Per l'import dei punti al fine di definire i poligoni importati (in questo caso viene forza a diventare false prima).
+- Per l'import dei punti al fine di definire i poligoni importati (in questo caso viene definePoly viene forzato a diventare false prima).
 
 Esso prima di tutto verifica, per sicurezza, se definePoly è false. Se questa condizione viene soddisfatta, crea 4 array:
 - 2 per le X e Y presenti all'interno della lista di punti cropPoints.
@@ -633,7 +633,7 @@ Per la scrittura dei punti, presente nel metodo writePoints(File file) sono stat
 Alla fine viene ritornato il file scritto.
 
 Per la lettura dei punti invece, viene utilizzato il metodo readPoints il quale richiede sempre un file come argomento.
-In questo caso, l'oggetto utilizzato è il BufferedReader il quale li viene passato il file tramite l'oggetto FileReader. Per leggere quindi ogni riga del file, occorre utilizzare il metodo readLine() del buffer finchè non viene raggiunta l'ultima riga tramite ciclo while. Dentro al while si naviga, per ogni riga, i caratteri che la compongono e si salvano in un array le percentuali  X finchè non viene trovato il carattare delimitatore '|', da qui in poi, i dati verranno salvati in un secondo array per le percentuali Y. Dopodiché, per ogni coordinata X e Y dei 2 array, viene creato un CropPoint che viene aggiunto alla lista CropPoints. Infine viene richiamato il metodo definePolygons per la definizioni dei poligoni.
+In questo caso, l'oggetto utilizzato è il BufferedReader il quale li viene passato il file tramite l'oggetto FileReader. Per leggere quindi ogni riga del file, occorre utilizzare il metodo readLine() del buffer finchè non viene raggiunta l'ultima riga, con l'utilizzo di un ciclo while. Dentro al while si naviga, per ogni riga, i caratteri che la compongono e si salvano in un array le percentuali  X finchè non viene trovato il carattare delimitatore '|', da qui in poi, i dati verranno salvati in un secondo array per le percentuali Y. Dopodiché, per ogni coordinata X e Y dei 2 array, viene creato un CropPoint che viene aggiunto alla lista CropPoints. Infine viene richiamato il metodo definePolygons per la definizioni dei poligoni.
 
 Codice: 
 
@@ -670,9 +670,51 @@ public void readPoints(File file) throws FileNotFoundException, IOException {
     }
 ```
 
+**Paint dei componenti**
+
+Il paint di ogni singolo componente creato o presente già dall'inizio, viene fatto nel metodo PaintComponent del SnowFlakePanel. Qui è dove il matrix model viene instanziato, insieme al triangolo e poi disegnato, come visto in precedenza.
+Per i componenti presenti nelle liste (polys e cropPoints) viene utilizzato un foreach, e per ognuno di essi viene richiamato il metodo RefreshPositions e paint(g). Per i cropPoints viene anche disegnato il filo/linea che connette i vari punti quando la variabile locale i è maggiore di 0, ed utilizza quindi le coordinate del punto precedente e quello attuale per effettuare il drawLine:
+
+```java
+int i = 0;
+for(CropPoint p : this.cropPoints){
+	p.refreshPosition(this.getWidth(),this.getHeight());  
+        p.paint(g);
+
+        if(i >= 1){
+        	g.setColor(Color.black);
+                g.drawLine(this.cropPoints.get(i).getX(),this.cropPoints.get(i).getY(),this.cropPoints.get(i-  					    1).getX(),this.cropPoints.get(i-1).getY());           
+	}
+	i++;
+}
+```
+Inoltre qui viene anche invocato il metodo polygonCreated per ogni listener di SnowFlakeListener, che verrà trattato in seguito:
+
+```java
+  if(this.polys.size() > 0){
+               
+                for(SnowFlakePanelListener l : this.listeners){
+                    l.polygonCreated(this.polys);
+                }
+            }
+```
+Tutto ciò avviene però esclusivamente se la variabile snowFlakeGenerated è settata a true in quanto in caso contrario, viene generato e disegnato il fiocco di neve utilizzando l'istanziazione dell'attributo sf che si tratta di oggetto SnowFlake. Inoltre viene eseguito per l'ultima volta un refresh di sicurezza di ogni coordinata dei vari punti dei CropPolygon presenti nella lista polys, garantito tramite l'attributo firstTime.
+
+```java
+}else if(this.flakeGenerated){
+	if(this.firstTime){
+                for(int i =0 ; i < this.polys.size();i++){
+                    this.polys.get(i).RefreshPositions(this.getWidth(),this.getHeight());
+                }
+                this.firstTime = false;
+         }
+         this.sf = new SnowFlake(this.a,this.polys,this.getWidth(),this.getHeight());
+         this.sf.paint(g);
+}
+```
 
 
-
+ 
 
 
 
