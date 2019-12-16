@@ -438,7 +438,17 @@ Di seguito uno screen di esempio di un poligono, tratto dai punti visti nelle 2 
 
 ![alt text](https://github.com/andredasilva451/SnowflakeGenerator/blob/master/screens/screen4.png)
 
+**SnowFlakePanel**
 
+SnowFlakePanel è a tutti gli effetti il Panel piu importante in quanto in esso avviene la creazione del Triangolo, l'aggiunta dei punti e la creazione dei poligoni di ritaglio ed infine il painting del fiocco di neve. SnowFlakePanel, oltre a estendere, ovviamente, la classe JPanel, implementa anche il MouseListener e MouseMotionListener, oltre ad un numero abbastanza alto di attributi, di cui i piu importanti sono:
+
+- Triangolo a : L'oggetto di tipo triangolo che verrà poi definito con l'ausilio del Matrix Model per le coordinate e misure e disegnato 		 nel metodo paintComponent del pannello.
+- MatrixModel m: Oggetto necessario al fine di, come detto nella descrizione della suddetta classe e in precedenza, calcolare le misure 		 e le coordinate necessarie affinché il Triangolo sia sempre proprozionale al pannello.
+
+- ArrayList<CropPoint> cropPoints: ArrayList conetenente tutti i punti attualmente creati per la creazione di un poligono di ritaglio, 				   	   dopo che quest'ultimo viene generato, la lista si resetta al fine di poter crearne un'altro. 
+	
+- ArrayList<CropPolygon> cropPolygons: ArrayList che contiene tutti poligoni ritaglio definiti dall'utente. Fondamentale al fine di
+				       creare l'area del Triangolo ritagliato, che poi viene utilizzato per generare il fiocco.
 
 
 
