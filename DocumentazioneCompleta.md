@@ -447,7 +447,7 @@ SnowFlakePanel è a tutti gli effetti il Panel piu importante in quanto in esso 
 
 - ArrayList<CropPoint> cropPoints: ArrayList conetenente tutti i punti attualmente creati per la creazione di un poligono di ritaglio, 				   	   dopo che quest'ultimo viene generato, la lista si resetta al fine di poter crearne un'altro. 
 
-- ArrayList<CropPolygon> cropPolygons: ArrayList che contiene tutti poligoni ritaglio definiti dall'utente. Fondamentale al fine di
+- ArrayList<CropPolygon> polys: ArrayList che contiene tutti poligoni ritaglio definiti dall'utente. Fondamentale al fine di
 				       creare l'area del Triangolo ritagliato, che poi viene utilizzato per generare il fiocco.
 	
 - Boolean definePoly: Booleano fodamentale al fine di capire, nel metodo MouseClicked del MouseListener implementato, se l'utente sta 			      definenendo i punti ritaglio, o sta modificando i punti già chiusi (colore arancione) che aspettano di poter 			      generare il poligono di ritaglio.
@@ -456,11 +456,10 @@ SnowFlakePanel è a tutti gli effetti il Panel piu importante in quanto in esso 
 
 I restanti attributi possono essere consultati nel codice con relativo commento javadoc o verranno descritti nei metodi fondamentali di questo JPanel, riportati qui di seguito:
 
-**Metodi Astratti di MouseListener e MouseMotionListener**
+**Creazione/eliminazione punti**
 
-- MouseClicked(): Si occupa di creare ed eliminare i punti rispettivamente tramite i tasti sinistro e destro del mouse.
-	          Oltre a ciò, avvengono anche il calcolo delle percentuali dei punti,i loro cambiamenti in base alla 			  		    creazione o rimozione di essi e verifica, tramite l'attributo definePoly, se l'utente può aggiungere altri punti o 			  essi sono stati chiusi al fine di poter definire il poligono e pulire la lista cropPoints. è presente anche 				  l'attributo pCounter che verifica se il numero di punti creati soddisfi la creazione di 1 poligono (minimo 3 quindi). 		  Per la rimozione dei punti viene verificato, oltre al click del tasto destro, se il cursore è contenuto dentro ad un 			  punto tramite il suo metodo contains ed esegue anche gli eventuali cambi di colore che i punti possono effettuare.
-		  Di seguito, in dettaglio, il codice del metodo:
+Il metodo astratto MouseClicked del MouseListener si occupa di creare ed eliminare i punti rispettivamente tramite i tasti sinistro e destro del mouse. Oltre a ciò, avvengono anche il calcolo delle percentuali dei punti,i loro cambiamenti in base alla creazione o rimozione di essi e verifica, tramite l'attributo definePoly, se l'utente può aggiungere altri punti o essi sono stati chiusi al fine di poter definire il poligono e pulire la lista cropPoints. è presente anche l'attributo pCounter che verifica se il numero di punti creati soddisfi la creazione di 1 poligono (minimo 3 quindi). Per la rimozione dei punti viene verificato, oltre al click del tasto destro, se il cursore è contenuto dentro ad un punto tramite il suo metodo contains ed esegue anche gli eventuali cambi di colore che i punti possono effettuare.
+Di seguito, in dettaglio, il codice del metodo:
 
 ```java
  //aggiunta punti tramite tasto SX
@@ -504,8 +503,7 @@ I restanti attributi possono essere consultati nel codice con relativo commento 
                     for(int i = 0; i<cropPoints.size(); i++) {
                         this.cropPoints.get(i).poligonDefined(true);
                     }
-                }
-                
+                }   
                 this.pCounter++;
             }else if(this.definePoly == false){
                 
@@ -532,6 +530,144 @@ I restanti attributi possono essere consultati nel codice con relativo commento 
             }
         }
         repaint();
+```
+
+**Dragging dei punti**
+
+Per il dragging dei punti è stata usata una tecnica semplice e intuitiva usata in molti applicativi grafici in Java e non. 
+Essa consiste nel prendere le coordinate del mouse alla pressione del tasto sinistro, verificabile tramite il metodo MousePressed del MouseListener, e le immagazzina negli attributi lastX e lastY, infine verifica se esse sono contenute all'interno di un punto ritaglio già creato. Se questa condizione si avvera, imposta l'attributo drag a true cioè che può avvenire un possibile drag del mouse e calcola gli offset tra le coordinate lastX e lastY e quelle del punto selezionato, infine si salva anche l'id della lista del punto selezionato tramite l'attributo pointIndex.
+Nel metodo astratto MouseDragged del MouseMotionListener viene verificato se il boolean drag è stato a true, cioè significa che sta avvenendo un trascinamento del mouse e calcola la nuova posizione del punto che si sta spostando tramite le coordinate attuali del mouse e quelle del offset. Vengono infine calcolate anche le percentuali X e Y nuove che il punto occupa su schermo e viene effettuato setting delle nuove percentuali e coordinate.
+Nel metodo MouseReleased, sempre del MouseMotionListener, viene inoltre impostata a false il boolean drag in quanto indica che  il trascinamento del mouse è concluso.
+
+Codice:
+
+```java
+
+    @Override
+    public void mousePressed(MouseEvent e) {
+        
+        this.lastX = e.getX();
+        this.lastY = e.getY();
+        
+        for(int i = 0; i<cropPoints.size(); i++) {
+            if(cropPoints.get(i).contains(this.lastX,this.lastY)){
+                
+                this.drag = true;
+                this.offsetX = this.lastX - this.cropPoints.get(i).getX();
+                this.offsetY = this.lastY - this.cropPoints.get(i).getY();
+                this.pointIndex = i;
+            }
+        }     
+    }
+    
+    @Override
+    public void mouseDragged(MouseEvent e) {
+                  
+        if(this.drag){
+            int x = e.getX() - this.offsetX;
+            int y = e.getY() - this.offsetY;
+            double percentageX = (x*100)/this.getWidth();
+            double percentageY = (y*100)/this.getHeight();
+            Point newCoords = new Point(x,y);
+            this.cropPoints.get(this.pointIndex).setPoint(newCoords);
+            this.cropPoints.get(this.pointIndex).setPercentages(percentageX, percentageY);
+            repaint();    
+        }             
+    }
+    
+    @Override
+    public void mouseReleased(MouseEvent arg0) {
+        this.drag = false;
+    }
+```
+
+**Creazione dei poligoni di ritaglio**
+
+Per la definizione dei poligoni di ritaglio, viene utilizzato il metodo definePolygon() il quale viene chiamato 2 volte:
+
+- Quando viene cliccato il tasto sinistro del mouse mentre la variabile definePoly si trova a false.
+- Per l'import dei punti al fine di definire i poligoni importati (in questo caso viene forza a diventare false prima).
+
+Esso prima di tutto verifica, per sicurezza, se definePoly è false. Se questa condizione viene soddisfatta, crea 4 array:
+- 2 per le X e Y presenti all'interno della lista di punti cropPoints.
+- 2 per le Percentuali X e Y, sempre presenti all'interno della suddetta lista.
+
+A questo punto viene creato un nuovo poligono con tutti questi dati e viene aggiunto all'interno della lista di poligoni polys.
+E per concludere, definePoly viene risettato a true al fine di poter ricreare nuovi punti e resettato pCounter in quanto, ovviamente, non ci sono piu punti creati.
+
+Codice:
+
+```java
+private void defineCropPolygon(){
+    
+        if(this.definePoly == false){
+            
+            int[] pointsX = new int[cropPoints.size()];
+            int[] pointsY = new int[cropPoints.size()];
+            double[] percentagesX = new double[cropPoints.size()];
+            double[] percentagesY = new double[cropPoints.size()];
+            
+            for(int j = 0;j<cropPoints.size();j++) {
+                  pointsX[j] = cropPoints.get(j).getX();
+                  pointsY[j] = cropPoints.get(j).getY();
+            }
+            for(int j = 0;j<cropPoints.size();j++) {
+                  percentagesX[j] = cropPoints.get(j).getPercentageX();
+                  percentagesY[j] = cropPoints.get(j).getPercentageY();
+            }
+            
+            CropPolygon p = new CropPolygon(pointsX,pointsY,this.cropPoints.size(),percentagesX,percentagesY);
+            this.polys.add(p);
+            this.definePoly = true;
+            this.pCounter = 0;   
+            
+        }
+    }
+```
+**Scrittura/lettura punti**
+
+Per la scrittura dei punti, presente nel metodo writePoints(File file) sono stati utilizzati gli oggetti FileWriter e PrintWriter. Il primo permette la scrittura di caratteri nel file passato, mentre il secondo a poterli stampare in quest'ultimo (file). Quello che viene fatto semplicemente è stampare grazie a printWriter, tutte le percentuali dei poligoni della lista polys,con un ciclo for, tramite il metodo toString() della classe CropPolygon che è strutturato nel seguente formato:
+
+![alt text](https://github.com/andredasilva451/SnowflakeGenerator/blob/master/screens/screen6.png)
+
+Alla fine viene ritornato il file scritto.
+
+Per la lettura dei punti invece, viene utilizzato il metodo readPoints il quale richiede sempre un file come argomento.
+In questo caso, l'oggetto utilizzato è il BufferedReader il quale li viene passato il file tramite l'oggetto FileReader. Per leggere quindi ogni riga del file, occorre utilizzare il metodo readLine() del buffer finchè non viene raggiunta l'ultima riga tramite ciclo while. Dentro al while si naviga, per ogni riga, i caratteri che la compongono e si salvano in un array le percentuali  X finchè non viene trovato il carattare delimitatore '|', da qui in poi, i dati verranno salvati in un secondo array per le percentuali Y. Dopodiché, per ogni coordinata X e Y dei 2 array, viene creato un CropPoint che viene aggiunto alla lista CropPoints. Infine viene richiamato il metodo definePolygons per la definizioni dei poligoni.
+
+Codice: 
+
+```java
+
+public void readPoints(File file) throws FileNotFoundException, IOException {
+        
+        BufferedReader in = new BufferedReader(new FileReader(file));    
+        this.pointReset();
+        String st;
+        while ((st = in.readLine()) != null) {
+            for(int i = 0; i < st.length()-1;i++){
+                if(st.charAt(i) == '|'){   
+                    String x = st.substring(0,i);
+                    String y = st.substring(i+1,st.length()-1);
+                    String[] splitX = x.split("-");
+                    String[] splitY = y.split("-");
+                    if(splitX.length == splitY.length){
+                        for(int j = 0; j < splitX.length; j++){
+                            CropPoint p = new CropPoint(0,0,(int)Double.parseDouble(splitX[j]),(int)Double.parseDouble(splitY[j]));
+                            p.refreshPosition(this.getWidth(),this.getHeight());
+                            this.cropPoints.add(p);
+                        }
+                        this.definePoly = false;
+                        this.defineCropPolygon();
+                        this.cropPoints.clear();
+                    }else{
+                        System.out.println("Impossibile!");
+                    }
+                }
+            }
+        }
+        repaint();
+    }
 ```
 
 
