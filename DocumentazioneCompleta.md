@@ -373,6 +373,7 @@ E alla fine il triangolo viene istanziato usando i metodi della classe:
 this.a = new Triangolo((int)m.getDXYSize()[0],(int)m.getDXYSize()[1],(int)m.getCellSize()[0],(int)m.getCellSize()[1]);
 this.a.paint(g);
 ```
+
 **CropPoints**
 
 Per rappresentare i punti creati è stata creata la classe CropPoints. Non è stata utilizzata la già presente classe Point della libreria AWT in quanto, al fine di rendere i punti 'Responsive', cioè che mantengono la loro posizione in caso di ingradimento o rimpicciolimento del frame, vengono passati alla creazione, oltre alle coordinate in cui bisogna disegnare il punto, anche la percentuale X e Y calcolate moltiplicando per 100 le coordinate X e Y e dividendole rispettivamente per la larghezza e l'altezza del SnowFlakePanel:
@@ -561,7 +562,7 @@ Sono presenti anche i metodi ToPolygon, che come per il triangolo, permette la c
 |   TC-008 | Riuscito |             
 |   TC-009 | Riuscito |  
 |   TC-010 | Riuscito |             
-|   TC-011 | Non Riuscito |             
+|   TC-011 | Riuscito |             
 
 
 
@@ -569,7 +570,7 @@ Sono presenti anche i metodi ToPolygon, che come per il triangolo, permette la c
 
 - Non è presente nessun tasto per lo switch creazione/elimina, ma l'operazione viene eseguita con i tasti sinistro o destro del mouse.
 - Non è possibile scegliere la dimensione con cui salvare l'immagine.
-- La preview del fiocco di neve non funziona.
+- La preview del fiocco di neve funziona, ma non rappresenta correttamente al 100% il fiocco di neve che verrà generato.
 
 ## Consuntivo
 
