@@ -683,7 +683,7 @@ for(CropPoint p : this.cropPoints){
 
         if(i >= 1){
         	g.setColor(Color.black);
-                g.drawLine(this.cropPoints.get(i).getX(),this.cropPoints.get(i).getY(),this.cropPoints.get(i-  					    1).getX(),this.cropPoints.get(i-1).getY());           
+                g.drawLine(this.cropPoints.get(i).getX(),this.cropPoints.get(i).getY(),this.cropPoints.get(i-1).getX(),this.cropPoints.get(i-1).getY());           
 	}
 	i++;
 }
