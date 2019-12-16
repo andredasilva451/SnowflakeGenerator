@@ -628,7 +628,7 @@ private void defineCropPolygon(){
 
 Per la scrittura dei punti, presente nel metodo writePoints(File file) sono stati utilizzati gli oggetti FileWriter e PrintWriter. Il primo permette la scrittura di caratteri nel file passato, mentre il secondo a poterli stampare in quest'ultimo (file). Quello che viene fatto semplicemente è stampare grazie a printWriter, tutte le percentuali dei poligoni della lista polys,con un ciclo for, tramite il metodo toString() della classe CropPolygon che è strutturato nel seguente formato:
 
-![alt text](https://github.com/andredasilva451/SnowflakeGenerator/blob/master/screens/screen6.png)
+![alt text](https://github.com/andredasilva451/SnowflakeGenerator/blob/master/screens/screen6.PNG)
 
 Alla fine viene ritornato il file scritto.
 
