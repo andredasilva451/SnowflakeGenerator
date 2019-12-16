@@ -432,7 +432,11 @@ Anche questa classe possiede il metodo RefreshPositions, ma in questo caso, veng
         }
     }
 ```
-Sono presenti anche i metodi ToPolygon, che come per il triangolo, permette la conversione in Poligono, e toString, che ritorna una stringa contenente le percentuali X e Y al fine di poter salvare i punti in un file.
+Sono presenti anche i metodi ToPolygon(), che come per il triangolo, permette la conversione in Poligono, e toString(), che ritorna invece una stringa contenente le percentuali X e Y al fine di poter salvare i punti in un file.
+
+Di seguito uno screen di esempio di un poligono, tratto dai punti visti nelle 2 immagini precedenti:
+
+![alt text](https://github.com/andredasilva451/SnowflakeGenerator/blob/master/screens/screen4.PNG)
 
 
 
