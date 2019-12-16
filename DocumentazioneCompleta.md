@@ -446,9 +446,97 @@ SnowFlakePanel è a tutti gli effetti il Panel piu importante in quanto in esso 
 - MatrixModel m: Oggetto necessario al fine di, come detto nella descrizione della suddetta classe e in precedenza, calcolare le misure 		 e le coordinate necessarie affinché il Triangolo sia sempre proprozionale al pannello.
 
 - ArrayList<CropPoint> cropPoints: ArrayList conetenente tutti i punti attualmente creati per la creazione di un poligono di ritaglio, 				   	   dopo che quest'ultimo viene generato, la lista si resetta al fine di poter crearne un'altro. 
-	
+
 - ArrayList<CropPolygon> cropPolygons: ArrayList che contiene tutti poligoni ritaglio definiti dall'utente. Fondamentale al fine di
 				       creare l'area del Triangolo ritagliato, che poi viene utilizzato per generare il fiocco.
+	
+- Boolean definePoly: Booleano fodamentale al fine di capire, nel metodo MouseClicked del MouseListener implementato, se l'utente sta 			      definenendo i punti ritaglio, o sta modificando i punti già chiusi (colore arancione) che aspettano di poter 			      generare il poligono di ritaglio.
+
+- Boolean SnowFlakeGenerated: Altro booleano fondamentale che permette di capire se il fiocco è stato generato e che quindi deve 				      impedire la creazione ed il painting di punti e poligoni.
+
+I restanti attributi possono essere consultati nel codice con relativo commento javadoc o verranno descritti nei metodi fondamentali di questo JPanel, riportati qui di seguito:
+
+**Metodi Astratti di MouseListener e MouseMotionListener**
+
+- MouseClicked(): Si occupa di creare ed eliminare i punti rispettivamente tramite i tasti sinistro e destro del mouse.
+	          Oltre a ciò, avvengono anche il calcolo delle percentuali dei punti,i loro cambiamenti in base alla 			  		    creazione o rimozione di essi e verifica, tramite l'attributo definePoly, se l'utente può aggiungere altri punti o 			  essi sono stati chiusi al fine di poter definire il poligono e pulire la lista cropPoints. è presente anche 				  l'attributo pCounter che verifica se il numero di punti creati soddisfi la creazione di 1 poligono (minimo 3 quindi). 		  Per la rimozione dei punti viene verificato, oltre al click del tasto destro, se il cursore è contenuto dentro ad un 			  punto tramite il suo metodo contains ed esegue anche gli eventuali cambi di colore che i punti possono effettuare.
+		  Di seguito, in dettaglio, il codice del metodo:
+
+```java
+ //aggiunta punti tramite tasto SX
+        if(e.getButton() == MouseEvent.BUTTON1){
+            
+            //verifica se l'utente può aggiungere/rimuovere punti di ritaglio.
+            if(this.definePoly){
+                
+               
+                double percentageX = (e.getX()*100)/this.getWidth();
+                double percentageY = (e.getY()*100)/this.getHeight();
+                CropPoint point = new CropPoint(e.getX(),e.getY(),percentageX,percentageY);
+                
+                //verifica se il numero minimo di punti è 3 al fine di creare un poligono, e verifica
+		//anche se l'ultimo punto che si vuole creare è contenuto nel primo al fine di chiudere il tutto.
+                if(this.pCounter >= 3){
+                    if(cropPoints.get(0).contains(e.getX(),e.getY())){
+                        this.definePoly = false;   
+                    }
+                }
+                
+                //verifica se è possibile aggiungere il punto tramite definePoly.
+                if(this.definePoly){
+                    this.cropPoints.add(point);
+                }
+                
+                //se il numero di punti creati è 0, setta il colore ciano per questo punto tramite setFirstPoint.
+                if(this.pCounter == 0){
+                    this.cropPoints.get(0).setFirstPoint(true);
+                }
+                
+                //setta questo punto come ultimo, impostando il colore verde tramite setLastPoint(true) e setta tutti gli altri
+                //punti creati false al fine di renderli rossi o ciano per il primo punto.
+                cropPoints.get(cropPoints.size()-1).setLastPoint(true);
+                for(int i = 0; i<cropPoints.size()-1; i++) {
+                        this.cropPoints.get(i).setLastPoint(false);
+                }
+                
+                //se la definizione dei punti del poligono è finita, colora di arancione tutti i punti.
+                if(this.definePoly == false){
+                    for(int i = 0; i<cropPoints.size(); i++) {
+                        this.cropPoints.get(i).poligonDefined(true);
+                    }
+                }
+                
+                this.pCounter++;
+            }else if(this.definePoly == false){
+                
+                //definizione del poligono.
+                this.defineCropPolygon();
+                this.cropPoints.clear();
+            }
+        }
+        
+        //rimozione punti tramite tasto DX
+        if(e.getButton() == MouseEvent.BUTTON3){
+           
+            //Verifica se l'utente può aggiungere/rimuovere punti.
+            if(this.definePoly){
+                
+                //verifica se il cursore si trova sopra ad almeno 1 punto.
+                for(int i = 0; i<cropPoints.size()-1; i++) {
+                    if(this.cropPoints.get(i).contains(e.getX(),e.getY())){                    
+                        this.cropPoints.remove(this.cropPoints.get(i));
+                        this.cropPoints.get(this.cropPoints.size()-1).setLastPoint(true);
+                        this.cropPoints.get(0).setFirstPoint(true);
+                    }
+                }
+            }
+        }
+        repaint();
+```
+
+
+
+
 
 
 
