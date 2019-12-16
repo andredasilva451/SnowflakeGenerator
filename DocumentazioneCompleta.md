@@ -312,6 +312,8 @@ Tra gli altri metodi importanti è presente anche **ToPolygon**, che converte il
 
 Affinchè il Triangolo venga centrato e sia sempre proprozionale al pannello, è stato necessario utilizzare una classe, già creata l'anno scorso per il modulo 226A, cioè **MatrixModel**. Questa riceve il numero di righe e colonne della matrice, margine, cioè la distanza dai bordi del contenitore, altezza e larghezza del contenitore e il ratio, cioè la differenza di proprozione tra la larghezza e la lunghezza di una cella. Al fine di calcolare il tutto, questa classe si avvale dei seguenti 2 metodi:
 
+![alt text](https://github.com/andredasilva451/SnowflakeGenerator/blob/master/screens/matrixModel.png)
+
 ```java
 /**
  * Ritorna un array contenente la larghezza e l'altezza di una cella della matrice (0 = larghezza, 1 = altezza). 
