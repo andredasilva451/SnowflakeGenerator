@@ -673,7 +673,7 @@ public void readPoints(File file) throws FileNotFoundException, IOException {
 **Paint dei componenti**
 
 Il paint di ogni singolo componente creato o presente già dall'inizio, viene fatto nel metodo PaintComponent del SnowFlakePanel. Qui è dove il matrix model viene instanziato, insieme al triangolo e poi disegnato, come visto in precedenza.
-Per i componenti presenti nelle liste (polys e cropPoints) viene utilizzato un foreach, e per ognuno di essi viene richiamato il metodo RefreshPositions e paint(g). Per i cropPoints viene anche disegnato il filo/linea che connette i vari punti quando la variabile locale i è maggiore di 0, ed utilizza quindi le coordinate del punto precedente e quello attuale per effettuare il drawLine:
+Per i componenti presenti nelle liste (polys e cropPoints) viene utilizzato un foreach, e per ognuno di essi viene richiamato il metodo RefreshPositions (al fine di riaggiornare in caso le dimensioni del frame cambino) e paint(g). Per i cropPoints viene anche disegnato il filo/linea che connette i vari punti quando la variabile locale i è maggiore di 0, ed utilizza quindi le coordinate del punto precedente e quello attuale per effettuare il drawLine:
 
 ```java
 int i = 0;
@@ -698,7 +698,7 @@ Inoltre qui viene anche invocato il metodo polygonCreated per ogni listener di S
                 }
             }
 ```
-Tutto ciò avviene però esclusivamente se la variabile snowFlakeGenerated è settata a true in quanto in caso contrario, viene generato e disegnato il fiocco di neve utilizzando l'istanziazione dell'attributo sf che si tratta di oggetto SnowFlake. Inoltre viene eseguito per l'ultima volta un refresh di sicurezza di ogni coordinata dei vari punti dei CropPolygon presenti nella lista polys, garantito tramite l'attributo firstTime.
+Tutto il painting precedentemente visto avviene però esclusivamente se la variabile snowFlakeGenerated è settata a true in quanto in caso contrario, viene generato e disegnato il fiocco di neve utilizzando l'istanziazione dell'attributo sf che si tratta di un oggetto di tipo SnowFlake. Inoltre viene eseguito per l'ultima volta un refresh di sicurezza di ogni coordinata dei vari punti dei CropPolygon presenti nella lista polys, garantito tramite l'attributo firstTime.
 
 ```java
 }else if(this.flakeGenerated){
@@ -713,8 +713,117 @@ Tutto ciò avviene però esclusivamente se la variabile snowFlakeGenerated è se
 }
 ```
 
+** Preview del Fiocco di neve **
 
- 
+Anche se facoltativa, nel software è stata integrata una preview del fiocco di neve che si andrà a creare. Cioè, ogni volta che l'utente genererà un poligono di ritaglio, nel PreviewPanel, contenuto all'interno del MarginPanel, verrà disegnato un fiocco di neve con i ritagli corrispondenti ai poligoni attualmente creati.
+
+Esempio: 
+
+![alt text](https://github.com/andredasilva451/SnowflakeGenerator/blob/master/screens/screen7.PNG)
+
+Affinchè avvenga tutto ciò viene utilizzato il listener **SnowFlakePanelListener** che possiede un metodo astratto di nome polygonChanged che richiede come parametro una lista di CropPolygons.
+Nel SnowFlakePanel è presente una lista di questi SnowFlakeListener di nome listeners che viene aggiornata nel paint come visto in precedenza, richiamando il metodo polygonChanged con parametro polys quando la lista di poligoni è maggiore di 0.
+Per passare quindi la lista di CropPolygons dallo SowFlakePanel al PreviewPanel, si utilizza il Frame principale, SnowFlakeFrame come "intermediario". In quest'ultimo viene implementato SnowFlakeListener e messo in ascolto nel costruttore del Frame:
+
+```java
+
+this.snowFlakePanel.addSnowFlakePanelListener(this);
+
+```
+A questo punto nel metodo astratto 'ereditato' dall listener, viene passato al PreviewPanel la lista di CropPolygons tramite il suo metodo setCropPolygon(<Lista>):
+
+```java
+@Override
+public void polygonCreated(List<CropPolygon> cp) {
+	this.previewPanel1.setCropPolygon(cp);
+}
+```
+
+** PreviewPanel**
+
+La classe PreviewPanel è un JPanel il quale compito è quello di generare un fiocco di neve temporaneo con i poligoni di ritaglio attualmente definiti dall'utente.
+Per fare ciò utilizza i seguenti attributi:
+
+- List<CropPolygon> cp: lista con gli attuali poligoni creati.
+- Triangolo t: Triangolo su cui applicare i ritagli.
+- MatrixModel m: Necessario al fine di ridimensionare il Triangolo.
+- SnowFlake sf: Fiocco di neve che funge da preview utilizzando i poligoni.
+- Boolean isFlakeGenerated: Serve a verificare se è stato generato il fiocco di neve definitivo e quindi smettere di disegnare
+			    la preview (true), o continuare (false).
+	
+I metodi utilizzati dalla classe sono:
+
+setCropPolygon(List<cropPolygon cp): fa un clear dell'attributo cp ed aggiunge gli elementi della lista passata come parametro.
+snowFlakeCreated(boolean flag): imposta true/false l'attributo isSnowFlakeGenerated.
+resetCropPolygon(): pulisca la lista cp.
+
+Nel metodo paintComponent avvengono invece tutti i panting dei componenti, sempre però se la variabile isFlakeGenerated lo permetta:
+
+```java
+ public void paintComponent(Graphics g){
+        super.paintComponent(g);
+        
+        if(!this.isFlakeGenerated){
+            this.m = new MatrixModel(1,1,25,this.getHeight(),this.getWidth(),1,1.73);
+            this.t = new Triangolo((int)m.getDXYSize()[0],(int)m.getDXYSize()[1],(int)m.getCellSize()[0],(int)m.getCellSize()[1]);
+            this.t.setColor(Color.blue);
+            this.t.paint(g);
+            for(int i = 0; i < this.cp.size();i++){
+                this.cp.get(i).RefreshPositions(this.getWidth(),this.getHeight());
+            }
+            if(this.cp.size() > 0){
+
+               SnowFlake s = new SnowFlake(this.t,this.cp,this.getWidth(),this.getHeight());
+                s.paint(g);
+            }
+        }  
+    }
+```
+
+è da notare come anche il triangolo viene disegnato ma il suo colore viene settato a blu tramite il metodo setColor, al fine di non risultare visible. Questo perché, a quanto pare, il metodo Area di SnowFlake non può lavorare con elementi non disegnati. Viene anche verificato se la lista di poligoni sia maggiore di 0 al fine di poter generare un fiocco 'temporaneo'.
+
+** SnowFlakeFrame** 
+
+la classe SnowFlakeFrame è un JFrame il cui compito principale è quello di "riunire" tutti i vari pannelli creati e che devono comunicare tra di loro.
+
+In esso viene creato direttamente il ButtonsPanel, un JPanel contenente i JButtons fondamentali, che sono:
+
+- SalvaPuntiButton: Bottone il cui compito è, alla sua pressione, quello di poter salvare i file con i punti ritaglio attualmente 		      definiti dall'utente.
+		    Per fare ciò, usufruisce della classe JFileChooser che permette di selezionare la directory in cui salvare il file 			   tramite il metodo getSelectedFile(), mentre per poter scriverci dentro il contenuto, si utilizza il 			   	    metodo writePoints(File file), già visto in precedenza, dello SnowFlakePanel:		    
+```java
+
+ private void SalvaPuntiButtonActionPerformed(java.awt.event.ActionEvent evt) {                                                 
+       
+        JFileChooser fileChooser = new JFileChooser();
+        
+        fileChooser.setDialogTitle("Specify a file to save");   
+
+        int userSelection = fileChooser.showSaveDialog(this);
+        
+        if (userSelection == JFileChooser.APPROVE_OPTION) {
+                         
+            File fileToSave = fileChooser.getSelectedFile();  //File da salvare
+            try {
+                fileToSave = this.snowFlakePanel.writePoints(fileToSave);
+            } catch (IOException ex) {
+                Logger.getLogger(SnowFlakeFrame.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            System.out.println("Save as file: " + fileToSave.getAbsolutePath());
+                  
+        }
+    }                                                
+```
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -860,6 +969,9 @@ consuntivo).
 
 ## Conclusioni
 
+Mi ritengo abbastanza soddisfatto del esito del progetto, anche se probabilmente una gestione dei tempi maggiormente accurata e rispettata e una progettazione/strutturazione di come sarebbe stato scritto il codice migliore con anche l'utilizzo di determinate implementazioni, magari piu semplici e fattibili ma non trovate (in quanto non pensate) durante la creazione, avrebbero reso il software piu godibile e intuitivo.
+Per quanto riguarda l'importanza di questo percorso, essa è stata dal mio punto di vista abbastanza alta in quanto mi permetterà di capire, in futuro, come effettuare una migliore pianificazione e progettazione di futuri progetti, piu in particolare quello finale che verrà affrontato all'ultimo anno di questa scuola.
+
 Quali sono le implicazioni della mia soluzione? Che impatto avrà?
 Cambierà il mondo? È un successo importante? È solo un’aggiunta
 marginale o è semplicemente servita per scoprire che questo percorso è
@@ -867,40 +979,12 @@ stato una perdita di tempo? I risultati ottenuti sono generali,
 facilmente generalizzabili o sono specifici di un caso particolare? ecc
 
 ### Sviluppi futuri
-  Migliorie o estensioni che possono essere sviluppate sul prodotto.
-
+ 
+ - Fare in modo che si possano modificare piu 'poligoni ritaglio' allo stesso tempo.
+ - Migliore struttura e qualità dell'interfaccia grafica.
+ 
 ### Considerazioni personali
-  Cosa ho imparato in questo progetto? ecc
-
-## Bibliografia
-
-### Bibliografia per articoli di riviste
-1.  Cognome e nome (o iniziali) dell’autore o degli autori, o nome
-    dell’organizzazione,
-
-2.  Titolo dell’articolo (tra virgolette),
-
-3.  Titolo della rivista (in italico),
-
-4.  Anno e numero
-
-5.  Pagina iniziale dell’articolo,
-
-### Bibliografia per libri
-
-
-1.  Cognome e nome (o iniziali) dell’autore o degli autori, o nome
-    dell’organizzazione,
-
-2.  Titolo del libro (in italico),
-
-3.  ev. Numero di edizione,
-
-4.  Nome dell’editore,
-
-5.  Anno di pubblicazione,
-
-6.  ISBN.
+In questo progetto ho imparato che i tempi sono molto importanti e non vanno 'presi sottogamba' in quanto gli imprevisti possono essere tanti e rovinare potenzialmente l'intera pianificazione e implementazione del progetto.
 
 ### Sitografia
 
