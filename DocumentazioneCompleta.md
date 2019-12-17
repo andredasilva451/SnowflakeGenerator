@@ -670,6 +670,44 @@ public void readPoints(File file) throws FileNotFoundException, IOException {
     }
 ```
 
+**Salvataggio del fiocco di neve**
+
+Per poter salvare un fiocco di neve generato, il software utilizza il metodo saveSnowFlake dello SnowFlakePanel che chiede come parametri il tipo di salvataggio (png o svg) e il percorso in cui salvare il file.
+
+Se viene scelto di salvare in png, viene utilizzata la classe BufferedImage che permette di definire un buffer in cui disegnare al suo interno passandogli altezza&larghezza del pannello e il tipo. Fatto ciò viene utilizzato il metodo paint per disegnare dentro al buffer ed infine scritto il contenuto di quest'ultimo nel file.
+
+Se invece vine scelto di salvare in svg, viene sempre definito un BufferedImage, ma in questo caso si utilizza una classe esterna, presa da internet, di nome ImageTracer che tramite il suo metodo saveString e passandogli la path e la conversione in svg del buffer tramite il metodo imageToSVG sempre della classe ImageTracer, esegue la conversione da raster a SVG.
+
+Codice:
+
+
+```java
+ public File saveSnowFlake(String type,String path) throws Exception {
+    
+        if(type.equals("png")){
+            
+            BufferedImage img = new BufferedImage(this.getWidth(),this.getHeight(), BufferedImage.TYPE_INT_RGB);
+            this.paint(img.getGraphics());
+            File out = new File(path);
+            try {
+                ImageIO.write(img,"png", out);   
+            } catch (IOException ex) {
+                Logger.getLogger(SnowFlakePanel.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            return out;
+            
+        }else if(type.equals("svg")){
+            
+           BufferedImage img = new BufferedImage(this.getWidth(),this.getHeight(), BufferedImage.TYPE_INT_RGB);
+           this.paint(img.getGraphics());
+           ImageTracer.saveString(path,ImageTracer.imageToSVG(img,null,null));
+           
+           
+        }
+        return null;
+    }
+```
+
 **Paint dei componenti**
 
 Il paint di ogni singolo componente creato o presente già dall'inizio, viene fatto nel metodo PaintComponent del SnowFlakePanel. Qui è dove il matrix model viene instanziato, insieme al triangolo e poi disegnato, come visto in precedenza.
@@ -713,7 +751,7 @@ Tutto il painting precedentemente visto avviene però esclusivamente se la varia
 }
 ```
 
-** Preview del Fiocco di neve **
+**Preview del Fiocco di neve**
 
 Anche se facoltativa, nel software è stata integrata una preview del fiocco di neve che si andrà a creare. Cioè, ogni volta che l'utente genererà un poligono di ritaglio, nel PreviewPanel, contenuto all'interno del MarginPanel, verrà disegnato un fiocco di neve con i ritagli corrispondenti ai poligoni attualmente creati.
 
@@ -739,7 +777,7 @@ public void polygonCreated(List<CropPolygon> cp) {
 }
 ```
 
-** PreviewPanel**
+**PreviewPanel**
 
 La classe PreviewPanel è un JPanel il quale compito è quello di generare un fiocco di neve temporaneo con i poligoni di ritaglio attualmente definiti dall'utente.
 Per fare ciò utilizza i seguenti attributi:
@@ -782,7 +820,7 @@ Nel metodo paintComponent avvengono invece tutti i panting dei componenti, sempr
 
 è da notare come anche il triangolo viene disegnato ma il suo colore viene settato a blu tramite il metodo setColor, al fine di non risultare visible. Questo perché, a quanto pare, il metodo Area di SnowFlake non può lavorare con elementi non disegnati. Viene anche verificato se la lista di poligoni sia maggiore di 0 al fine di poter generare un fiocco 'temporaneo'.
 
-** SnowFlakeFrame** 
+**SnowFlakeFrame** 
 
 la classe SnowFlakeFrame è un JFrame il cui compito principale è quello di "riunire" tutti i vari pannelli creati e che devono comunicare tra di loro.
 
@@ -811,18 +849,40 @@ In esso viene creato direttamente il ButtonsPanel, un JPanel contenente i JButto
             System.out.println("Save as file: " + fileToSave.getAbsolutePath());
                   
         }
-    }                                                
+    }   
 ```
+- ImportaPuntiButton: Bottone che come dice da nome, alla sua pressione, permette all'utente di scegliere un file binario (es. .txt) da 		      importare contentente le percentuali dei punti ritaglio. La struttura del codice è la stessa del bottone per 			 salvare, ma utilizza il metodo readPoints(File file).
+- salvaSVGButton: Bottone che si occupa di salvare, quando premuto, il fiocco di neve in formato SVG. Stessa struttura dei 2 bottoni 		       precedenti, ma utilizza il metodo saveSnowFlake("svg",FilePath).
+- salvaPNGButton: Bottone che si occupa di salvare, quando premuto, il fiocco di neve in formato PNG. Stessa struttura dei 3 bottoni 		       precedenti, ma utilizza il metodo saveSnowFlake("png",FilePath). 
 
+Entrambi i bottoni per il salvataggio sono disabilitati all'avvio e vengono abilitati una volta generato il fiocco.
 
+- GeneraButton: Bottone che se premuto, genera il fiocco di neve richiamando i metodi genSnowFlake del SnowFlakePanel per settare 		  l'attributo FlakeGenerated a true, vengono abilitati i 2 tasti salva e viene settato a true l'attributo   				isSnowFlakeGenerated del previewPanel:
+ 
+ ```java
+ 
+ private void GeneraButtonActionPerformed(java.awt.event.ActionEvent evt) {                                             
+       this.snowFlakePanel.genSnowFlake();
+       this.salvaPNGButton.setEnabled(true);
+       this.salvaSVGButton.setEnabled(true);
+       this.previewPanel1.setVisible(false);
+       this.previewPanel1.SnowFlakeCreated(true);
+    }
+ ```
 
+- ResetButton: Bottone che se premuto esegue in sintesi le operazioni inverse del bottone genera:
 
-
-
-
-
-
-
+```java
+ private void ResetButtonActionPerformed(java.awt.event.ActionEvent evt) {                                            
+        this.snowFlakePanel.pointReset();
+        this.salvaPNGButton.setEnabled(false);
+        this.salvaSVGButton.setEnabled(false);
+        this.previewPanel1.resetCropPolygons();
+        this.previewPanel1.SnowFlakeCreated(false);
+        this.previewPanel1.setVisible(true);
+        this.previewPanel1.repaint();
+    } 
+```
 
 
 
@@ -959,7 +1019,7 @@ In esso viene creato direttamente il ButtonsPanel, un JPanel contenente i JButto
 
 - Non è presente nessun tasto per lo switch creazione/elimina, ma l'operazione viene eseguita con i tasti sinistro o destro del mouse.
 - Non è possibile scegliere la dimensione con cui salvare l'immagine.
-- La preview del fiocco di neve funziona, ma non rappresenta correttamente al 100% il fiocco di neve che verrà generato.
+- La preview del fiocco di neve funziona, ma non rappresenta correttamente al 100% il fiocco di neve che verrà generato in seguito.
 
 ## Consuntivo
 
@@ -969,8 +1029,8 @@ consuntivo).
 
 ## Conclusioni
 
-Mi ritengo abbastanza soddisfatto del esito del progetto, anche se probabilmente una gestione dei tempi maggiormente accurata e rispettata e una progettazione/strutturazione di come sarebbe stato scritto il codice migliore con anche l'utilizzo di determinate implementazioni, magari piu semplici e fattibili ma non trovate (in quanto non pensate) durante la creazione, avrebbero reso il software piu godibile e intuitivo.
-Per quanto riguarda l'importanza di questo percorso, essa è stata dal mio punto di vista abbastanza alta in quanto mi permetterà di capire, in futuro, come effettuare una migliore pianificazione e progettazione di futuri progetti, piu in particolare quello finale che verrà affrontato all'ultimo anno di questa scuola.
+Mi ritengo abbastanza soddisfatto del esito del progetto, anche se probabilmente una gestione dei tempi maggiormente accurata e rispettata e una progettazione/strutturazione di come sarebbe stato scritto il codice migliore con anche l'utilizzo di determinate implementazioni, magari piu semplici e fattibili ma non trovate (in quanto non pensate) durante la creazione, avrebbero reso il software piu godibile da utilizzare, anche esteticamente.
+Per quanto riguarda l'importanza di questo percorso, essa è stata, dal mio punto di vista, abbastanza alta in quanto mi permetterà di capire meglio, in futuro, come effettuare una migliore pianificazione e progettazione di futuri progetti, piu in particolare quello finale che verrà affrontato all'ultimo anno di questa scuola. In sintesi ho fatto vera e propria esperienza con eseguendo le varie fasi del progetto.
 
 Quali sono le implicazioni della mia soluzione? Che impatto avrà?
 Cambierà il mondo? È un successo importante? È solo un’aggiunta
