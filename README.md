@@ -6,3 +6,5 @@ Link Utili:
 - [Documentazione](DocumentazioneCompleta.md)
 - [Sito]()
 - [Source Code](SnowFlakeGenerator/)
+- [Gantt preventivo](Gantt/GanttPreventivo.PNG)
+- [Gantt consuntivo](Gantt/GanttConsuntivo.PNG)
