@@ -1011,6 +1011,8 @@ Entrambi i bottoni per il salvataggio sono disabilitati all'avvio e vengono abil
 
 ![alt text](Gantt/GanttConsuntivo.PNG)
 
+La progettazione e l'implementazione vengono eseguite in alcuni punti parallelamente, in quanto spesso l'idea di progettare deteriminate classi veniva dopo averne già implementate e progettate altre.
+
 ## Conclusioni
 
 Mi ritengo abbastanza soddisfatto del esito del progetto, anche se probabilmente una gestione dei tempi maggiormente accurata e rispettata e una progettazione/strutturazione di come sarebbe stato scritto il codice migliore con anche l'utilizzo di determinate implementazioni, magari piu semplici e fattibili ma non trovate (in quanto non pensate) durante la creazione, avrebbero reso il software piu godibile da utilizzare, anche esteticamente.
