@@ -874,10 +874,6 @@ Entrambi i bottoni per il salvataggio sono disabilitati all'avvio e vengono abil
     } 
 ```
 
-
-
-
-
 ## Diagramma UML
 
 
@@ -1013,9 +1009,7 @@ Entrambi i bottoni per il salvataggio sono disabilitati all'avvio e vengono abil
 
 ## Consuntivo
 
-Consuntivo del tempo di lavoro effettivo e considerazioni riguardo le
-differenze rispetto alla pianificazione (cap 1.7) (ad esempio Gannt
-consuntivo).
+![alt text](Gantt/GanttConsuntivo.PNG)
 
 ## Conclusioni
 
