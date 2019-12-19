@@ -193,17 +193,20 @@ nell’implementazione del prodotto.
 
 ### Design dell’architettura del sistema
 
-Descrive:
+Sono stati stabiliti i seguenti componenti che, sicuramente, verranno implementati:
 
--   La struttura del programma/sistema lo schema di rete...
+- **Tasto genera**: Bottone/tasto che se premuto, permetterà all'utente di generare il fiocco di neve.
+- **Tasto switch crea/elimina punto**: Bottone/tasto che quando premuto, permetterà all'utente di cambiare modalità tra creare o eliminare i punti.
+- **tasto salva punti**: Bottone/tasto che se premuto, permetterà il salvataggio dei punti creati per il ritaglio dentro ad un file con l'opzione per scegliere in che posto salvare.
+- **tasto importa punti**: Bottone/tasto che se premuto, permetterà di importare dei punti precedentemente creati.
+- **Tasto salva fiocco**: Bottone/tasto che una volta premuto, permetterà all'utente di salvare il fiocco di neve, scegliendo se in frmato PNG (raster) o SVG (vettoriale)
+Tutti i seguenti bottoni verranno implementati tramite l'utlizzo della classe JButton.
 
--   Gli oggetti/moduli/componenti che lo compongono.
+- **Triangolo**: Triangolo che verrà ritagliato tramite dei punti ritaglio al fine di generare il fiocco di neve.
+- **Punti ritaglio**: I punti che permetteranno all'utente di ritagliare il triangolo.
+- **Fiocco di neve**: Il fiocco di neve generato dai ritagli del triangolo.
+I 3 componenti sopra citati verranno invece, con molta probabilità, implementati con il componente grafico Graphics o Graphics2D e poi disegnati tramite i metodi paint/paintComponent.
 
--   I flussi di informazione in ingresso ed in uscita e le
-    relative elaborazioni. Può utilizzare *diagrammi di flusso dei
-    dati* (DFD).
-
--   Eventuale sitemap
 
 ### Design delle interfacce
 
