@@ -790,7 +790,6 @@ Nel metodo paintComponent avvengono invece tutti i panting dei componenti, sempr
         }  
     }
 ```
-
 è da notare come anche il triangolo viene disegnato ma il suo colore viene settato a blu tramite il metodo setColor, al fine di non risultare visible. Questo perché, a quanto pare, il metodo Area di SnowFlake non può lavorare con elementi non disegnati. Viene anche verificato se la lista di poligoni sia maggiore di 0 al fine di poter generare un fiocco 'temporaneo'.
 
 **SnowFlakeFrame** 
@@ -856,6 +855,10 @@ Entrambi i bottoni per il salvataggio sono disabilitati all'avvio e vengono abil
         this.previewPanel1.repaint();
     } 
 ```
+
+**MenuFrame**
+
+Si tratta semplicemente del JFrame presente all'avvio con le 3 opzioni già viste nel design delle interfacce.
 
 ## Diagramma UML
 
@@ -1000,12 +1003,6 @@ La progettazione e l'implementazione vengono eseguite in alcuni punti parallelam
 
 Mi ritengo abbastanza soddisfatto del esito del progetto, anche se probabilmente una gestione dei tempi maggiormente accurata e rispettata e una progettazione/strutturazione di come sarebbe stato scritto il codice migliore con anche l'utilizzo di determinate implementazioni, magari piu semplici e fattibili ma non trovate (in quanto non pensate) durante la creazione, avrebbero reso il software piu godibile da utilizzare, anche esteticamente.
 Per quanto riguarda l'importanza di questo percorso, essa è stata, dal mio punto di vista, abbastanza alta in quanto mi permetterà di capire meglio, in futuro, come effettuare una migliore pianificazione e progettazione di futuri progetti, piu in particolare quello finale che verrà affrontato all'ultimo anno di questa scuola. In sintesi ho fatto vera e propria esperienza con eseguendo le varie fasi del progetto.
-
-Quali sono le implicazioni della mia soluzione? Che impatto avrà?
-Cambierà il mondo? È un successo importante? È solo un’aggiunta
-marginale o è semplicemente servita per scoprire che questo percorso è
-stato una perdita di tempo? I risultati ottenuti sono generali,
-facilmente generalizzabili o sono specifici di un caso particolare? ecc
 
 ### Sviluppi futuri
  
