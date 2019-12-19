@@ -237,24 +237,7 @@ per la realizzazione del prodotto.
 
 ## Implementazione
 
-In questo capitolo dovrà essere mostrato come è stato realizzato il
-lavoro. Questa parte può differenziarsi dalla progettazione in quanto il
-risultato ottenuto non per forza può essere come era stato progettato.
-
-Sulla base di queste informazioni il lavoro svolto dovrà essere
-riproducibile.
-
-In questa parte è richiesto l’inserimento di codice sorgente/print
-screen di maschere solamente per quei passaggi particolarmente
-significativi e/o critici.
-
-Inoltre dovranno essere descritte eventuali varianti di soluzione o
-scelte di prodotti con motivazione delle scelte.
-
-Non deve apparire nessuna forma di guida d’uso di librerie o di
-componenti utilizzati. Eventualmente questa va allegata.
-
-Per eventuali dettagli si possono inserire riferimenti ai diari.
+In questo capitolo viene spiegato, passo per passo, come sono strutturate tutte le classi che compongono il software.
 
 **Triangolo**
 
@@ -876,7 +859,7 @@ Entrambi i bottoni per il salvataggio sono disabilitati all'avvio e vengono abil
 
 ## Diagramma UML
 
-
+![alt text](screens/UML.png)
 
 ## Test
 
