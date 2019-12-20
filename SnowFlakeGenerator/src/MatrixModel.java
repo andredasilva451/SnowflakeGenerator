@@ -1,6 +1,6 @@
 /**
  * Questa classe rappresenta un modello astratto
- * di una matrice da stampare.
+ * di una matrice proporzionale.
  * @author Andr Da Silva
  * @version 13.04.19
 */
@@ -112,8 +112,5 @@ public class MatrixModel {
                     
                 }                
 		return dxy;
-	}
-	
-	public static void main(String[] args){		
 	}
 }

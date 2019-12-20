@@ -19,6 +19,9 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
+import jankovicsandras.imagetracer.ImageTracer;
+import java.awt.Polygon;
+
 
 /**
  *
@@ -32,10 +35,11 @@ public class SnowFlakePanel extends JPanel implements MouseListener,MouseMotionL
      */
     private Triangolo a;
     
+    
     /**
      * Lista di tutti i poligoni di ritaglio creati.
      */
-    private List<CropPolygon> polys;
+    private ArrayList<CropPolygon> polys;
     
     /**
      * Lista di tutti i punti ritaglio creati.
@@ -45,7 +49,7 @@ public class SnowFlakePanel extends JPanel implements MouseListener,MouseMotionL
     /**
      * Lista di liste con tutti i punti creati.
      */
-    private ArrayList<ArrayList<CropPoint>> allCropPoints;
+    //private ArrayList<ArrayList<CropPoint>> allCropPoints;
     
     /**
      * Numero di punti creati.
@@ -60,12 +64,7 @@ public class SnowFlakePanel extends JPanel implements MouseListener,MouseMotionL
     /**
      * Ultima larghezza salvata del Pannello.
      */
-    private int lastScreenWidth;
-    
-    /**
-     * Ultima altezza salvata del Pannello.
-     */
-    private int lastScreenHeight;
+   
     
     /**
      * Ultima coordinata X della pressione del mouse.
@@ -112,50 +111,52 @@ public class SnowFlakePanel extends JPanel implements MouseListener,MouseMotionL
      */
     private SnowFlake sf;
     
+    /**
+     * Boolean per effettuare l'ultimo refresh delle posizioni
+     * dei punti dei poligoni prima della generazione del fiocco.
+     */
+    private boolean firstTime = true;
+    
+    /**
+     * Lista di SnowFlakePanelListeners.
+     */
+    private List<SnowFlakePanelListener> listeners;
+    
+    /**
+     * Costruttore per l'instanziazione del pannello.
+     */
     public SnowFlakePanel(){
         
         this.setBackground(Color.BLUE);
         this.cropPoints = new ArrayList<CropPoint>();
-        this.allCropPoints = new ArrayList<ArrayList<CropPoint>>();
         this.polys = new ArrayList<CropPolygon>();
         this.addMouseListener(this);
         this.addMouseMotionListener(this);
-        this.lastScreenWidth = this.getWidth();
-        this.lastScreenHeight = this.getHeight();
-        
+        this.listeners = new ArrayList<SnowFlakePanelListener>();
+
     }
     
     /**
-     * In caso di click sx del mouse, si occupa di creare i cropPoints
-     * per la creazione dei CropPolygon:
-     *   - Verifica prima di tutto se l'attributo definePoly è true affinché
-     *     ci si trovi in fase di creazione dei crop Points.
-     *   - Se la condizione precedente è vera, Crea un oggetto di tipo CropPoint
-     *     alle Coordinate del mouse.
-     *   - Se il numero di punti creati, stabiliti dall'attributo pCounter, è maggiore di
-     *     3, verifica se l'ultimo punto creato si trovi alla stessa coordinata del primo punto
-     *     affinché si possa definire il poligono, se questa condizione è quindi vera, definePoly viene
-     *     settato a false ed il cropPoint appena definito assumerà le stesse coordinate del primo cropPoint.
-     *   - Viene aggiunto l'attuale cropPoint alla lista cropPoints.
-     *   - All'ultimo Crop Point definito, viene settato come ultimo punto tramite il metodo setLastPoint
-     *     che permetterà di disegnarlo di colore verde, mentre per tutti gli altri viene settato false.
-     *   - Se la variabile definePoly è false, setta per ogni cropPoint della lista di 
-     *     crop Points, tramite il metodo polygonDefined, affinchè essi possano essere di colore arancione. 
-     *   - Se la variabile definePoly è false (da non confondere con la condizione precedente), richiama il metodo
-     *   - definePolygon, aggiunge alla lista allCropPoints i valori dell'attuale lista di crop points (cropPoints)
-     *   - e pulisce quest'ultima.
-     * In caso di click del tasto dx del mouse invece:
-     *   - Verifica sempre se definePoly è true.
-     *   - Se la condizione precedente è soddisfatta, verifica se il cursore si trova sopra ad un elemento
-     *   - della lista di cropPoints, se si, rimuove il punto.
+     * Aggiunge un nuovo SnowFlakeListener.
+     * @param newListener nuovo SnowFlakeListener.
+     */
+    public void addSnowFlakePanelListener(SnowFlakePanelListener newListener){
+        this.listeners.add(newListener);
+    }
+    
+    
+    /**
+     * Si occupa di gestire la creazione/eliminazione di ogni
+     * punto di ritaglio.
      * @param e Evento del mouse.
      */
     @Override
     public void mouseClicked(MouseEvent e) {
         
-        //aggiunta punti
+        //aggiunta punti tramite tasto SX
         if(e.getButton() == MouseEvent.BUTTON1){
             
+            //verifica se l'utente può aggiungere/rimuovere punti di ritaglio.
             if(this.definePoly){
                 
                
@@ -163,39 +164,54 @@ public class SnowFlakePanel extends JPanel implements MouseListener,MouseMotionL
                 double percentageY = (e.getY()*100)/this.getHeight();
                 CropPoint point = new CropPoint(e.getX(),e.getY(),percentageX,percentageY);
                 
+                //verifica se il numero minimo di punti è 3 al fine di creare un poligono, e verifica
+		//anche se l'ultimo punto che si vuole creare è contenuto nel primo al fine di chiudere il tutto.
                 if(this.pCounter >= 3){
                     if(cropPoints.get(0).contains(e.getX(),e.getY())){
                         this.definePoly = false;   
                     }
                 }
+                
+                //verifica se è possibile aggiungere il punto tramite definePoly.
                 if(this.definePoly){
                     this.cropPoints.add(point);
                 }
+                
+                //se il numero di punti creati è 0, setta il colore ciano per questo punto tramite setFirstPoint.
                 if(this.pCounter == 0){
                     this.cropPoints.get(0).setFirstPoint(true);
                 }
+                
+                //setta questo punto come ultimo, impostando il colore verde tramite setLastPoint(true) e setta tutti gli altri
+                //punti creati false al fine di renderli rossi o ciano per il primo punto.
                 cropPoints.get(cropPoints.size()-1).setLastPoint(true);
                 for(int i = 0; i<cropPoints.size()-1; i++) {
                         this.cropPoints.get(i).setLastPoint(false);
                 }
+                
+                //se la definizione dei punti del poligono è finita, colora di arancione tutti i punti.
                 if(this.definePoly == false){
                     for(int i = 0; i<cropPoints.size(); i++) {
                         this.cropPoints.get(i).poligonDefined(true);
                     }
                 }
+                
                 this.pCounter++;
-            }else if(this.definePoly == false){       
-                defineCropPolygon();
-                this.allCropPoints.add(this.cropPoints);
+            }else if(this.definePoly == false){
+                
+                //definizione del poligono.
+                this.defineCropPolygon();
                 this.cropPoints.clear();
             }
-            repaint();
         }
-        //rimozione punti
+        
+        //rimozione punti tramite tasto DX
         if(e.getButton() == MouseEvent.BUTTON3){
            
+            //Verifica se l'utente può aggiungere/rimuovere punti.
             if(this.definePoly){
                 
+                //verifica se il cursore si trova sopra ad almeno 1 punto.
                 for(int i = 0; i<cropPoints.size()-1; i++) {
                     if(this.cropPoints.get(i).contains(e.getX(),e.getY())){                    
                         this.cropPoints.remove(this.cropPoints.get(i));
@@ -204,10 +220,15 @@ public class SnowFlakePanel extends JPanel implements MouseListener,MouseMotionL
                     }
                 }
             }
-            repaint();
-        }    
+        }
+        repaint();
     }
 
+    /**
+     * Verifica se il mouse viene premuto per poter iniziare
+     * ad effettuare un dragging di un punto.
+     * @param e Evento del mouse.
+     */
     @Override
     public void mousePressed(MouseEvent e) {
         
@@ -225,23 +246,27 @@ public class SnowFlakePanel extends JPanel implements MouseListener,MouseMotionL
         }     
     }
 
+    /**
+     * Verifica se il mouse viene rilasciato per smettere
+     * di eseguire il dragging.
+     * @param e Evento del mouse.
+     */
     @Override
-    public void mouseReleased(MouseEvent arg0) {
+    public void mouseReleased(MouseEvent e) {
         this.drag = false;
     }
 
     @Override
-    public void mouseEntered(MouseEvent arg0) {
+    public void mouseEntered(MouseEvent e) {
     }
 
     @Override
-    public void mouseExited(MouseEvent arg0) {
+    public void mouseExited(MouseEvent e) {
     }
     
     /**
      * In caso di dragging del mouse:
-     * Verifica prima di tutto se è presente almeno 1 crop Point, 
-     * dopodiché, per ogni punto della lista di Crop Point,
+     * Per ogni punto della lista di Crop Point,
      * verifica se il cursore si trovi sopra per poter effettuare lo spostamento.
      * Funziona sia prima che dopo (solo in caso non venga già disegnato) 
      * la generazione del poligono.
@@ -249,20 +274,17 @@ public class SnowFlakePanel extends JPanel implements MouseListener,MouseMotionL
      */
     @Override
     public void mouseDragged(MouseEvent e) {
-        
-        if(this.cropPoints.size() > 0){
-           
-            if(this.drag){
-                int x = e.getX() - this.offsetX;
-                int y = e.getY() - this.offsetY;
-                double percentageX = (x*100)/this.getWidth();
-                double percentageY = (y*100)/this.getHeight();
-                Point newCoords = new Point(x,y);
-                this.cropPoints.get(this.pointIndex).setPoint(newCoords);
-                this.cropPoints.get(this.pointIndex).setPercentages(percentageX, percentageY);
-                repaint();    
-            }             
-        }
+                  
+        if(this.drag){
+            int x = e.getX() - this.offsetX;
+            int y = e.getY() - this.offsetY;
+            double percentageX = (x*100)/this.getWidth();
+            double percentageY = (y*100)/this.getHeight();
+            Point newCoords = new Point(x,y);
+            this.cropPoints.get(this.pointIndex).setPoint(newCoords);
+            this.cropPoints.get(this.pointIndex).setPercentages(percentageX, percentageY);
+            repaint();    
+        }             
     }
    
     @Override
@@ -275,6 +297,7 @@ public class SnowFlakePanel extends JPanel implements MouseListener,MouseMotionL
      * MatrixModel
      * - I vari crop Points con rispettiva linea.
      * - I vari poligoni generati dai crop Points.
+     * - Il fiocco di neve.
      * @param g Componente grafico.
      */
     public void paintComponent(Graphics g){
@@ -282,26 +305,26 @@ public class SnowFlakePanel extends JPanel implements MouseListener,MouseMotionL
         super.paintComponent(g);
         
         if(this.flakeGenerated == false){
+            
             this.m = new MatrixModel(1,1,25,this.getHeight(),this.getWidth(),1,1.73);
             this.a = new Triangolo((int)m.getDXYSize()[0],(int)m.getDXYSize()[1],(int)m.getCellSize()[0],(int)m.getCellSize()[1]);
             this.a.paint(g);
             int i = 0;
             
-            if(this.polys.size() > 0 ){
-                for(int j = 0;j<this.polys.size();j++) {
-                    if(this.lastScreenHeight != this.getHeight() || this.lastScreenWidth != this.getWidth()){    
-                        this.polys.get(j).RefreshPositions(this.getWidth(),this.getHeight());
-                    }
-                    this.polys.get(j).paint(g);
+            for(CropPolygon cp : this.polys) {   
+                    
+                cp.RefreshPositions(this.getWidth(),this.getHeight());
+                cp.paint(g);
+            }
+            if(this.polys.size() > 0){
+               
+                for(SnowFlakePanelListener l : this.listeners){
+                    l.polygonCreated(this.polys);
                 }
             }
-            
             for(CropPoint p : this.cropPoints){
-
-                if(this.lastScreenHeight != this.getHeight() || this.lastScreenWidth != this.getWidth()){
-
-                    p.refreshPosition(this.getWidth(),this.getHeight());
-                }
+                
+                p.refreshPosition(this.getWidth(),this.getHeight());  
                 p.paint(g);
 
                 if(i >= 1){
@@ -319,14 +342,17 @@ public class SnowFlakePanel extends JPanel implements MouseListener,MouseMotionL
                 g.drawLine(x1,y1,x2,y2); 
 
             }
-            this.lastScreenHeight = this.getHeight();
-            this.lastScreenWidth = this.getWidth();
             
         }else if(this.flakeGenerated){
             
+            if(this.firstTime){
+                for(int i =0 ; i < this.polys.size();i++){
+                    this.polys.get(i).RefreshPositions(this.getWidth(),this.getHeight());
+                }
+                this.firstTime = false;
+            }
             this.sf = new SnowFlake(this.a,this.polys,this.getWidth(),this.getHeight());
             this.sf.paint(g);
-            
         }
     }
     
@@ -359,6 +385,7 @@ public class SnowFlakePanel extends JPanel implements MouseListener,MouseMotionL
             this.polys.add(p);
             this.definePoly = true;
             this.pCounter = 0;   
+            
         }
     }
     
@@ -368,7 +395,7 @@ public class SnowFlakePanel extends JPanel implements MouseListener,MouseMotionL
     public void pointReset(){
         
         this.cropPoints = new ArrayList<CropPoint>();
-        this.allCropPoints = new ArrayList<ArrayList<CropPoint>>();
+        //this.allCropPoints = new ArrayList<ArrayList<CropPoint>>();
         this.polys = new ArrayList<CropPolygon>();
         this.pCounter = 0;
         this.definePoly = true;
@@ -431,7 +458,6 @@ public class SnowFlakePanel extends JPanel implements MouseListener,MouseMotionL
                         }
                         this.definePoly = false;
                         this.defineCropPolygon();
-                        this.allCropPoints.add(this.cropPoints);
                         this.cropPoints.clear();
                     }else{
                         System.out.println("Impossibile!");
@@ -441,14 +467,14 @@ public class SnowFlakePanel extends JPanel implements MouseListener,MouseMotionL
         }
         repaint();
     }
-    
+       
     /**
      * Esegue un render del fiocco di neve specificando il tipo
      * di salvataggio (png o svg).
      * @param type Il tipo di render da eseguire (raster o vettoriale). 
      * @return  File PNG/SVG.
      */
-    public File saveSnowFlake(String type,String path){
+    public File saveSnowFlake(String type,String path) throws Exception {
     
         if(type.equals("png")){
             
@@ -464,7 +490,10 @@ public class SnowFlakePanel extends JPanel implements MouseListener,MouseMotionL
             
         }else if(type.equals("svg")){
             
-            
+           BufferedImage img = new BufferedImage(this.getWidth(),this.getHeight(), BufferedImage.TYPE_INT_RGB);
+           this.paint(img.getGraphics());
+           ImageTracer.saveString(path,ImageTracer.imageToSVG(img,null,null));
+               
         }
         return null;
     }

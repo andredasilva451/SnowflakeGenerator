@@ -4,8 +4,10 @@ import java.awt.Graphics;
 import java.awt.Polygon;
 
 /**
- *
- * @author andre
+ * Classe che rappresenta un modello astratto di un poligono
+ * per il ritaglio.
+ * @author André Da Silva
+ * @version 13.12.19
  */
 public class CropPolygon {
     
@@ -35,13 +37,14 @@ public class CropPolygon {
     private int nPoints;
     
     
-    public CropPolygon(int[] pointsX, int[] pointsY,int nPoints){
-        
-        this.pointsX = pointsX;
-        this.pointsY = pointsY;
-        this.nPoints = nPoints;
-    }
-    
+    /**
+     * Costruttore che permette l'istanziazione dell'oggetto tramite 5 parametri:
+     * @param pointsX Coordinate X dei punti di ogni poligono.
+     * @param pointsY Coordinate Y dei punti di ogni poligono.
+     * @param nPoints numero di punti che compongono il poligono.
+     * @param percentagesX Percentuale X della posizione rispetto al contenitore di ogni coordinata.
+     * @param percentagesY Percentuale Y della posizione rispetto al contenitore di ogni coordinata.
+     */
     public CropPolygon(int[] pointsX, int[] pointsY,int nPoints, double[] percentagesX, double[] percentagesY){
         
         this.pointsX = pointsX;
@@ -51,6 +54,11 @@ public class CropPolygon {
         this.percentagesY = percentagesY;
     }
     
+    /**
+     * Aggiorna la posizione del poligono.
+     * @param wContainer Larghezza del contenitore.
+     * @param hContainer  Altezza del contenitore.
+     */
     public void RefreshPositions(int wContainer, int hContainer){
     
         for(int i = 0; i < this.pointsX.length; i++){
@@ -65,12 +73,20 @@ public class CropPolygon {
         }
     }
             
+    /**
+     * Disegna il poligono.
+     * @param g Componente grafico.
+     */
     public void paint(Graphics g){
     
-          g.setColor(Color.BLUE);
+          g.setColor(Color.blue);
           g.fillPolygon(pointsX, pointsY,this.nPoints);
     }
     
+    /**
+     * Ritorna il CropPolygon in oggetto di tipo Polygon.
+     * @return CropPolygon convertito in Polygon.
+     */
     public Polygon toPolygon(){
      
         return new Polygon(this.pointsX,this.pointsY,this.nPoints);

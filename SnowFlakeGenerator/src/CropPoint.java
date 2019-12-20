@@ -10,6 +10,7 @@ import java.awt.Rectangle;
  */
 public class CropPoint {
 
+    
     private int posX;
     private int posY;
     private final int CROP_POINT_SIZE = 10;
@@ -63,7 +64,7 @@ public class CropPoint {
         return this.posY + CROP_POINT_SIZE/2;
     }
     
-     public double getPercentageX(){
+    public double getPercentageX(){
     
         return this.percentageX;
     }
@@ -95,24 +96,13 @@ public class CropPoint {
         this.posY = p.y;
     
     }
-    
-    public String toStringPoints(){
-    
-        return this.posX + "," + this.posY;
-    }
-    
+      
     public Point getPoint(){
     
         Point p = new Point();
         p.x = this.posX;
         p.y = this.posY;
         return p;
-    
-    }
-    
-    public int getSize(){
-        
-        return CROP_POINT_SIZE;
     
     }
     

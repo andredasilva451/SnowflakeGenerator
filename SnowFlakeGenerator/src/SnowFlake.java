@@ -13,9 +13,11 @@ import java.util.List;
 public class SnowFlake {
     
     private Triangolo a;
-    private List<CropPolygon> polys;
+    public List<CropPolygon> polys;
     private int wContainer;
     private int hContainer;
+    
+    public SnowFlake(){}
     
     public SnowFlake(Triangolo a,List<CropPolygon> polys, int wContainer, int hContainer){
         
@@ -23,7 +25,6 @@ public class SnowFlake {
         this.polys = polys;
         this.wContainer = wContainer;
         this.hContainer = hContainer;
-        
     }
     
     public void paint(Graphics g){
@@ -32,7 +33,7 @@ public class SnowFlake {
         Area croppedTriangle = new Area(this.a.toPolygon());
             
         for(int i = 0; i < this.polys.size(); i++){
-           
+            
                 Area curPolyArea = new Area(this.polys.get(i).toPolygon());
                 cropArea.add(curPolyArea);
                 
@@ -42,7 +43,6 @@ public class SnowFlake {
         g2d.setColor(Color.white);    
         g2d.scale(0.4,0.4);
         g2d.translate(this.wContainer-this.a.getWidth(),this.hContainer-this.a.getHeight()/1.25);
-        
         g2d.rotate(Math.toRadians(-30),croppedTriangle.getBounds2D().getMaxX(),croppedTriangle.getBounds2D().getMaxY());
         g2d.fill(croppedTriangle);
         Shape r2 = mirrorAlongX(croppedTriangle.getBounds2D().getMaxX(),croppedTriangle);
@@ -71,7 +71,7 @@ public class SnowFlake {
         Shape r14 = mirrorAlongX(r13.getBounds2D().getMinX(),r13);
         g2d.fill(r14);
     }
-    
+   
     /**
      * Specchia nell'asse X una forma (Shape)
      * @param x Punto in cui bisogna traslare la nuova forma specchiata.

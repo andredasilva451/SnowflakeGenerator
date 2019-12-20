@@ -1,11 +1,11 @@
 
+import java.awt.Color;
 import java.awt.Dimension;
-import java.io.BufferedWriter;
+import java.awt.Toolkit;
 import javax.swing.JFileChooser;
 import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
-import java.nio.file.Files;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -14,16 +14,17 @@ import javax.swing.filechooser.FileNameExtensionFilter;
  *
  * @author André Da Silva
  */
-public class SnowFlakeFrame extends javax.swing.JFrame {
+public class SnowFlakeFrame extends javax.swing.JFrame implements SnowFlakePanelListener {
 
-    /**
-     * Creates new form SnowFlakeFrame
-     */
+    
     public SnowFlakeFrame() {
         super("SnowFlake Generator");
         initComponents();
         this.setSize(1024,768);
         this.setMinimumSize(new Dimension(1024,768));
+        Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+        this.setLocation(dim.width/2-this.getSize().width/2, dim.height/2-this.getSize().height/2);
+        this.snowFlakePanel.addSnowFlakePanelListener(this);
     }
 
     /**
@@ -35,6 +36,8 @@ public class SnowFlakeFrame extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        marginPanel = new javax.swing.JPanel();
+        previewPanel1 = new PreviewPanel();
         snowFlakePanel = new SnowFlakePanel();
         ButtonsPanel = new javax.swing.JPanel();
         SalvaPuntiButton = new javax.swing.JButton();
@@ -46,16 +49,52 @@ public class SnowFlakeFrame extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        marginPanel.setBackground(new java.awt.Color(255, 255, 255));
+        marginPanel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        marginPanel.setPreferredSize(new java.awt.Dimension(150, 737));
+
+        javax.swing.GroupLayout previewPanel1Layout = new javax.swing.GroupLayout(previewPanel1);
+        previewPanel1.setLayout(previewPanel1Layout);
+        previewPanel1Layout.setHorizontalGroup(
+            previewPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 128, Short.MAX_VALUE)
+        );
+        previewPanel1Layout.setVerticalGroup(
+            previewPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 131, Short.MAX_VALUE)
+        );
+
+        javax.swing.GroupLayout marginPanelLayout = new javax.swing.GroupLayout(marginPanel);
+        marginPanel.setLayout(marginPanelLayout);
+        marginPanelLayout.setHorizontalGroup(
+            marginPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(marginPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(previewPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        marginPanelLayout.setVerticalGroup(
+            marginPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(marginPanelLayout.createSequentialGroup()
+                .addGap(50, 50, 50)
+                .addComponent(previewPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(554, Short.MAX_VALUE))
+        );
+
+        getContentPane().add(marginPanel, java.awt.BorderLayout.LINE_END);
+
         javax.swing.GroupLayout snowFlakePanelLayout = new javax.swing.GroupLayout(snowFlakePanel);
         snowFlakePanel.setLayout(snowFlakePanelLayout);
         snowFlakePanelLayout.setHorizontalGroup(
             snowFlakePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGap(0, 876, Short.MAX_VALUE)
         );
         snowFlakePanelLayout.setVerticalGroup(
             snowFlakePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 711, Short.MAX_VALUE)
+            .addGap(0, 737, Short.MAX_VALUE)
         );
+
+        getContentPane().add(snowFlakePanel, java.awt.BorderLayout.CENTER);
 
         ButtonsPanel.setBackground(new java.awt.Color(0, 153, 255));
 
@@ -110,26 +149,7 @@ public class SnowFlakeFrame extends javax.swing.JFrame {
         });
         ButtonsPanel.add(salvaSVGButton);
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(snowFlakePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(ButtonsPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 1004, Short.MAX_VALUE))
-                .addContainerGap())
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(ButtonsPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(2, 2, 2)
-                .addComponent(snowFlakePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
-        );
+        getContentPane().add(ButtonsPanel, java.awt.BorderLayout.NORTH);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -138,12 +158,18 @@ public class SnowFlakeFrame extends javax.swing.JFrame {
        this.snowFlakePanel.genSnowFlake();
        this.salvaPNGButton.setEnabled(true);
        this.salvaSVGButton.setEnabled(true);
+       this.previewPanel1.setVisible(false);
+       this.previewPanel1.SnowFlakeCreated(true);
     }//GEN-LAST:event_GeneraButtonActionPerformed
 
     private void ResetButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ResetButtonActionPerformed
         this.snowFlakePanel.pointReset();
         this.salvaPNGButton.setEnabled(false);
         this.salvaSVGButton.setEnabled(false);
+        this.previewPanel1.resetCropPolygons();
+        this.previewPanel1.SnowFlakeCreated(false);
+        this.previewPanel1.setVisible(true);
+        this.previewPanel1.repaint();
     }//GEN-LAST:event_ResetButtonActionPerformed
 
     private void SalvaPuntiButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SalvaPuntiButtonActionPerformed
@@ -168,7 +194,22 @@ public class SnowFlakeFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_SalvaPuntiButtonActionPerformed
 
     private void salvaSVGButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_salvaSVGButtonActionPerformed
-        //this.snowFlakePanel.saveSnowFlake("svg");
+       
+        JFileChooser fileChooser = new JFileChooser();      
+        int userSelection = fileChooser.showSaveDialog(this);
+        
+        if (userSelection == JFileChooser.APPROVE_OPTION) {
+                         
+            File fileToSave = fileChooser.getSelectedFile();  //File da salvare
+            try {
+                fileToSave = this.snowFlakePanel.saveSnowFlake("svg",fileToSave.getAbsolutePath());
+            } catch (Exception ex) {
+                Logger.getLogger(SnowFlakeFrame.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            System.out.println("Save as file: " + fileToSave.getAbsolutePath());
+            
+        }
+        
     }//GEN-LAST:event_salvaSVGButtonActionPerformed
 
     private void ImportaPuntiButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ImportaPuntiButtonActionPerformed
@@ -189,16 +230,17 @@ public class SnowFlakeFrame extends javax.swing.JFrame {
     private void salvaPNGButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_salvaPNGButtonActionPerformed
 
         JFileChooser fileChooser = new JFileChooser();      
-        FileNameExtensionFilter filter = new FileNameExtensionFilter("PNG files (.png)", "png");
-        fileChooser.setFileFilter(filter);
         int userSelection = fileChooser.showSaveDialog(this);
         
         if (userSelection == JFileChooser.APPROVE_OPTION) {
                          
             File fileToSave = fileChooser.getSelectedFile();  //File da salvare
-            fileToSave = this.snowFlakePanel.saveSnowFlake("png",fileToSave.getAbsolutePath());
-            System.out.println("Save as file: " + fileToSave.getAbsolutePath());
-            
+            try {
+                fileToSave = this.snowFlakePanel.saveSnowFlake("png",fileToSave.getAbsolutePath());
+            } catch (Exception ex) {
+                Logger.getLogger(SnowFlakeFrame.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            System.out.println("Save as file: " + fileToSave.getAbsolutePath());            
         }
     }//GEN-LAST:event_salvaPNGButtonActionPerformed
 
@@ -237,15 +279,21 @@ public class SnowFlakeFrame extends javax.swing.JFrame {
             }
         });
     }
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel ButtonsPanel;
     private javax.swing.JButton GeneraButton;
     private javax.swing.JButton ImportaPuntiButton;
     private javax.swing.JButton ResetButton;
     private javax.swing.JButton SalvaPuntiButton;
+    private javax.swing.JPanel marginPanel;
+    private PreviewPanel previewPanel1;
     private javax.swing.JButton salvaPNGButton;
     private javax.swing.JButton salvaSVGButton;
     private SnowFlakePanel snowFlakePanel;
     // End of variables declaration//GEN-END:variables
+
+    @Override
+    public void polygonCreated(List<CropPolygon> cp) {
+        this.previewPanel1.setCropPolygon(cp);
+    }
 }
