@@ -38,10 +38,6 @@ public class SnowFlake {
                 cropArea.add(curPolyArea);
                 
         }
-        System.out.println(wContainer + ": " + this.polys.toString());
-        //for(int i =0 ; i < this.polys.size();i++){
-          //  this.polys.get(i).paint(g);
-        //}
         croppedTriangle.subtract(cropArea);
         Graphics2D g2d = (Graphics2D) g.create();
         g2d.setColor(Color.white);    
