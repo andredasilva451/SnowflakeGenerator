@@ -950,9 +950,10 @@ Per quanto riguarda l'importanza di questo percorso, essa è stata, dal mio punt
 
  - Fare in modo che si possano modificare piu 'poligoni ritaglio' allo stesso tempo.
  - Migliore struttura e qualità dell'interfaccia grafica.
+ - Migliorare l'anteprima.
 
 ### Considerazioni personali
-In questo progetto ho imparato che i tempi sono molto importanti e non vanno 'presi sottogamba' in quanto gli imprevisti possono essere tanti e rovinare potenzialmente l'intera pianificazione e implementazione del progetto.
+In questo progetto ho imparato che i tempi sono molto importanti e non vanno mai sottovalutati in quanto gli imprevisti possono essere tanti e rovinare potenzialmente l'intera pianificazione e implementazione del progetto.
 
 ### Sitografia
 
@@ -969,7 +970,5 @@ Elenco degli allegati:
 -   Diari di lavoro
 
 -   Codici sorgente
-
--   Mandato
 
 -   Prodotto
