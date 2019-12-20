@@ -205,9 +205,7 @@ public class SnowFlakeFrame extends javax.swing.JFrame implements SnowFlakePanel
                 fileToSave = this.snowFlakePanel.saveSnowFlake("svg",fileToSave.getAbsolutePath());
             } catch (Exception ex) {
                 Logger.getLogger(SnowFlakeFrame.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            System.out.println("Save as file: " + fileToSave.getAbsolutePath());
-            
+            }            
         }
         
     }//GEN-LAST:event_salvaSVGButtonActionPerformed
