@@ -53,8 +53,8 @@
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Component id="aboutButton" min="-2" pref="35" max="-2" attributes="0"/>
               <EmptySpace type="separate" max="-2" attributes="0"/>
-              <Component id="esciButton" min="-2" pref="50" max="-2" attributes="0"/>
-              <EmptySpace pref="46" max="32767" attributes="0"/>
+              <Component id="esciButton" min="-2" pref="35" max="-2" attributes="0"/>
+              <EmptySpace pref="61" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
