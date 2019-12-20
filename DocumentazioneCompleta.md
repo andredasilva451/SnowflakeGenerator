@@ -970,19 +970,13 @@ In questo progetto ho imparato che i tempi sono molto importanti e non vanno 'pr
  
 ## Allegati
 
-Elenco degli allegati, esempio:
+Elenco degli allegati:
 
 -   Diari di lavoro
 
--   Codici sorgente/documentazione macchine virtuali
+-   Codici sorgente
 
--   Istruzioni di installazione del prodotto (con credenziali
-    di accesso) e/o di eventuali prodotti terzi
-
--   Documentazione di prodotti di terzi
-
--   Mandato e/o Qdc
+-   Mandato
 
 -   Prodotto
 
--   …
