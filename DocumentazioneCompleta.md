@@ -66,42 +66,10 @@ SAMT, Sezione informatica modulo 306 + progetti.
 
 ### Abstract
 
-  E’ una breve e accurata rappresentazione dei contenuti di un documento,
-  senza notazioni critiche o valutazioni. Lo scopo di un abstract efficace
-  dovrebbe essere quello di far conoscere all’utente il contenuto di base
-  di un documento e metterlo nella condizione di decidere se risponde ai
-  suoi interessi e se è opportuno il ricorso al documento originale.
-
-  Può contenere alcuni o tutti gli elementi seguenti:
-
-  -   **Background/Situazione iniziale**
-
-  -   **Descrizione del problema e motivazione**: Che problema ho cercato
-      di risolvere? Questa sezione dovrebbe includere l'importanza del
-      vostro lavoro, la difficoltà dell'area e l'effetto che potrebbe
-      avere se portato a termine con successo.
-
-  -   **Approccio/Metodi**: Come ho ottenuto dei progressi? Come ho
-      risolto il problema (tecniche…)? Quale è stata l’entità del mio
-      lavoro? Che fattori importanti controllo, ignoro o misuro?
-
-  -   **Risultati**: Quale è la risposta? Quali sono i risultati? Quanto è
-      più veloce, più sicuro, più economico o in qualche altro aspetto
-      migliore di altri prodotti/soluzioni?
-
-  Esempio di abstract:
-
-  > *As the size and complexity of today’s most modern computer chips
-  > increase, new techniques must be developed to effectively design and
-  > create Very Large Scale Integration chips quickly. For this project, a
-  > new type of hardware compiler is created. This hardware compiler will
-  > read a C++ program, and physically design a suitable microprocessor
-  > intended for running that specific program. With this new and powerful
-  > compiler, it is possible to design anything from a small adder, to a
-  > microprocessor with millions of transistors. Designing new computer
-  > chips, such as the Pentium 4, can require dozens of engineers and
-  > months of time. With the help of this compiler, a single person could
-  > design such a large-scale microprocessor in just weeks.*
+Finding a software who allows you to create a snowflake starting from a clipped right triangle is very hard to find maybe even
+impossibile, so this software made in Java resolve the problem. When the software is open, you can cut the triangle by placing some points over it in order to create some cuts polygon. After you created the cuts you wanted, you can finally generate the snow flake     and then, if you want, saving it in raster/vectorformat or resetting it and making a new one. If you're more interested on how  this   project was made, proceed with the reading of this document, or if you just want to test it, download it from the page link in the     readme file.
+  
+  
 
 ### Scopo
 
