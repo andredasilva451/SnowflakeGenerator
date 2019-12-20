@@ -968,12 +968,6 @@ In questo progetto ho imparato che i tempi sono molto importanti e non vanno 'pr
  
 -  https://docs.oracle.com/javase/10/docs/api/java/awt/Graphics2D.html, *Graphics2D (JAVA SE 10 & JDK 10)*, 11-27-2019. 
  
-
-**Esempio:**
-
--   http://standards.ieee.org/guides/style/section7.html, *IEEE
-    Standards Style Manual*, 07-06-2008.
-
 ## Allegati
 
 Elenco degli allegati, esempio:
