@@ -1,4 +1,0 @@
-Il salvataggio in vettoriale non funziona dal jar in quanto, per qualche strano motivo, 
-netbeans non aggiunge la cartella lib con le librerie esterne dentro quella del .jar (dist).
-L'unico modo quindi per poter utilizzare questa funzione è avviare il software direttamente
-da NetBeans. 
