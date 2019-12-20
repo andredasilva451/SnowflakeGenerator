@@ -21,9 +21,7 @@ public class PreviewPanel extends JPanel {
     private Triangolo t;
     private MatrixModel m;
     private SnowFlake sf;
-    private boolean isFlakeGenerated = false;
-    
-    
+      
     public PreviewPanel() {
         
         this.setBackground(Color.blue);
@@ -35,38 +33,29 @@ public class PreviewPanel extends JPanel {
         
         this.cp.clear();
         this.cp.addAll(cp);
-        repaint();
-    }
-  
-    public void SnowFlakeCreated(boolean flag){
-    
-        this.isFlakeGenerated = !this.isFlakeGenerated;
         this.repaint();
     }
-    
+   
     public void resetCropPolygons(){
     
         this.cp.clear();
-        repaint();
+        this.repaint();
     }
-    
+     
     public void paintComponent(Graphics g){
         super.paintComponent(g);
-        System.out.println(this.isFlakeGenerated);
-        if(!this.isFlakeGenerated){
-            this.m = new MatrixModel(1,1,25,this.getHeight(),this.getWidth(),1,1.73);
-            this.t = new Triangolo((int)m.getDXYSize()[0],(int)m.getDXYSize()[1]+25,(int)m.getCellSize()[0],(int)m.getCellSize()[1]);
-            this.t.setColor(Color.blue);
-            this.t.paint(g);
-            for(int i = 0; i < this.cp.size();i++){
-                this.cp.get(i).RefreshPositions(this.getWidth(),this.getHeight());
-            }
-            if(this.cp.size() > 0){
-
-               SnowFlake s = new SnowFlake(this.t,this.cp,this.getWidth(),this.getHeight());
-                s.paint(g);
-            }
-        }  
+      
+        this.m = new MatrixModel(1,1,25,this.getHeight(),this.getWidth(),1,1.73);
+        this.t = new Triangolo((int)m.getDXYSize()[0],(int)m.getDXYSize()[1]+25,(int)m.getCellSize()[0],(int)m.getCellSize()[1]);
+        this.t.setColor(Color.blue);
+        this.t.paint(g);
+        for(int i = 0; i < this.cp.size();i++){
+            this.cp.get(i).RefreshPositions(this.getWidth(),this.getHeight());
+        }
+        if(this.cp.size() > 0){
+            SnowFlake s = new SnowFlake(this.t,this.cp,this.getWidth(),this.getHeight());
+            s.paint(g);
+        } 
     }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents

@@ -316,6 +316,7 @@ public class SnowFlakePanel extends JPanel implements MouseListener,MouseMotionL
                 cp.RefreshPositions(this.getWidth(),this.getHeight());
                 cp.paint(g);
             }
+            System.out.println("polys:" + this.polys.size());
             if(this.polys.size() > 0){
                
                 for(SnowFlakePanelListener l : this.listeners){
@@ -346,11 +347,12 @@ public class SnowFlakePanel extends JPanel implements MouseListener,MouseMotionL
         }else if(this.flakeGenerated){
             
             if(this.firstTime){
-                for(int i =0 ; i < this.polys.size();i++){
+               for(int i =0 ; i < this.polys.size();i++){
                     this.polys.get(i).RefreshPositions(this.getWidth(),this.getHeight());
-                }
-                this.firstTime = false;
+               }
+               this.firstTime = false;
             }
+            
             this.sf = new SnowFlake(this.a,this.polys,this.getWidth(),this.getHeight());
             this.sf.paint(g);
         }
@@ -394,13 +396,12 @@ public class SnowFlakePanel extends JPanel implements MouseListener,MouseMotionL
      */
     public void pointReset(){
         
-        this.cropPoints = new ArrayList<CropPoint>();
-        //this.allCropPoints = new ArrayList<ArrayList<CropPoint>>();
-        this.polys = new ArrayList<CropPolygon>();
-        this.pCounter = 0;
+        this.cropPoints.clear();
+        this.polys.clear();
         this.definePoly = true;
+        this.firstTime = true;
         this.flakeGenerated = false;
-        repaint();      
+        this.repaint();      
     }
     
     /**
@@ -429,8 +430,8 @@ public class SnowFlakePanel extends JPanel implements MouseListener,MouseMotionL
     public void genSnowFlake(){
     
         this.flakeGenerated = true;
-        this.removeAll();
-        repaint();  
+        this.firstTime = true;
+        this.repaint();  
     }
      
     /**
