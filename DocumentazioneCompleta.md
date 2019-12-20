@@ -154,11 +154,6 @@ Qualsiasi Sistema operativo (Windows,Mac OS, distribuzioni Linux, etc.)
 
 ## Progettazione
 
-Questo capitolo descrive esaustivamente come deve essere realizzato il
-prodotto fin nei suoi dettagli. Una buona progettazione permette
-all’esecutore di evitare fraintendimenti e imprecisioni
-nell’implementazione del prodotto.
-
 ### Design dell’architettura del sistema
 
 Sono stati stabiliti i seguenti componenti che, sicuramente, verranno implementati:
