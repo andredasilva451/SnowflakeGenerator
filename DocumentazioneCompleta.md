@@ -66,7 +66,7 @@ SAMT, Sezione informatica modulo 306 + progetti.
 
 ### Abstract
 
-Finding a software who allows you to create a snowflake starting from a clipped right triangle is very hard to find maybe even
+Finding a software that allows you to create a snowflake starting from a clipped right triangle is very hard to find maybe even
 impossibile, so this software made in Java resolve the problem. When the software is open, you can cut the triangle by placing some points over it in order to create some cuts polygon. After you created the cuts you wanted, you can finally generate the snow flake     and then, if you want, saving it in raster/vectorformat or resetting it and making a new one. If you're more interested on how  this   project was made, proceed with the reading of this document, or if you just want to test it, download it from the page link in the     readme file.
   
   
