@@ -967,12 +967,12 @@ In questo progetto ho imparato che i tempi sono molto importanti e non vanno 'pr
 
 ### Sitografia
 
-1.  URL del sito (se troppo lungo solo dominio, evt completo nel
-    diario),
-
-2.  Eventuale titolo della pagina (in italico),
-
-3.  Data di consultazione (GG-MM-AAAA).
+-  https://github.com/jankovicsandras/imagetracerjava, *ImageTracer*, 12-06-2019.
+ 
+-  https://docs.oracle.com/javase/10/docs/api/java/awt/Polygon.html, *Polygon (JAVA SE 10 & JDK 10)*, 11-22-2019.
+ 
+-  https://docs.oracle.com/javase/10/docs/api/java/awt/Graphics2D.html, *Graphics2D (JAVA SE 10 & JDK 10)*, 11-27-2019. 
+ 
 
 **Esempio:**
 
@@ -991,8 +991,6 @@ Elenco degli allegati, esempio:
     di accesso) e/o di eventuali prodotti terzi
 
 -   Documentazione di prodotti di terzi
-
--   Eventuali guide utente / Manuali di utilizzo
 
 -   Mandato e/o Qdc
 
