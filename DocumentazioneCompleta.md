@@ -222,21 +222,7 @@ L'interfaccia del software sarà composta da 2 frame:
 
 ### Design procedurale
 
-Descrive i concetti dettagliati dell’architettura/sviluppo utilizzando
-ad esempio:
-
--   Diagrammi di flusso e Nassi.
-
--   Tabelle.
-
--   Classi e metodi.
-
--   Tabelle di routing
-
--   Diritti di accesso a condivisioni …
-
-Questi documenti permetteranno di rappresentare i dettagli procedurali
-per la realizzazione del prodotto.
+![alt text](screens/UML.png)
 
 ## Implementazione
 
@@ -862,10 +848,6 @@ Entrambi i bottoni per il salvataggio sono disabilitati all'avvio e vengono abil
 **MenuFrame**
 
 Si tratta semplicemente del JFrame presente all'avvio con le 3 opzioni già viste nel design delle interfacce.
-
-## Diagramma UML
-
-![alt text](screens/UML.png)
 
 ## Test
 
