@@ -40,7 +40,7 @@ public class PreviewPanel extends JPanel {
   
     public void SnowFlakeCreated(boolean flag){
     
-        this.isFlakeGenerated = true;
+        this.isFlakeGenerated = !this.isFlakeGenerated;
         this.repaint();
     }
     
@@ -52,7 +52,7 @@ public class PreviewPanel extends JPanel {
     
     public void paintComponent(Graphics g){
         super.paintComponent(g);
-        
+        System.out.println(this.isFlakeGenerated);
         if(!this.isFlakeGenerated){
             this.m = new MatrixModel(1,1,25,this.getHeight(),this.getWidth(),1,1.73);
             this.t = new Triangolo((int)m.getDXYSize()[0],(int)m.getDXYSize()[1]+25,(int)m.getCellSize()[0],(int)m.getCellSize()[1]);

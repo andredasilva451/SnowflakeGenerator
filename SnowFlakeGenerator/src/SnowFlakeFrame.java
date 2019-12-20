@@ -38,6 +38,7 @@ public class SnowFlakeFrame extends javax.swing.JFrame implements SnowFlakePanel
 
         marginPanel = new javax.swing.JPanel();
         previewPanel1 = new PreviewPanel();
+        previewLabel = new javax.swing.JLabel();
         snowFlakePanel = new SnowFlakePanel();
         ButtonsPanel = new javax.swing.JPanel();
         SalvaPuntiButton = new javax.swing.JButton();
@@ -64,19 +65,28 @@ public class SnowFlakeFrame extends javax.swing.JFrame implements SnowFlakePanel
             .addGap(0, 131, Short.MAX_VALUE)
         );
 
+        previewLabel.setText("Preview:");
+
         javax.swing.GroupLayout marginPanelLayout = new javax.swing.GroupLayout(marginPanel);
         marginPanel.setLayout(marginPanelLayout);
         marginPanelLayout.setHorizontalGroup(
             marginPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(marginPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(previewPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(marginPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(previewPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(marginPanelLayout.createSequentialGroup()
+                        .addGap(41, 41, 41)
+                        .addComponent(previewLabel)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         marginPanelLayout.setVerticalGroup(
             marginPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(marginPanelLayout.createSequentialGroup()
-                .addGap(50, 50, 50)
+                .addGap(25, 25, 25)
+                .addComponent(previewLabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(previewPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(554, Short.MAX_VALUE))
         );
@@ -187,9 +197,7 @@ public class SnowFlakeFrame extends javax.swing.JFrame implements SnowFlakePanel
                 fileToSave = this.snowFlakePanel.writePoints(fileToSave);
             } catch (IOException ex) {
                 Logger.getLogger(SnowFlakeFrame.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            System.out.println("Save as file: " + fileToSave.getAbsolutePath());
-                  
+            }     
         }
     }//GEN-LAST:event_SalvaPuntiButtonActionPerformed
 
@@ -284,6 +292,7 @@ public class SnowFlakeFrame extends javax.swing.JFrame implements SnowFlakePanel
     private javax.swing.JButton ResetButton;
     private javax.swing.JButton SalvaPuntiButton;
     private javax.swing.JPanel marginPanel;
+    private javax.swing.JLabel previewLabel;
     private PreviewPanel previewPanel1;
     private javax.swing.JButton salvaPNGButton;
     private javax.swing.JButton salvaSVGButton;
